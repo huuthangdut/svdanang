@@ -39,7 +39,16 @@ export class SidenavComponent {
   }
   ];
 
-  constructor(private _router: Router) { }
+  screenWidth: number;
+
+  constructor(private _router: Router) {
+    // set screenWidth on page load
+    this.screenWidth = window.innerWidth;
+    window.onresize = () => {
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
+  }
 
   logout(): void {
     this._router.navigate(['/login']);

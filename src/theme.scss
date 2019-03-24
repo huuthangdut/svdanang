@@ -43,8 +43,14 @@ $mat-font-url: '../node_modules/@covalent/core/common/styles/font/';
 
 // // The warn palette is optional (defaults to red).
 // $warn:    mat-palette($mat-red, 600);
-$primary: mat-palette($mat-orange, 800, 100, 900);
-$accent:  mat-palette($mat-light-blue, 600, 100, 900);
+// $primary: mat-palette($mat-orange, 800, 100, 900);
+// $accent:  mat-palette($mat-light-blue, 600, 100, 900);
+
+$primary: mat-palette($mat-red, 700);
+$accent:  mat-palette($mat-blue, 800, A100, A400);
+
+// $primary: mat-palette($mat-purple, 900, 100, 900);
+// $accent:  mat-palette($mat-teal, 600, 100, 900);
 
 $warn:    mat-palette($mat-red, 600, 100, 900);
 

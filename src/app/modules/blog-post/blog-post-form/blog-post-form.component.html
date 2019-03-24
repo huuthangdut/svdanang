@@ -1,0 +1,47 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <div>Thêm bài đăng mới</div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="card-container">
+  <mat-card-title>
+    <p>Thông tin bài đăng</p>
+  </mat-card-title>
+  <mat-card-content>
+    <form flex fxLayout="column" fxLayoutGap="15px">
+      <div fxLayout="row">
+        <mat-icon>title</mat-icon>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Tiêu đề" type="text">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon>subject</mat-icon>
+        <mat-form-field class="full-width">
+          <mat-label>Chủ đề</mat-label>
+          <mat-select required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let topic of topics" [value]="topic">
+              {{topic.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon>subtitles</mat-icon>
+        <td-text-editor class="full-width" [options]="options"></td-text-editor>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button>
+      Trở về
+    </button>
+    <button mat-raised-button color="accent">
+      Lưu
+    </button>
+  </mat-card-actions>
+</mat-card>

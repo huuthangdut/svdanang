@@ -1,0 +1,10 @@
+.mat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  padding-top: 20px;
+}
+
+.mat-container > * {
+  width: 100%;
+}

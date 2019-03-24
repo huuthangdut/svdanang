@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainComponent } from './main.component';
 import { SharedModule } from './shared/shared.module';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     CoreModule,
@@ -20,8 +21,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     SharedModule,
   ],
-  providers: [
-  ], // additional providers needed for this module
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   entryComponents: [],
   bootstrap: [AppComponent],
 })

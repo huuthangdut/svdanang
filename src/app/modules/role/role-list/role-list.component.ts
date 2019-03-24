@@ -2,7 +2,6 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/material';
-import { TdMediaService } from '@covalent/core/media';
 import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
 
@@ -24,7 +23,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  constructor(private media: TdMediaService,
+  constructor(
     private dialog: MatDialog,
     private roleService: RoleService) { }
 
@@ -67,7 +66,9 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     // dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    dialogConfig.minWidth = "40%";
+    dialogConfig.position = { top: '10vh' }
+    // dialogConfig.height = "60%";
     this.dialog.open(RoleFormComponent, dialogConfig);
   }
 
@@ -76,7 +77,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     // dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    dialogConfig.data = roleId;
+    dialogConfig.data = { id: roleId };
     this.dialog.open(RoleFormComponent, dialogConfig);
   }
 

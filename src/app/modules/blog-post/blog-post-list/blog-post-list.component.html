@@ -1,0 +1,72 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <div>Quản lý bài đăng</div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+
+  <td-search-box class="push-left push-right" placeholder="Tìm kiếm" [alwaysVisible]="true" #input></td-search-box>
+
+  <!-- <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div> -->
+
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="title" matSortDirection="asc"
+    matSortDisableClear>
+    <ng-container matColumnDef="thumbnailImage">
+      <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
+      <mat-cell *matCellDef="let post">{{post.thumbnailImage}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tiêu đề</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.title}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="shortDescription">
+      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.shortDescription}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdBy">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Người tạo</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdBy}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isPublish">
+      <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.isPublish}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let role">
+        <button mat-icon-button (click)="onEdit(role.id)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator [length]="" [pageSize]="3" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+</mat-card>
+
+<a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">
+  <mat-icon>add</mat-icon>
+</a>

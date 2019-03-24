@@ -19,12 +19,28 @@ const routes: Routes = [{
       path: 'roles',
       loadChildren: './modules/role/role.module#RoleModule'
     },
+    {
+      path: 'users',
+      loadChildren: './modules/user/user.module#UserModule'
+    },
+    {
+      path: 'profile',
+      loadChildren: './modules/profile/profile.module#ProfileModule'
+    },
+    {
+      path: 'posts',
+      loadChildren: './modules/blog-post/blog-post.module#BlogPostModule'
+    },
+    {
+      path: 'events',
+      loadChildren: './modules/event/event.module#EventModule'
+    },
   ],
 },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,0 +1,101 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <div>Thêm sự kiện mới</div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab label="Thông tin cơ bản">
+        <div class="mat-container">
+          <form flex fxLayout="column" fxLayoutGap="15px">
+            <div fxLayout="row">
+              <mat-icon>title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input matInput placeholder="Tên sự kiện" type="text">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon>title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input matInput placeholder="Mô tả" type="text">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon>subject</mat-icon>
+              <mat-form-field class="field-full-width">
+                <mat-label>Chủ đề</mat-label>
+                <mat-select required>
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let topic of topics" [value]="topic">
+                    {{topic.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon>date_range</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input matInput [matDatepicker]="picker" placeholder="Ngày bắt đầu">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon>date_range</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input matInput [matDatepicker]="myDatepicker" placeholder="Ngày kết thúc">
+                  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                  <mat-datepicker #myDatepicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon>group</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input matInput placeholder="Số lượng dự kiến" type="number" min="0">
+                </mat-form-field>
+              </div>
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon>attach_money</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input matInput placeholder="Lệ phí tham gia" type="text">
+                  <span matSuffix>VNĐ</span>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Kế hoạch">
+        <div class="mat-container">
+          <h1>Some more tab content</h1>
+          <p>...</p>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Tình nguyện viên">
+        <div class="mat-container">
+          <h1>Some more tab content</h1>
+          <p>...</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button>
+      Trở về
+    </button>
+    <button mat-raised-button color="accent">
+      Lưu
+    </button>
+  </mat-card-actions>
+
+</mat-card>

@@ -1,33 +1,54 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  MatGridListModule,
-  MatPaginatorModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
   MatButtonModule,
   MatCardModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
   MatDividerModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatSidenavModule,
   MatSlideToggleModule,
   MatSnackBarModule,
+  MatSortModule,
+  MatTableModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatTreeModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
-
-import { CovalentCommonModule } from '@covalent/core/common';
-import { CovalentDialogsModule } from '@covalent/core/dialogs';
-import { CovalentLayoutModule } from '@covalent/core/layout';
-import { CovalentLoadingModule } from '@covalent/core/loading';
-import { CovalentMediaModule } from '@covalent/core/media';
-import { CovalentSearchModule } from '@covalent/core/search';
+import {
+  CovalentBreadcrumbsModule,
+  CovalentCommonModule,
+  CovalentDataTableModule,
+  CovalentDialogsModule,
+  CovalentExpansionPanelModule,
+  CovalentFileModule,
+  CovalentLayoutModule,
+  CovalentLoadingModule,
+  CovalentMediaModule,
+  CovalentMenuModule,
+  CovalentMessageModule,
+  CovalentNotificationsModule,
+  CovalentPagingModule,
+  CovalentSearchModule,
+  CovalentStepsModule,
+} from '@covalent/core';
+import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
@@ -39,9 +60,17 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     // BrowserModule,
     // BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    FlexLayoutModule,
     // material modules
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSidenavModule,
+    MatRadioModule,
+    MatSelectModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatIconModule,
     MatListModule,
     MatDividerModule,
@@ -57,13 +86,27 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatTreeModule,
+    MatCheckboxModule,
     // covalent modules
-    CovalentLoadingModule,
-    CovalentDialogsModule,
-    CovalentMediaModule,
-    CovalentLayoutModule,
-    CovalentSearchModule,
     CovalentCommonModule,
+    CovalentLayoutModule,
+    CovalentMediaModule,
+    CovalentTextEditorModule,
+    CovalentBreadcrumbsModule,
+    CovalentExpansionPanelModule,
+    CovalentStepsModule,
+    CovalentFileModule,
+    CovalentDialogsModule,
+    CovalentLoadingModule,
+    CovalentSearchModule,
+    CovalentPagingModule,
+    CovalentNotificationsModule,
+    CovalentMenuModule,
+    CovalentDataTableModule,
+    CovalentMessageModule,
     // external modules
     NgxChartsModule,
     // routes
@@ -75,9 +118,17 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     // BrowserModule,
     // BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
+    FlexLayoutModule,
     // material modules
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSidenavModule,
+    MatRadioModule,
+    MatSelectModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatIconModule,
     MatListModule,
     MatDividerModule,
@@ -93,13 +144,27 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatTreeModule,
+    MatCheckboxModule,
     // covalent modules
-    CovalentLoadingModule,
-    CovalentDialogsModule,
-    CovalentMediaModule,
-    CovalentLayoutModule,
-    CovalentSearchModule,
     CovalentCommonModule,
+    CovalentLayoutModule,
+    CovalentMediaModule,
+    CovalentTextEditorModule,
+    CovalentBreadcrumbsModule,
+    CovalentExpansionPanelModule,
+    CovalentStepsModule,
+    CovalentFileModule,
+    CovalentDialogsModule,
+    CovalentLoadingModule,
+    CovalentSearchModule,
+    CovalentPagingModule,
+    CovalentNotificationsModule,
+    CovalentMenuModule,
+    CovalentDataTableModule,
+    CovalentMessageModule,
     // external modules
     NgxChartsModule,
     // routes

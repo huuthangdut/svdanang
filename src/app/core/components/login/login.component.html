@@ -1,97 +1,39 @@
-<!-- <div class="sign-in-container">
-  <mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']" class="sign-in-card">
-    <mat-card-title>
-      <mat-icon class="mat-icon-logo" svgIcon="assets:covalent"></mat-icon> Login
+<div flex fxLayout="column" class="login-container" fxLayoutAlign="center center" fxFlexFill>
+  <mat-card class="card-container">
+    <mat-card-title class="login-box-header">
+      <img src="assets/icons/sv-logo.png">
     </mat-card-title>
-    <mat-card-subtitle>sign in via your current corporate account</mat-card-subtitle>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      <form #loginForm="ngForm">
-        <div layout="row">
-          <mat-form-field flex>
-            <input matInput #userElement #userControl="ngModel" placeholder="Username" type="text" maxlength="30" name="username"
-              [(ngModel)]="username" required>
-            <span matPrefix>
-              <mat-icon>person</mat-icon>
-            </span>
-            <mat-hint align="start">
-              <span [hidden]="!userControl.errors?.required || userControl.pristine" class="tc-red-600">Required</span>
-            </mat-hint>
-            <mat-hint align="end">{{userElement.value.length}} / 30</mat-hint>
+    <mat-card-content fxLayout="column" class="login-box-body">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+        <p class="login-title">Đăng nhập quản trị</p>
+        <div fxLayout="row">
+          <mat-icon>email</mat-icon>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Tên đăng nhập" formControlName="username" required type="text">
+            <mat-error *ngFor="let validation of validationMessages.username">
+              <mat-error class="error-message" *ngIf="username.hasError(validation.type) && (username.dirty || username.touched)">{{validation.message}}</mat-error>
+            </mat-error>
           </mat-form-field>
         </div>
-        <div layout="row">
-          <mat-form-field flex>
-            <input matInput #passElement #passControl="ngModel" placeholder="Password" type="password" name="password"
-              [(ngModel)]="password" required>
-            <span matPrefix>
-              <mat-icon>lock</mat-icon>
-            </span>
-            <mat-hint align="start">
-              <span [hidden]="!passControl.errors?.required || passControl.pristine" class="tc-red-600">Required</span>
-            </mat-hint>
-            <mat-hint align="end">Something hard to guess</mat-hint>
+        <div fxLayout="row">
+          <mat-icon>lock</mat-icon>
+          <mat-form-field class="full-width-input">
+            <input matInput placeholder="Mật khẩu" [type]="passwordHide ? 'password' : 'text'" formControlName="password"
+              required>
+            <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' :
+              'visibility'}}</mat-icon>
+            <mat-error *ngFor="let validation of validationMessages.password">
+              <mat-error *ngIf="password.hasError(validation.type) && (password.dirty || password.touched)">{{validation.message}}</mat-error>
+            </mat-error>
           </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <button mat-raised-button class="login-button" [disabled]="!form.valid">
+            <!-- <mat-icon>input</mat-icon>Đăng nhập -->
+            Đăng nhập
+          </button>
         </div>
       </form>
     </mat-card-content>
-    <mat-divider></mat-divider>
-    <mat-card-actions layout="row" fxLayoutAlign="flex-end">
-      <button flex mat-raised-button color="accent" [disabled]="!loginForm.form.valid" (click)="login()">Sign In</button>
-    </mat-card-actions>
   </mat-card>
-
 </div>
-
-
-
-<!-- <div layout="column" layout-fill class="sign-in-container">
-  <div class="mat-content" layout-padding flex>
-    <div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
-      <div flex-gt-xs="50">
-        <mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']">
-          <mat-card-title>
-            <mat-icon class="mat-icon-logo" svgIcon="assets:covalent"></mat-icon> Login
-          </mat-card-title>
-          <mat-card-subtitle>sign in via your current corporate account</mat-card-subtitle>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <form #loginForm="ngForm">
-              <div layout="row">
-                <mat-form-field flex>
-                  <input matInput #userElement #userControl="ngModel" placeholder="Username" type="text" maxlength="30"
-                    name="username" [(ngModel)]="username" required>
-                  <span matPrefix>
-                    <mat-icon>person</mat-icon>
-                  </span>
-                  <mat-hint align="start">
-                    <span [hidden]="!userControl.errors?.required || userControl.pristine" class="tc-red-600">Required</span>
-                  </mat-hint>
-                  <mat-hint align="end">{{userElement.value.length}} / 30</mat-hint>
-                </mat-form-field>
-              </div>
-              <div layout="row">
-                <mat-form-field flex>
-                  <input matInput #passElement #passControl="ngModel" placeholder="Password" type="password" name="password"
-                    [(ngModel)]="password" required>
-                  <span matPrefix>
-                    <mat-icon>lock</mat-icon>
-                  </span>
-                  <mat-hint align="start">
-                    <span [hidden]="!passControl.errors?.required || passControl.pristine" class="tc-red-600">Required</span>
-                  </mat-hint>
-                  <mat-hint align="end">Something hard to guess</mat-hint>
-                </mat-form-field>
-              </div>
-            </form>
-          </mat-card-content>
-          <mat-divider></mat-divider>
-          <mat-card-actions layout="row" fxLayoutAlign="flex-end">
-            <button flex mat-raised-button color="accent" [disabled]="!loginForm.form.valid" (click)="login()">Sign In</button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-</div> -->
--->

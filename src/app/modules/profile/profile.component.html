@@ -1,0 +1,145 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div td-toolbar-content layout="row" layout-align="start center" flex>
+      <div>Thiết lập thông tin cá nhân</div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div flex fxLayout="row" fxLayout.lt-md="column">
+  <div fxFlex="50">
+    <mat-card class="card-container">
+      <mat-card-title>
+        <p>Thông tin cá nhân</p>
+      </mat-card-title>
+      <mat-card-content>
+        <form flex fxLayout="column" fxLayoutGap="10px">
+          <div flex fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
+            <div fxFlex="30">
+              <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" height="128"
+                width="128" />
+            </div>
+            <div fxFlex="70">
+              <div fxLayout="column" fxLayoutGap="10px">
+                <div>
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Họ và tên đệm" required>
+                  </mat-form-field>
+                </div>
+                <div>
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Tên" required>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>account_circle</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Tên đăng nhập" disabled>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>group</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Ban" disabled>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>email</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Email">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>phone</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Điện thoại">
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayout.md="column">
+            <div fxFlex="50" fxLayout="row">
+              <mat-icon>date_range</mat-icon>
+              <mat-form-field class="half-width">
+                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex="50" fxLayout="row" fxLayoutAlign="center center">
+              <mat-icon></mat-icon>
+              <label fxHide.lt-lg class="mat-radio-label">Giới tính</label>
+              <mat-radio-group>
+                <mat-radio-button value="1">Nam</mat-radio-button>
+                <mat-radio-button value="2">Nữ</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>place</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Địa chỉ">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>pages</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Link facebook">
+            </mat-form-field>
+          </div>
+
+
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="accent">
+          Lưu
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+  <div fxFlex="50">
+    <mat-card class="card-container">
+      <mat-card-title>
+        <p>Đổi mật khẩu</p>
+      </mat-card-title>
+      <mat-card-content>
+        <form flex fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row">
+            <mat-icon>lock</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Mật khẩu cũ" type="password">
+            </mat-form-field>
+          </div>
+          <div fxLayout="row">
+            <mat-icon>replay</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Mật khẩu mới" type="password">
+            </mat-form-field>
+          </div>
+          <div fxLayout="row">
+            <mat-icon>replay</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Nhập lại mật khẩu mới" type="password">
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button mat-raised-button color="accent">
+          Lưu
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>

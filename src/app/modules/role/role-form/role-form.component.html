@@ -1,4 +1,86 @@
-<mat-card-content class="push-bottom-none">
+<h2 mat-dialog-title>Tạo mới vai trò</h2>
+<mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Vai trò">
+      <div class="mat-container">
+        <mat-form-field>
+          <input matInput placeholder="Tên vai trò" [formControl]="name" required>
+          <mat-error *ngIf="name.invalid">{{getErrorMessage}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Mô tả" [formControl]="description" required>
+          <mat-error *ngIf="description.invalid">{{getErrorMessage}}</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-tab>
+    <mat-tab label="Phân quyền">
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+          <button mat-icon-button disabled></button>
+          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node)">{{node.displayName}}</mat-checkbox>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
+            (change)="todoItemSelectionToggle(node)">{{node.displayName}} </mat-checkbox>
+        </mat-tree-node>
+      </mat-tree>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-raised-button>Trở về</button>
+  <button mat-button [mat-dialog-close]="true" mat-raised-button color="accent" (click)="onSubmit()">Lưu</button>
+</mat-dialog-actions>
+
+<!-- <mat-tab-group>
+  <mat-tab label="Vai trò">
+    <ng-template matTabContent>
+      <div class="mat-container">
+        <mat-form-field>
+          <input type="text" matInput placeholder="Tên vai trò">
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Mô tả">
+        </mat-form-field>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Phân quyền">
+    <ng-template matTabContent>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+          <button mat-icon-button disabled></button>
+          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node)">{{node.displayName}}</mat-checkbox>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
+            (change)="todoItemSelectionToggle(node)">{{node.displayName}} </mat-checkbox>
+        </mat-tree-node>
+      </mat-tree>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group> -->
+
+
+<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->
+<!-- <mat-card-content class="push-bottom-none">
   <form #userForm="ngForm">
     <div layout="row">
       <mat-form-field flex>
@@ -35,4 +117,4 @@
 <mat-card-actions>
   <button mat-button [disabled]="!userForm.form.valid" color="primary" (click)="save()">SAVE</button>
   <button mat-button (click)="onClose()">CANCEL</button>
-</mat-card-actions>
+</mat-card-actions> -->

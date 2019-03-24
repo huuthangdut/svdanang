@@ -1,0 +1,83 @@
+<h2 mat-dialog-title>Tạo mới người dùng</h2>
+<mat-dialog-content>
+  <div class="mat-container">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" flex fxLayout="column" fxLayoutGap="10px">
+      <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
+        <div fxFlex="25">
+          <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" height="128"
+            width="128" />
+        </div>
+        <div fxFlex="75">
+          <div fxLayout="column" fxLayoutGap="10px">
+            <div>
+              <mat-form-field class="full-width">
+                <input type="hidden" formControlName="id">
+                <input matInput formControlName="lastName" placeholder="Họ và tên đệm" type="text" required>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="full-width">
+                <input matInput formControlName="firstName" placeholder="Tên" type="text" required>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <mat-icon>email</mat-icon>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="email" placeholder="Email" type="email" required>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-icon>account_circle</mat-icon>
+        <mat-form-field class="full-width">
+          <input matInput formControlName="username" placeholder="Tên đăng nhập" type="text" required>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.sm="column" fxLayoutGap="30px">
+        <mat-icon>lock</mat-icon>
+        <mat-form-field fxFlex="50">
+          <input matInput formControlName="password" placeholder="Mật khẩu" [type]="hidePassword ? 'password' : 'text'"
+            required>
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field fxFlex="50">
+          <input matInput placeholder="Nhập lại mật khẩu" [type]="hidePassword ? 'password' : 'text'" required>
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon>group</mat-icon>
+        <mat-form-field class="half-width">
+          <mat-label>Ban</mat-label>
+          <mat-select required>
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let department of departments" [value]="department">
+              {{department.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon>pan_tool</mat-icon>
+        <mat-form-field class="half-width">
+          <mat-label>Vai trò</mat-label>
+          <mat-select multiple required>
+            <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-icon></mat-icon>
+        <mat-slide-toggle class="half-width">Kích hoạt tài khoản</mat-slide-toggle>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-raised-button>Trở về</button>
+  <button mat-button [mat-dialog-close]="true" mat-raised-button color="accent">Lưu</button>
+</mat-dialog-actions>
