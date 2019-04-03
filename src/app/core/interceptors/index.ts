@@ -1,2 +1,2 @@
-export * from './http-token.interceptor';
-export * from './error-handler.interceptor';
+export * from './jwt.interceptor';
+export * from './error.interceptor';

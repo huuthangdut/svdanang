@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { UserService } from './../../../core/services/user.service';
+
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -8,11 +11,37 @@ import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 export class UserFormComponent implements OnInit {
   form: FormGroup;
   departments;
-  roles: string[] = ['Admin', 'Member'];
+  roles;
   hidePassword = true;
-  constructor() { }
+
+  validationMessages = {
+    'firstName': [
+      { type: 'required', message: 'Vui lòng nhập tên' }
+    ],
+    'lastName': [
+      { type: 'required', message: 'Vui lòng nhập họ và tên đệm' }
+    ],
+    'userName': [
+      { type: 'required', message: 'Vui lòng nhập tên đăng nhập' }
+    ],
+    'email': [
+      { type: 'required', message: 'Vui lòng nhập địa chỉ email' }
+    ],
+    'password': [
+      { type: 'required', message: 'Vui lòng nhập mật khẩu' }
+    ],
+    'departmentId': [
+      { type: 'required', message: 'Vui lòng chọn ban' }
+    ]
+  }
+
+  constructor(private fb: FormBuilder, private userService: UserService) {
+    this.createFormGroup();
+  }
 
   ngOnInit() {
+    this.createFormGroup();
+
     this.departments = [
       { id: 1, name: 'Ban 1' },
       { id: 2, name: 'Ban 2' },
@@ -20,23 +49,59 @@ export class UserFormComponent implements OnInit {
       { id: 4, name: 'Ban 4' },
     ]
 
-    this.form = new FormGroup({
-      id: new FormControl(null),
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      gender: new FormControl('true'),
-      departmentId: new FormControl('0'),
-      isActive: new FormControl('false'),
+    this.roles = [
+      { id: 1, name: 'Admin' },
+      { id: 2, name: 'Admod' },
+    ]
+  }
+
+  createFormGroup() {
+    this.form = this.fb.group({
+      id: null,
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      userName: [null, Validators.required],
+      password: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      departmentId: [null, [Validators.required]],
+      isActive: false,
+      roles: null
     })
   }
 
+  get lastName() {
+    return this.form.get('lastName');
+  }
+
+  get firstName() {
+    return this.form.get('firstName');
+  }
+
+  get userName() {
+    return this.form.get('userName');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
+
+  get departmentId() {
+    return this.form.get('departmentId');
+  }
+
+
+
   onSubmit() {
     if (this.form.valid) {
-
+      const user = Object.assign({}, this.form.value);
+      console.log(user);
+      this.userService.createUser(user).subscribe();
     }
+
   }
 
 }

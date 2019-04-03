@@ -1,0 +1,19 @@
+.td-menu-button {
+  margin-left: -2px;
+}
+
+.sidenav-container {
+    height: 100%;
+}
+
+.sidenav {
+    // width: 250px;
+    background-color: white;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
+}
+
+.logo-sidebar > img {
+  height: 64px;
+  width: 100%;
+  object-fit: contain;
+}

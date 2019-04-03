@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-form.component.scss']
 })
 export class EventFormComponent implements OnInit {
-
+  topics = [];
   constructor() { }
 
   ngOnInit() {

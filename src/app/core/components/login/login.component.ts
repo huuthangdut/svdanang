@@ -1,6 +1,10 @@
-import { Validators, FormBuilder, FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+
+import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -10,35 +14,39 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   passwordHide = true;
   form: FormGroup;
+  loading = false;
+  returnUrl: string;
+  error = '';
+  formSubmitted = false;
 
   validationMessages = {
     'username': [
-      { type: 'required', message: 'Vui lòng nhập tên đăng nhập' },
-      { type: 'minLength', message: 'Tên đăng nhập tối thiểu 6 ký tự' }
+      { type: 'required', message: 'Vui lòng nhập tên đăng nhập' }
     ],
     'password': [
-      { type: 'required', message: 'Vui lòng nhập mật khẩu' },
-      { type: 'minLength', message: 'Mật khẩu tối thiểu 6 ký tự' }
+      { type: 'required', message: 'Vui lòng nhập mật khẩu' }
     ]
   }
 
-  constructor(private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private router: Router) {
+  }
 
   ngOnInit() {
-    this.form = new FormGroup({
-      username: new FormControl('',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(3)
-        ]
-        )
-      ),
-      password: new FormControl('',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(6)
-        ]))
+    this.form = this.formBuilder.group({
+      username: ['', Validators.compose([Validators.required])],
+      password: ['', Validators.compose([Validators.required])]
     });
+
+    // reset login status
+    this.authService.logout();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   get username() {
@@ -49,10 +57,27 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  onSubmit(form: NgForm) {
-    if (this.form.valid) {
-      console.log()
-      this.router.navigate(['/']);
-    }
+  get f() { return this.form.controls; }
+
+  onSubmit() {
+    if (this.form.invalid)
+      return;
+
+    this.formSubmitted = true;
+
+    this.loading = true;
+    this.authService.login(this.f.username.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(data => {
+        this.router.navigate([this.returnUrl]);
+      }, error => {
+        this.error = error;
+        this.loading = false;
+        this.snackBar.open(error, '', {
+          duration: 2000,
+          panelClass: ['error-snackbar-message']
+        });
+      })
+
   }
 }

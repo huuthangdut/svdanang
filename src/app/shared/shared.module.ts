@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from './directives/has-permission.directive';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -29,6 +30,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
+  MatExpansionModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import {
@@ -50,9 +52,16 @@ import {
 } from '@covalent/core';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HasPermissionDirective,
+    SpinnerOverlayComponent,
+    SpinnerComponent,
+
+  ],
   imports: [
     // angular modules
     CommonModule,
@@ -90,6 +99,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatTabsModule,
     MatTreeModule,
     MatCheckboxModule,
+    MatExpansionModule,
     // covalent modules
     CovalentCommonModule,
     CovalentLayoutModule,
@@ -112,6 +122,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     // routes
   ],
   exports: [
+    //component
+    SpinnerOverlayComponent,
+    SpinnerComponent,
     // angular modules
     CommonModule,
     RouterModule,
@@ -148,6 +161,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatTabsModule,
     MatTreeModule,
     MatCheckboxModule,
+    MatExpansionModule,
     // covalent modules
     CovalentCommonModule,
     CovalentLayoutModule,
@@ -167,7 +181,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     CovalentMessageModule,
     // external modules
     NgxChartsModule,
-    // routes
+
+
+    HasPermissionDirective
   ]
 })
 export class SharedModule { }

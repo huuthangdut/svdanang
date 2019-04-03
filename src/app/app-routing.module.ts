@@ -1,3 +1,4 @@
+import { AuthGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -10,6 +11,7 @@ const routes: Routes = [{
 }, {
   path: '',
   component: MainComponent,
+  canActivate: [AuthGuard],
   children: [
     {
       path: '',
@@ -34,6 +36,14 @@ const routes: Routes = [{
     {
       path: 'events',
       loadChildren: './modules/event/event.module#EventModule'
+    },
+    {
+      path: 'meetings',
+      loadChildren: './modules/meeting/meeting.module#MeetingModule'
+    },
+    {
+      path: 'projects',
+      loadChildren: './modules/project/project.module#ProjectModule'
     },
   ],
 },

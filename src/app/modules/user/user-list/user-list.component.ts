@@ -3,10 +3,10 @@ import { DataSource } from '@angular/cdk/table';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, finalize, first, tap } from 'rxjs/operators';
 
 import { User } from './../../../core/models';
-import { UserService } from './../../../core/services/user.service';
+import { UserService } from './../../../core/services';
 import { UserFormComponent } from './../user-form/user-form.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { UserFormComponent } from './../user-form/user-form.component';
 export class UserListComponent implements OnInit, AfterViewInit {
 
   dataSource: UsersDataSource;
-  displayedColumns = ['username', 'lastName', 'firstName', 'email', 'department', 'isActive', 'actions']
+  displayedColumns = ['index', 'username', 'lastName', 'firstName', 'email', 'department', 'isActive', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -31,7 +31,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // server-side search
     fromEvent(this.input.nativeElement, 'keyup')
       .pipe(
         debounceTime(150),
@@ -55,13 +54,14 @@ export class UserListComponent implements OnInit, AfterViewInit {
   loadUsersPage() {
     this.dataSource.loadUsers(
       this.input.nativeElement.value,
+      this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize);
   }
 
   onCreate() {
-    const dialogConfig = new MatDialogConfig()
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "40%";
@@ -77,6 +77,8 @@ class UsersDataSource implements DataSource<User> {
   private usersSubject = new BehaviorSubject<User[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
+  public loading$ = this.loadingSubject.asObservable();
+
   constructor(private userService: UserService) {
 
   }
@@ -90,12 +92,13 @@ class UsersDataSource implements DataSource<User> {
     this.loadingSubject.complete();
   }
 
-  loadUsers(filter = '',
+  loadUsers(filter = '', sortBy = '',
     sortDirection = 'asc', pageIndex = 0, pageSize = 3) {
     this.loadingSubject.next(true);
 
-    this.userService.getUsers(filter, sortDirection, pageIndex, pageSize)
+    this.userService.getUsers(filter, sortBy, sortDirection, pageIndex, pageSize)
       .pipe(
+        first(),
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )

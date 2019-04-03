@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Tạo mới người dùng</h2>
 <mat-dialog-content>
   <div class="mat-container">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" flex fxLayout="column" fxLayoutGap="10px">
+    <form [formGroup]="form" flex fxLayout="column" fxLayoutGap="10px">
       <div flex fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
         <div fxFlex="25">
           <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" height="128"
@@ -10,74 +10,115 @@
         <div fxFlex="75">
           <div fxLayout="column" fxLayoutGap="10px">
             <div>
-              <mat-form-field class="full-width">
+              <mat-form-field class="field-full-width">
                 <input type="hidden" formControlName="id">
                 <input matInput formControlName="lastName" placeholder="Họ và tên đệm" type="text" required>
+                <mat-error *ngFor="let validation of validationMessages.lastName">
+                  <mat-error class="error-message"
+                    *ngIf="lastName.hasError(validation.type) && (lastName.dirty || lastName.touched)">
+                    {{validation.message}}</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
             <div>
-              <mat-form-field class="full-width">
+              <mat-form-field class="field-full-width">
                 <input matInput formControlName="firstName" placeholder="Tên" type="text" required>
+                <mat-error *ngFor="let validation of validationMessages.firstName">
+                  <mat-error class="error-message"
+                    *ngIf="firstName.hasError(validation.type) && (firstName.dirty || firstName.touched)">
+                    {{validation.message}}</mat-error>
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
         </div>
       </div>
       <div fxLayout="row">
-        <mat-icon>email</mat-icon>
-        <mat-form-field class="full-width">
+        <mat-icon class="custom-icon">email</mat-icon>
+        <mat-form-field class="field-full-width">
           <input matInput formControlName="email" placeholder="Email" type="email" required>
+          <mat-error *ngFor="let validation of validationMessages.email">
+            <mat-error class="error-message" *ngIf="email.hasError(validation.type) && (email.dirty || email.touched)">
+              {{validation.message}}</mat-error>
+          </mat-error>
         </mat-form-field>
       </div>
 
       <div fxLayout="row">
-        <mat-icon>account_circle</mat-icon>
-        <mat-form-field class="full-width">
-          <input matInput formControlName="username" placeholder="Tên đăng nhập" type="text" required>
+        <mat-icon class="custom-icon">account_circle</mat-icon>
+        <mat-form-field class="field-full-width">
+          <input matInput formControlName="userName" placeholder="Tên đăng nhập" type="text" required>
+          <mat-error *ngFor="let validation of validationMessages.userName">
+            <mat-error class="error-message"
+              *ngIf="userName.hasError(validation.type) && (userName.dirty || userName.touched)">
+              {{validation.message}}</mat-error>
+          </mat-error>
         </mat-form-field>
       </div>
-      <div fxLayout="row" fxLayout.sm="column" fxLayoutGap="30px">
-        <mat-icon>lock</mat-icon>
-        <mat-form-field fxFlex="50">
-          <input matInput formControlName="password" placeholder="Mật khẩu" [type]="hidePassword ? 'password' : 'text'"
-            required>
-          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </mat-form-field>
-        <mat-form-field fxFlex="50">
-          <input matInput placeholder="Nhập lại mật khẩu" [type]="hidePassword ? 'password' : 'text'" required>
-          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
-        <mat-icon>group</mat-icon>
-        <mat-form-field class="half-width">
-          <mat-label>Ban</mat-label>
-          <mat-select required>
-            <mat-option>--</mat-option>
-            <mat-option *ngFor="let department of departments" [value]="department">
-              {{department.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
-        <mat-icon>pan_tool</mat-icon>
-        <mat-form-field class="half-width">
-          <mat-label>Vai trò</mat-label>
-          <mat-select multiple required>
-            <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon">lock</mat-icon>
+          <mat-form-field class="field-full-width">
+            <input matInput formControlName="password" placeholder="Mật khẩu"
+              [type]="hidePassword ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+              {{hidePassword ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+            <mat-error *ngFor="let validation of validationMessages.password">
+              <mat-error class="error-message"
+                *ngIf="password.hasError(validation.type) && (password.dirty || password.touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
 
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon"></mat-icon>
+          <mat-form-field class="field-full-width">
+            <input matInput placeholder="Nhập lại mật khẩu" [type]="hidePassword ? 'password' : 'text'" required>
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+              {{hidePassword ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon">group</mat-icon>
+          <mat-form-field class="field-full-width">
+            <mat-label>Ban</mat-label>
+            <mat-select required formControlName="departmentId">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let department of departments" [value]="department.id">
+                {{department.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngFor="let validation of validationMessages.departmentId">
+              <mat-error class="error-message"
+                *ngIf="departmentId.hasError(validation.type) && (departmentId.dirty || departmentId.touched)">
+                {{validation.message}}</mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon">pan_tool</mat-icon>
+          <mat-form-field class="field-full-width">
+            <mat-label>Vai trò</mat-label>
+            <mat-select multiple formControlName="roles" required>
+              <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
       <div fxLayout="row">
-        <mat-icon></mat-icon>
-        <mat-slide-toggle class="half-width">Kích hoạt tài khoản</mat-slide-toggle>
+        <mat-icon class="custom-icon"></mat-icon>
+        <mat-slide-toggle formControlName="isActive">Kích hoạt tài khoản</mat-slide-toggle>
       </div>
     </form>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close mat-raised-button>Trở về</button>
-  <button mat-button [mat-dialog-close]="true" mat-raised-button color="accent">Lưu</button>
+  <button mat-button mat-dialog-close>Trở về</button>
+  <button mat-button mat-raised-button [mat-dialog-close]="true" color="accent" [disabled]="!form.valid"
+    (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>

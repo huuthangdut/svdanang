@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material/icon';
+import { Component } from "@angular/core";
 
 @Component({
   selector: 'app-root',
@@ -9,4 +7,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 })
 export class AppComponent {
 
+  constructor() {
+
+  }
 }

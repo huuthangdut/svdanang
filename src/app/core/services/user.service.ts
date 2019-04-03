@@ -1,4 +1,4 @@
-import { ApiService } from './../http/api.service';
+import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -11,12 +11,21 @@ export class UserService {
 
   constructor(private apiService: ApiService) { }
 
-  getUsers(filter = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<User[]> {
-    return this.apiService.get('/roles',
+  getUsers(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<User[]> {
+    return this.apiService.get('/users',
       new HttpParams()
         .set('filter', filter)
+        .set('sortBy', sortBy)
         .set('sortOrder', sortOrder)
-        .set('pageNumber', pageNumber.toString())
+        .set('page', pageNumber.toString())
         .set('pageSize', pageSize.toString()));
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.apiService.get('/users/me');
+  }
+
+  createUser(user) {
+    return this.apiService.post('/users', user);
   }
 }

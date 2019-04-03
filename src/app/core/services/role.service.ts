@@ -1,4 +1,4 @@
-import { ApiService } from './../http/api.service';
+import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Role } from '../models/role.model';
 import { Observable } from 'rxjs';
@@ -16,26 +16,8 @@ export class RoleService {
       new HttpParams()
         .set('filter', filter)
         .set('sortOrder', sortOrder)
-        .set('pageNumber', pageNumber.toString())
-        .set('pageSize', pageSize.toString()));
-    // return [
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" },
-    //   { id: 1, name: 'Admin', description: "Administrator" }
-    // ];
+        .set('page', pageNumber.toString())
+        .set('size', pageSize.toString()));
   }
 }
 

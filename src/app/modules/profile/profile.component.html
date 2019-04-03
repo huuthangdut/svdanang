@@ -16,8 +16,8 @@
         <form flex fxLayout="column" fxLayoutGap="10px">
           <div flex fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
             <div fxFlex="30">
-              <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" height="128"
-                width="128" />
+              <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png"
+                height="128" width="128" />
             </div>
             <div fxFlex="70">
               <div fxLayout="column" fxLayoutGap="10px">
@@ -63,7 +63,7 @@
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.md="column">
-            <div fxFlex="50" fxLayout="row">
+            <div fxFlex="50">
               <mat-icon>date_range</mat-icon>
               <mat-form-field class="half-width">
                 <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh">
@@ -71,7 +71,7 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
-            <div fxFlex="50" fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex="50" fxLayoutAlign="center center">
               <mat-icon></mat-icon>
               <label fxHide.lt-lg class="mat-radio-label">Giới tính</label>
               <mat-radio-group>

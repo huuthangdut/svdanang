@@ -2,7 +2,10 @@ export class User {
   id: number;
   firstName: string;
   lastName: string;
+  userName: string;
   email: string;
-  username: string;
-  avatar: string;
+  password?: string;
+  accessToken: string;
+  avatar?: string;
+  grantedActions: string[];
 }

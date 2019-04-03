@@ -1,3 +1,4 @@
+import { HasPermissionDirective } from '../../shared/directives/has-permission.directive';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -7,7 +8,11 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
-  declarations: [UserListComponent, UserFormComponent],
+  declarations: [
+    UserListComponent,
+    UserFormComponent
+
+  ],
   imports: [
     CommonModule,
     UserRoutingModule,

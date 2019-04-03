@@ -1,3 +1,75 @@
-<p>
-  event-schedule works!
-</p>
+<form flex fxLayout="column" fxLayoutGap="15px">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+    <div fxFlex="30" fxLayout="row">
+      <mat-icon>date_range</mat-icon>
+      <mat-form-field class="field-full-width">
+        <input matInput [matDatepicker]="picker" placeholder="Thời gian bắt đầu">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="70" fxLayout="row">
+      <mat-icon>title</mat-icon>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Nội dung" type="text">
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+    <div fxFlex="30" fxLayout="row">
+      <mat-icon>date_range</mat-icon>
+      <mat-form-field class="field-full-width">
+        <input matInput [matDatepicker]="myDatepicker" placeholder="Thời gian kết thúc">
+        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #myDatepicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="70" fxLayout="row">
+      <mat-icon>title</mat-icon>
+      <mat-form-field class="field-full-width">
+        <input matInput placeholder="Địa điểm" type="text">
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<br><br>
+<br>
+
+<table>
+  <thead>
+    <td width="15%">Thời gian bắt đầu</td>
+    <td width="15%">Thời gian kết thúc</td>
+    <td width="45%">Kế hoạch</td>
+    <td width="25%">Địa điểm</td>
+  </thead>
+  <tbody>
+    <tr *ngFor="let schedule of schedules">
+      <td>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" [value]="schedule.startTime">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [matDatepicker]="myDatepicker" [value]="schedule.endTime">
+          <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #myDatepicker></mat-datepicker>
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="field-full-width">
+          <input matInput type="text" [value]="schedule.schedule">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field class="field-full-width">
+          <input matInput type="text" [value]="schedule.location">
+        </mat-form-field>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

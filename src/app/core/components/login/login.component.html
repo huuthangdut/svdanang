@@ -4,36 +4,41 @@
       <img src="assets/icons/sv-logo.png">
     </mat-card-title>
     <mat-card-content fxLayout="column" class="login-box-body">
-      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-        <p class="login-title">Đăng nhập quản trị</p>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <p class="login-title">Đăng nhập hệ thống</p>
         <div fxLayout="row">
           <mat-icon>email</mat-icon>
           <mat-form-field class="full-width-input">
             <input matInput placeholder="Tên đăng nhập" formControlName="username" required type="text">
             <mat-error *ngFor="let validation of validationMessages.username">
-              <mat-error class="error-message" *ngIf="username.hasError(validation.type) && (username.dirty || username.touched)">{{validation.message}}</mat-error>
+              <mat-error class="error-message"
+                *ngIf="username.hasError(validation.type) && (username.dirty || username.touched)">
+                {{validation.message}}</mat-error>
             </mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row">
           <mat-icon>lock</mat-icon>
           <mat-form-field class="full-width-input">
-            <input matInput placeholder="Mật khẩu" [type]="passwordHide ? 'password' : 'text'" formControlName="password"
-              required>
+            <input matInput placeholder="Mật khẩu" [type]="passwordHide ? 'password' : 'text'"
+              formControlName="password" required>
             <mat-icon matSuffix (click)="passwordHide = !passwordHide">{{passwordHide ? 'visibility_off' :
               'visibility'}}</mat-icon>
             <mat-error *ngFor="let validation of validationMessages.password">
-              <mat-error *ngIf="password.hasError(validation.type) && (password.dirty || password.touched)">{{validation.message}}</mat-error>
+              <mat-error *ngIf="password.hasError(validation.type) && (password.dirty || password.touched)">
+                {{validation.message}}</mat-error>
             </mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row">
           <button mat-raised-button class="login-button" [disabled]="!form.valid">
-            <!-- <mat-icon>input</mat-icon>Đăng nhập -->
-            Đăng nhập
+            <mat-icon>input</mat-icon>
           </button>
         </div>
       </form>
     </mat-card-content>
+    <div *ngIf="loading" class="relative">
+      <app-spinner-overlay></app-spinner-overlay>
+    </div>
   </mat-card>
 </div>

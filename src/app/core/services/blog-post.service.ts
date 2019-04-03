@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '../http/api.service';
+import { ApiService } from './api.service';
 import { BlogPost } from './../models/blog-post.model';
 
 @Injectable({

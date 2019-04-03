@@ -1,3 +1,5 @@
+import { AuthGuard } from './core/guards/auth.guard';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,12 +9,11 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainComponent } from './main.component';
 import { SharedModule } from './shared/shared.module';
-import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
+    MainComponent
   ],
   imports: [
     CoreModule,
@@ -21,7 +22,11 @@ import { PathLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserAnimationsModule,
     SharedModule,
   ],
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    AuthGuard
+
+  ],
   entryComponents: [],
   bootstrap: [AppComponent],
 })
