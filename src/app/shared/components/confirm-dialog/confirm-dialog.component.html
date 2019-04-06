@@ -1,0 +1,14 @@
+<div class="dialog-container">
+  <p mat-dialog-title class="dialog-title">
+    {{title}}
+  </p>
+
+  <div mat-dialog-content class="dialog-content">
+    <p>{{message}}</p>
+  </div>
+
+  <div mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button [mat-dialog-close]="false">{{ disagreeText }}</button>
+    <button mat-button color="accent" [mat-dialog-close]="true">{{ agreeText }}</button>
+  </div>
+</div>

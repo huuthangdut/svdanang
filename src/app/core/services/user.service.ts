@@ -1,8 +1,9 @@
-import { ApiService } from './api.service';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
-import { User } from '../models';
+
+import { ApiService } from './api.service';
+import { FormUserModel } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
 
   constructor(private apiService: ApiService) { }
 
-  getUsers(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<User[]> {
+  getUsers(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any[]> {
     return this.apiService.get('/users',
       new HttpParams()
         .set('filter', filter)
@@ -21,11 +22,39 @@ export class UserService {
         .set('pageSize', pageSize.toString()));
   }
 
-  getCurrentUser(): Observable<User> {
+  getCurrentUser(): Observable<any> {
     return this.apiService.get('/users/me');
   }
 
-  createUser(user) {
+  createUser(user: FormUserModel) {
     return this.apiService.post('/users', user);
   }
+
+  getUser(id: number) {
+    return this.apiService.get(`/users/${id}`);
+  }
+
+  updateUser(id: number, user: FormUserModel) {
+    return this.apiService.put(`/users/${id}`, user);
+  }
+
+  deleteUser(id: number) {
+    return this.apiService.delete(`/users/${id}`);
+  }
+
+  checkUsernameAvailability(username: string) {
+    return this.apiService.get(`/users/checkUsernameAvailability`,
+      new HttpParams().set('userName', username)
+    )
+  }
+
+  checkEmailAvailability(email: string) {
+    return this.apiService.get(`/users/checkEmailAvailability`,
+      new HttpParams().set('email', email)
+    )
+  }
+
+
+
+
 }

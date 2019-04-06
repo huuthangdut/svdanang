@@ -6,7 +6,7 @@ import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
 
 import { RoleService } from '../../../core/services';
-import { Role } from './../../../core/models/role.model';
+import { RoleModel } from './../../../core/models/role.model';
 import { RoleFormComponent } from './../role-form/role-form.component';
 
 @Component({
@@ -83,15 +83,15 @@ export class RoleListComponent implements OnInit, AfterViewInit {
 
 }
 
-class RolesDataSource implements DataSource<Role> {
-  private rolesSubject = new BehaviorSubject<Role[]>([]);
+class RolesDataSource implements DataSource<RoleModel> {
+  private rolesSubject = new BehaviorSubject<RoleModel[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private roleService: RoleService) {
 
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<Role[]> {
+  connect(collectionViewer: CollectionViewer): Observable<RoleModel[]> {
     return this.rolesSubject.asObservable();
   }
 

@@ -1,4 +1,3 @@
-import { Crypto } from './../helpers';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -6,7 +5,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../models';
+import { AuthUser } from '../models';
+import { Crypto } from './../helpers';
 
 const BASE_URL = environment.apiURL;
 
@@ -14,21 +14,21 @@ const BASE_URL = environment.apiURL;
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<AuthUser>;
+  public currentUser: Observable<AuthUser>;
 
   constructor(private httpClient: HttpClient, private crypto: Crypto) {
-    this.currentUserSubject = new BehaviorSubject<User>(this.getAuthToken());
+    this.currentUserSubject = new BehaviorSubject<AuthUser>(this.getAuthToken());
     this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
 
-  public get currentUserValue(): User {
+  public get currentUserValue(): AuthUser {
     return this.currentUserSubject.value;
   }
 
   public login(username: string, password: string): Observable<any> {
     return this.httpClient.post<any>(`${BASE_URL}/auth/signin`,
-      { usernameOrEmail: username, password: password })
+      { userNameOrEmail: username, password: password })
       .pipe(
         map(response => {
           if (response.success) {
@@ -69,7 +69,7 @@ export class AuthService {
     localStorage.removeItem('auth_token');
   }
 
-  private getAuthToken(): User {
+  private getAuthToken(): AuthUser {
     const authToken = localStorage.getItem('auth_token');
     if (!authToken)
       return null;

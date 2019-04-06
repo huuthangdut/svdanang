@@ -1,13 +1,13 @@
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { User } from '../../core/models/user.model';
+import { AuthUser } from '../../core/models';
 import { AuthService } from '../../core/services/auth.service';
 
 @Directive({
   selector: '[hasPermission]'
 })
 export class HasPermissionDirective {
-  private currentUser: User;
+  private currentUser: AuthUser;
   private permissions = [];
 
   constructor(

@@ -1,4 +1,3 @@
-import { HasPermissionDirective } from './directives/has-permission.directive';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -11,6 +10,7 @@ import {
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
+  MatExpansionModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule,
@@ -30,7 +30,6 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
-  MatExpansionModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import {
@@ -52,14 +51,19 @@ import {
 } from '@covalent/core';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
+
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { HasPermissionDirective } from './directives/has-permission.directive';
 
 @NgModule({
   declarations: [
     HasPermissionDirective,
     SpinnerOverlayComponent,
     SpinnerComponent,
+    ConfirmDialogComponent,
 
   ],
   imports: [
@@ -68,6 +72,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     RouterModule,
     // BrowserModule,
     // BrowserAnimationsModule,
+
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -119,7 +124,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     CovalentMessageModule,
     // external modules
     NgxChartsModule,
-    // routes
+
+    MatProgressButtonsModule
+
   ],
   exports: [
     //component
@@ -182,8 +189,13 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     // external modules
     NgxChartsModule,
 
+    MatProgressButtonsModule,
 
-    HasPermissionDirective
+
+    HasPermissionDirective,
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ]
 })
 export class SharedModule { }

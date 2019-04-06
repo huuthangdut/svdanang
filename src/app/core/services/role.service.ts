@@ -1,8 +1,7 @@
-import { ApiService } from './api.service';
-import { Injectable } from '@angular/core';
-import { Role } from '../models/role.model';
-import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,7 @@ export class RoleService {
 
   constructor(private apiService: ApiService) { }
 
-  getRoles(filter = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<Role[]> {
+  getRoles(filter = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<any> {
     return this.apiService.get('/roles',
       new HttpParams()
         .set('filter', filter)

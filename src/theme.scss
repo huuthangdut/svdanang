@@ -121,6 +121,10 @@ background-color: mat-color($primary, 50) !important;
     margin: 23px 20px 0 0 ;
 }
 
+.mat-drawer.mat-drawer-side {
+    z-index: 1 !important;;
+}
+
 
 // .arrow {
 //       width:120px;

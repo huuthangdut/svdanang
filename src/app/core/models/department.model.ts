@@ -1,4 +1,4 @@
-export class RoleModel {
+export class DepartmentModel {
   id: number;
   name: string;
 }
