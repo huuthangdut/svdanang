@@ -7,6 +7,8 @@ export class PasswordValidators {
     const passwordControl = group.get('password');
     const confirmPasswordControl = group.get('confirmPassword');
 
+    console.log(passwordControl.value + " - confirm: " + confirmPasswordControl.value);
+
     if ((passwordControl.value === confirmPasswordControl.value)) {
       return null;
     }

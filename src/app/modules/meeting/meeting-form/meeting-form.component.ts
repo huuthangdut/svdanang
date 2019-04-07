@@ -24,10 +24,4 @@ export class MeetingFormComponent implements OnInit {
     console.log(form);
   }
 
-  autoGrowTextZone(e) {
-    e.target.style.height = "0px";
-    e.target.style.height = (e.target.scrollHeight + 25) + "px";
-
-  }
-
 }

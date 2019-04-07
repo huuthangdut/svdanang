@@ -9,3 +9,5 @@ export * from './permission.model';
 export * from './nav-item.model';
 
 export * from './blog-post.model';
+
+export * from './user-profile.model';

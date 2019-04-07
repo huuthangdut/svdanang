@@ -13,7 +13,7 @@
         <p>Thông tin cá nhân</p>
       </mat-card-title>
       <mat-card-content>
-        <form flex fxLayout="column" fxLayoutGap="10px">
+        <form [formGroup]="profileForm" flex fxLayout="column" fxLayoutGap="10px">
           <div flex fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="10px" fxLayoutGap.lt-md="0px">
             <div fxFlex="30">
               <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png"
@@ -23,12 +23,20 @@
               <div fxLayout="column" fxLayoutGap="10px">
                 <div>
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Họ và tên đệm" required>
+                    <input (blur)="onProfileFormValueChanged()" matInput placeholder="Họ và tên đệm"
+                      formControlName="lastName" required>
+                    <mat-error *ngIf="profileFormErrors.lastName">
+                      {{ profileFormErrors.lastName }}
+                    </mat-error>
                   </mat-form-field>
                 </div>
                 <div>
                   <mat-form-field class="full-width">
-                    <input matInput placeholder="Tên" required>
+                    <input (blur)="onProfileFormValueChanged()" matInput placeholder="Tên" formControlName="firstName"
+                      required>
+                    <mat-error *ngIf="profileFormErrors.firstName">
+                      {{ profileFormErrors.firstName }}
+                    </mat-error>
                   </mat-form-field>
                 </div>
               </div>
@@ -38,35 +46,41 @@
           <div fxLayout="row">
             <mat-icon>account_circle</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Tên đăng nhập" disabled>
+              <input matInput placeholder="Tên đăng nhập" formControlName="userName">
             </mat-form-field>
           </div>
 
           <div fxLayout="row">
             <mat-icon>group</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Ban" disabled>
+              <input matInput placeholder="Ban" formControlName="department">
             </mat-form-field>
           </div>
 
           <div fxLayout="row">
             <mat-icon>email</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Email">
+              <input (blur)="onProfileFormValueChanged()" matInput placeholder="Email" formControlName="email">
+              <mat-error *ngIf="profileFormErrors.email">
+                {{ profileFormErrors.email }}
+              </mat-error>
+              <mat-hint *ngIf="profileForm.get('email').pending">
+                Đang kiểm tra email ...
+              </mat-hint>
             </mat-form-field>
           </div>
 
           <div fxLayout="row">
             <mat-icon>phone</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Điện thoại">
+              <input matInput placeholder="Điện thoại" formControlName="phoneNumber">
             </mat-form-field>
           </div>
           <div fxLayout="row" fxLayout.md="column">
             <div fxFlex="50">
               <mat-icon>date_range</mat-icon>
               <mat-form-field class="half-width">
-                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh">
+                <input matInput [matDatepicker]="picker" placeholder="Chọn ngày sinh" formControlName="birthDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -74,9 +88,9 @@
             <div fxFlex="50" fxLayoutAlign="center center">
               <mat-icon></mat-icon>
               <label fxHide.lt-lg class="mat-radio-label">Giới tính</label>
-              <mat-radio-group>
-                <mat-radio-button value="1">Nam</mat-radio-button>
-                <mat-radio-button value="2">Nữ</mat-radio-button>
+              <mat-radio-group formControlName="gender">
+                <mat-radio-button [value]="true">Nam</mat-radio-button>
+                <mat-radio-button [value]="false">Nữ</mat-radio-button>
               </mat-radio-group>
             </div>
 
@@ -85,14 +99,21 @@
           <div fxLayout="row">
             <mat-icon>place</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Địa chỉ">
+              <input matInput placeholder="Địa chỉ" formControlName="address">
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row">
+            <mat-icon>place</mat-icon>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Tỉnh/Thành phố" formControlName="city">
             </mat-form-field>
           </div>
 
           <div fxLayout="row">
             <mat-icon>pages</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Link facebook">
+              <input matInput placeholder="Link facebook" formControlName="facebookLink">
             </mat-form-field>
           </div>
 
@@ -100,7 +121,7 @@
         </form>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button color="accent">
+        <button mat-raised-button color="accent" (click)="onSubmitProfileForm()" [disabled]="profileForm.invalid">
           Lưu
         </button>
       </mat-card-actions>
@@ -113,29 +134,45 @@
         <p>Đổi mật khẩu</p>
       </mat-card-title>
       <mat-card-content>
-        <form flex fxLayout="column" fxLayoutGap="10px">
+        <form [formGroup]="updatePasswordForm" flex fxLayout="column" fxLayoutGap="10px">
           <div fxLayout="row">
             <mat-icon>lock</mat-icon>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Mật khẩu cũ" type="password">
+              <input (blur)="onUpdatePasswordFormValueChanged()" matInput placeholder="Mật khẩu cũ" type="password"
+                formControlName="oldPassword" required>
+              <mat-error *ngIf="updatePasswordFormErrors.oldPassword">
+                {{ updatePasswordFormErrors.oldPassword }}
+              </mat-error>
             </mat-form-field>
           </div>
-          <div fxLayout="row">
-            <mat-icon>replay</mat-icon>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Mật khẩu mới" type="password">
-            </mat-form-field>
-          </div>
-          <div fxLayout="row">
-            <mat-icon>replay</mat-icon>
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Nhập lại mật khẩu mới" type="password">
-            </mat-form-field>
+          <div formGroupName="passwordGroup">
+            <div fxLayout="row">
+              <mat-icon>replay</mat-icon>
+              <mat-form-field class="full-width">
+                <input (blur)="onUpdatePasswordFormValueChanged()" matInput placeholder="Mật khẩu mới" type="password"
+                  formControlName="password" required>
+                <mat-error *ngIf="updatePasswordFormErrors.password">
+                  {{ updatePasswordFormErrors.password }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon>replay</mat-icon>
+              <mat-form-field class="full-width">
+                <input (blur)="onUpdatePasswordFormValueChanged()" matInput placeholder="Nhập lại mật khẩu mới"
+                  type="password" formControlName="confirmPassword" [errorStateMatcher]="errorMatcher" required>
+                <mat-error *ngIf="updatePasswordFormErrors.confirmPassword || updatePasswordFormErrors.passwordGroup">
+                  {{ updatePasswordFormErrors.confirmPassword ?
+                    updatePasswordFormErrors.confirmPassword : updatePasswordFormErrors.passwordGroup }}
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
         </form>
       </mat-card-content>
       <mat-card-actions align="end">
-        <button mat-raised-button color="accent">
+        <button mat-raised-button color="accent" (click)="onSubmitUpdatePasswordForm()"
+          [disabled]="updatePasswordForm.invalid">
           Lưu
         </button>
       </mat-card-actions>

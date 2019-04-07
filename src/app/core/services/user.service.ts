@@ -1,9 +1,10 @@
+import { UserPasswordModel } from '../models/user-password.model';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { FormUserModel } from '../models';
+import { FormUserModel, UserProfileModel } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,14 @@ export class UserService {
 
   getCurrentUser(): Observable<any> {
     return this.apiService.get('/users/me');
+  }
+
+  updateCurrentUser(userProfile: UserProfileModel) {
+    return this.apiService.put('/users/me', userProfile);
+  }
+
+  updateCurrentUserPassword(userPassword: UserPasswordModel) {
+    return this.apiService.put('/users/me/password', userPassword);
   }
 
   createUser(user: FormUserModel) {

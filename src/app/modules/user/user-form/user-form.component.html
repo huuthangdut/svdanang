@@ -89,7 +89,8 @@
             <mat-icon class="custom-icon"></mat-icon>
             <mat-form-field class="field-full-width">
               <input (blur)="onValueChanged()" matInput placeholder="Nhập lại mật khẩu"
-                [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword" required>
+                [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword" required
+                [errorStateMatcher]="errorMatcher">
               <mat-icon matSuffix (click)="hidePassword = !hidePassword">
                 {{hidePassword ? 'visibility_off' : 'visibility'}}
               </mat-icon>

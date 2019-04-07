@@ -1,3 +1,4 @@
+import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
@@ -17,6 +18,8 @@ export class UserFormComponent implements OnInit {
   departments = [];
   roles = [];
   hidePassword = true;
+
+  errorMatcher = new CrossFieldErrorMatcher();
 
 
   user: UserModel;
@@ -94,7 +97,7 @@ export class UserFormComponent implements OnInit {
 
   setFormValue(user: UserModel) {
     this.userForm.patchValue({
-      id: user.id,
+
       userName: user.userName,
       firstName: user.firstName,
       lastName: user.lastName,
