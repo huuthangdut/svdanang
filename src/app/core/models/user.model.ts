@@ -1,19 +1,19 @@
-import { DepartmentModel } from './department.model';
-import { RoleModel } from "./role.model";
+import { Department } from './department.model';
+import { Role } from "./role.model";
 
-class UserModel {
+class User {
   id: number;
   userName: string;
   lastName: string;
   firstName: string;
   avatar: string;
   email: string;
-  department: DepartmentModel;
-  roles: RoleModel[];
+  department: Department;
+  roles: Role[];
   isActive: boolean;
 }
 
-class FormUserModel {
+class UserModel {
   constructor(
     public id: number,
     public userName: string,
@@ -30,5 +30,5 @@ class FormUserModel {
   }
 }
 
-export { UserModel, FormUserModel }
+export { User, UserModel }
 

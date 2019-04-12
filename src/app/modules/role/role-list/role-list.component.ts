@@ -2,11 +2,12 @@ import { CollectionViewer } from '@angular/cdk/collections';
 import { DataSource } from '@angular/cdk/table';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/material';
-import { BehaviorSubject, fromEvent, merge, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, finalize, tap } from 'rxjs/operators';
+import { BehaviorSubject, merge, Observable, of } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
+import { Role } from '../../../core/models';
 import { RoleService } from '../../../core/services';
-import { RoleModel } from './../../../core/models/role.model';
+import { DialogService } from '../../../shared/services/dialog.service';
 import { RoleFormComponent } from './../role-form/role-form.component';
 
 @Component({
@@ -25,7 +26,8 @@ export class RoleListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private roleService: RoleService) { }
+    private roleService: RoleService,
+    private dialogService: DialogService) { }
 
   ngOnInit() {
     this.dataSource = new RolesDataSource(this.roleService);
@@ -33,17 +35,17 @@ export class RoleListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // server-side search
-    fromEvent(this.input.nativeElement, 'keyup')
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-          this.loadRolesPage();
-        })
-      )
-      .subscribe();
+    // // server-side search
+    // fromEvent(this.input.nativeElement, 'keyup')
+    //   .pipe(
+    //     debounceTime(150),
+    //     distinctUntilChanged(),
+    //     tap(() => {
+    //       this.paginator.pageIndex = 0;
+    //       this.loadRolesPage();
+    //     })
+    //   )
+    //   .subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -56,7 +58,9 @@ export class RoleListComponent implements OnInit, AfterViewInit {
 
   loadRolesPage() {
     this.dataSource.loadRoles(
-      this.input.nativeElement.value,
+      // this.input.nativeElement.value,
+      '',
+      this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize);
@@ -64,34 +68,63 @@ export class RoleListComponent implements OnInit, AfterViewInit {
 
   onCreate() {
     const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
+    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = "40%";
-    dialogConfig.position = { top: '10vh' }
-    // dialogConfig.height = "60%";
-    this.dialog.open(RoleFormComponent, dialogConfig);
+    dialogConfig.width = "650px";
+    dialogConfig.position = { top: '10vh' };
+    let dialogRef = this.dialog.open(RoleFormComponent, dialogConfig);
+
+    dialogRef.afterClosed()
+      .subscribe((response) => {
+        if (response)
+          this.loadRolesPage()
+      });
   }
 
-  onEdit(roleId: number) {
+  onEdit(id: number) {
+    console.log("on edit" + id);
     const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
+    dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    dialogConfig.data = { id: roleId };
-    this.dialog.open(RoleFormComponent, dialogConfig);
+    dialogConfig.width = "650px";
+    dialogConfig.position = { top: '10vh' };
+    dialogConfig.data = { roleId: id };
+    let dialogRef = this.dialog.open(RoleFormComponent, dialogConfig);
+
+    dialogRef.afterClosed()
+      .subscribe((response) => {
+        if (response)
+          this.loadRolesPage()
+      });
+  }
+
+  onDelete(id: number) {
+    this.dialogService.openConfirmDialog({
+      title: 'Xoá vai trò',
+      message: 'Bạn có chắc chắn muốn xoá vai trò này?'
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.roleService.deleteRole(id).subscribe(() =>
+          this.loadRolesPage());
+      }
+    });
   }
 
 }
 
-class RolesDataSource implements DataSource<RoleModel> {
-  private rolesSubject = new BehaviorSubject<RoleModel[]>([]);
+class RolesDataSource implements DataSource<Role> {
+  private rolesSubject = new BehaviorSubject<Role[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
+
+  public page: number;
+  public pageSize: number;
+  public totalElements: number;
 
   constructor(private roleService: RoleService) {
 
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<RoleModel[]> {
+  connect(collectionViewer: CollectionViewer): Observable<Role[]> {
     return this.rolesSubject.asObservable();
   }
 
@@ -100,15 +133,23 @@ class RolesDataSource implements DataSource<RoleModel> {
     this.loadingSubject.complete();
   }
 
-  loadRoles(filter = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 3) {
+  loadRoles(filter = '', sortBy = '',
+    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
-    this.roleService.getRoles(filter, sortDirection, pageIndex, pageSize)
+    this.roleService.getRoles(filter, sortBy, sortDirection, pageIndex, pageSize)
       .pipe(
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(roles => this.rolesSubject.next(roles));
+      .subscribe((response: any) => {
+        if (response.success) {
+          let roles = response.data.content;
+          this.page = response.data.page;
+          this.pageSize = response.data.size;
+          this.totalElements = response.data.totalElements;
+          this.rolesSubject.next(roles);
+        }
+      });
   }
 }

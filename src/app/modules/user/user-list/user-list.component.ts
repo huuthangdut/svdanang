@@ -5,7 +5,7 @@ import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/mate
 import { BehaviorSubject, merge, Observable, of } from 'rxjs';
 import { catchError, finalize, first, tap } from 'rxjs/operators';
 
-import { UserModel } from '../../../core/models';
+import { User } from '../../../core/models';
 import { UserService } from './../../../core/services';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { UserFormComponent } from './../user-form/user-form.component';
@@ -113,8 +113,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
 }
 
 
-class UsersDataSource implements DataSource<UserModel> {
-  private usersSubject = new BehaviorSubject<UserModel[]>([]);
+class UsersDataSource implements DataSource<User> {
+  private usersSubject = new BehaviorSubject<User[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   public loading$ = this.loadingSubject.asObservable();
@@ -127,7 +127,7 @@ class UsersDataSource implements DataSource<UserModel> {
 
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<UserModel[]> {
+  connect(collectionViewer: CollectionViewer): Observable<User[]> {
     return this.usersSubject.asObservable();
   }
 
@@ -152,7 +152,7 @@ class UsersDataSource implements DataSource<UserModel> {
           this.page = response.data.page;
           this.pageSize = response.data.size;
           this.totalElements = response.data.totalElements;
-          this.usersSubject.next(users)
+          this.usersSubject.next(users);
         }
       });
   }

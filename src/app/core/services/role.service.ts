@@ -10,13 +10,30 @@ export class RoleService {
 
   constructor(private apiService: ApiService) { }
 
-  getRoles(filter = '', sortOrder = 'asc', pageNumber = 0, pageSize = 3): Observable<any> {
+  getRoles(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any> {
     return this.apiService.get('/roles',
       new HttpParams()
         .set('filter', filter)
+        .set('sortBy', sortBy)
         .set('sortOrder', sortOrder)
         .set('page', pageNumber.toString())
-        .set('size', pageSize.toString()));
+        .set('pageSize', pageSize.toString()));
+  }
+
+  getRole(id: number) {
+    return this.apiService.get(`/roles/${id}`);
+  }
+
+  createRole(role) {
+    return this.apiService.post('/roles', role);
+  }
+
+  updateRole(id, role) {
+    return this.apiService.put(`/roles/${id}`, role);
+  }
+
+  deleteRole(id: number): any {
+    return this.apiService.delete(`/roles/${id}`);
   }
 }
 

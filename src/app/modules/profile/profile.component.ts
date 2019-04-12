@@ -1,15 +1,14 @@
-import { MatSnackBar } from '@angular/material';
-import { UserPasswordModel } from '../../core/models/user-password.model';
-import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-error-matcher';
-import { UpdatePasswordFormService } from './../../core/services/forms/update-password-form.service';
-import { PasswordValidators } from './../../core/validators/password.validator';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 import { UserProfile, UserProfileModel } from '../../core/models';
+import { UserPasswordModel } from '../../core/models/user-password.model';
+import { UpdatePasswordFormService } from './../../core/services/forms/update-password-form.service';
 import { UserProfileFormService } from './../../core/services/forms/user-profile-form.service';
 import { UserService } from './../../core/services/user.service';
-import { UserEmailValidators } from './../../core/validators/user-email.validator';
+import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-error-matcher';
+import { PasswordValidators } from './../../core/validators/password.validator';
 
 @Component({
   selector: 'app-profile',
@@ -64,7 +63,7 @@ export class ProfileComponent implements OnInit {
 
   setProfileFormValue(userProfile: UserProfile) {
     this.profileForm.patchValue({
-      firstName: userProfile.userName,
+      firstName: userProfile.firstName,
       lastName: userProfile.lastName,
       userName: userProfile.userName,
       department: userProfile.department,

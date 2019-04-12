@@ -1,23 +1,27 @@
-<h2 mat-dialog-title>Tạo mới vai trò</h2>
+<h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content>
   <mat-tab-group>
     <mat-tab label="Vai trò">
       <div class="mat-container">
-        <mat-form-field>
-          <input matInput placeholder="Tên vai trò" [formControl]="name" required>
-          <mat-error *ngIf="name.invalid">{{getErrorMessage}}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Mô tả" [formControl]="description" required>
-          <mat-error *ngIf="description.invalid">{{getErrorMessage}}</mat-error>
-        </mat-form-field>
+        <form [formGroup]="roleForm" flex fxLayout="column">
+          <mat-form-field>
+            <input (blur)="onValueChanged()" matInput placeholder="Tên vai trò" formControlName="name" required>
+            <mat-error *ngIf="formErrors.name">
+              {{ formErrors.name }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Mô tả" formControlName="description">
+          </mat-form-field>
+        </form>
       </div>
     </mat-tab>
     <mat-tab label="Phân quyền">
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
           <button mat-icon-button disabled></button>
-          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="todoLeafItemSelectionToggle(node)">{{node.displayName}}</mat-checkbox>
+          <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+            (change)="todoLeafItemSelectionToggle(node)">{{node.displayName}}</mat-checkbox>
         </mat-tree-node>
         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
           <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
@@ -33,8 +37,8 @@
   </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close mat-raised-button>Trở về</button>
-  <button mat-button [mat-dialog-close]="true" mat-raised-button color="accent" (click)="onSubmit()">Lưu</button>
+  <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
+  <button mat-button mat-raised-button color="accent" [disabled]="roleForm.invalid" (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>
 
 <!-- <mat-tab-group>

@@ -1,12 +1,12 @@
-import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
-import { UserModel, FormUserModel } from '../../../core/models';
+import { UserModel, User } from '../../../core/models';
 import { UserFormService } from '../../../core/services/forms/user-form.service';
 import { UserService } from './../../../core/services/user.service';
 import { PasswordValidators, UserEmailValidators, UsernameValidators } from './../../../core/validators';
+import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
 
 @Component({
   selector: 'app-user-form',
@@ -22,7 +22,7 @@ export class UserFormComponent implements OnInit {
   errorMatcher = new CrossFieldErrorMatcher();
 
 
-  user: UserModel;
+  user: User;
   isEdit: boolean = false;
 
   // FormBuilder form
@@ -33,7 +33,6 @@ export class UserFormComponent implements OnInit {
   formErrors: any;
 
   // Form submission
-  submitUserObj: UserModel;
   error: boolean;
   submitting: boolean;
 
@@ -95,9 +94,8 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  setFormValue(user: UserModel) {
+  setFormValue(user: User) {
     this.userForm.patchValue({
-
       userName: user.userName,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -166,7 +164,7 @@ export class UserFormComponent implements OnInit {
   getSubmitModel() {
     const formValue = Object.assign({}, this.userForm.value);
 
-    return new FormUserModel(
+    return new UserModel(
       this.user ? this.user.id : null,
       formValue.userName,
       formValue.lastName,

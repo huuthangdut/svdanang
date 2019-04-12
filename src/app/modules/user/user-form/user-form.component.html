@@ -11,7 +11,7 @@
 </ng-template> -->
 <h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content>
-  <div class=" mat-container">
+  <div class="mat-container">
     <form [formGroup]="userForm" flex fxLayout="column" fxLayoutGap="10px">
       <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
         <div fxFlex="25">
@@ -168,6 +168,6 @@
     (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>
 
-<div *ngIf="isSubmitting">
+<div *ngIf="submitting">
   <app-spinner-overlay></app-spinner-overlay>
 </div>

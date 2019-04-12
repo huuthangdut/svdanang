@@ -1,9 +1,14 @@
+import { ActionService } from './../../../core/services/action.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Inject, Injectable } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material';
+import { Component, Inject, Injectable, OnInit, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatTreeFlatDataSource, MatTreeFlattener, MatSnackBar } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
-import { FormControl, Validators } from '@angular/forms';
+
+import { Role, RoleModel } from '../../../core/models';
+import { RoleService } from './../../../core/services/role.service';
+import { RoleFormService } from '../../../core/services/forms/role-form.service';
 
 export class PermissionNode {
   id: number;
@@ -12,7 +17,6 @@ export class PermissionNode {
   children?: PermissionNode[];
 }
 
-/** Flat to-do item node with expandable and level information */
 export class PermissionFlatNode {
   id: number;
   name: string;
@@ -21,162 +25,48 @@ export class PermissionFlatNode {
   expandable: boolean;
 }
 
-/**
- * The Json object for to-do list data.
- */
-
-export const PERMISSIONS: PermissionNode[] = [
+export const PERMISSIONS = [
+  {
+    id: 2,
+    name: "Pages.Administration.AuditLogs",
+    displayName: "Audit logs",
+    parentId: 1
+  },
+  {
+    id: 3,
+    name: "Pages.Administration.Users",
+    displayName: "User",
+    parentId: 1
+  },
+  {
+    id: 4,
+    name: "Pages.Administration.Users.Delete",
+    displayName: "Deleting user",
+    parentId: 3
+  },
+  {
+    id: 5,
+    name: "Pages.Administration.Users.Edit",
+    displayName: "Editing user",
+    parentId: 3
+  },
   {
     id: 1,
-    name: 'Pages',
-    displayName: 'Pages',
-    children: [
-      {
-        id: 1,
-        name: 'Pages.Administration',
-        displayName: 'Administration',
-        children: [
-          {
-            id: 1,
-            name: 'Pages.Administration.AuditLogs',
-            displayName: 'Audit logs',
-            children: [
-              {
-                id: 1,
-                name: 'Pages.Administration.OrganizationUnits',
-                displayName: 'Organization Units',
-                children: [
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.OrganizationUnits.ManageMembers',
-                    displayName: 'Managing members',
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.OrganizationUnits.ManageOrganizationTree',
-                    displayName: 'Managing organization tree'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.OrganizationUnits.ManageRoles',
-                    displayName: 'Managing roles'
-                  },
-                ]
-              },
-
-              {
-                id: 1,
-                name: 'Pages.Administration.Roles',
-                displayName: 'Roles',
-                children: [
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Roles.Create',
-                    displayName: 'Creating new role'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Roles.Delete',
-                    displayName: 'Deleting role'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Roles.Edit',
-                    displayName: 'Editing role'
-                  },
-                ]
-              },
-              {
-                id: 1,
-                name: 'Pages.Administration.Tenant.Settings',
-                displayName: 'Settings'
-              },
-              {
-                id: 1,
-                name: 'Pages.Administration.Tenant.SubscriptionManagement',
-                displayName: 'Subscription'
-              },
-              {
-                id: 1,
-                name: 'Pages.Administration.Users',
-                displayName: 'Users',
-                children: [
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Users.ChangePermissions',
-                    displayName: 'Changing permissions'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Users.Create',
-                    displayName: 'Creating new user'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Users.Edit',
-                    displayName: 'Administration.Users.Edit'
-                  },
-
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Users.Impersonation',
-                    displayName: 'Login for users'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Users.Delete',
-                    displayName: 'Deleting user'
-                  },
-                ]
-              },
-              {
-                id: 1,
-                name: 'Pages.Administration.UiCustomization',
-                displayName: 'Visual Settings'
-              },
-              {
-                id: 1,
-                name: 'Pages.Administration.Languages',
-                displayName: 'Languages',
-                children: [
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Languages.ChangeTexts',
-                    displayName: 'Changing texts'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Languages.Create',
-                    displayName: 'Creating new language'
-                  },
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Languages.Delete',
-                    displayName: 'Deleting language'
-                  },
-
-                  {
-                    id: 1,
-                    name: 'Pages.Administration.Languages.Edit',
-                    displayName: 'Editing language'
-                  },
-                ]
-              },
-            ]
-          },
-        ]
-      },
-      {
-        id: 1,
-        name: 'Pages.Tenant.Dashboard',
-        displayName: 'Dashboard'
-      },
-      {
-        id: 1,
-        name: 'Pages.DemoUiComponents',
-        displayName: 'Demo UI Components'
-      },
-    ]
+    name: "Pages.Administration",
+    displayName: "Administration",
+    parentId: null,
+  },
+  {
+    id: 6,
+    name: "Pages.Administration.Users.Create",
+    displayName: "Creating user",
+    parentId: 3
+  },
+  {
+    id: 7,
+    name: "Pages.Administration.Users.Read",
+    displayName: "View user",
+    parentId: 3
   }
 ]
 export const GRANTED_PERMISSIONS = [
@@ -218,18 +108,44 @@ export class ChecklistDatabase {
 
   get data(): PermissionNode[] { return this.dataChange.value; }
 
-  constructor() {
+  constructor(private actionService: ActionService) {
     this.initialize();
   }
 
   initialize() {
-    // Build the tree nodes from Json object. The result is a list of `TodoItemNode` with nested
-    //     file node as children.
-    // const data = this.buildFileTree(PERMISSIONS, 0);
-    const data = PERMISSIONS;
+    this.actionService.getAll().subscribe((response: any) => {
+      if (response.success) {
+        // Build the tree nodes from Json object.
+        const data = this.buildFileTree(response.data);
 
-    // Notify the change.
-    this.dataChange.next(data);
+        // Notify the change.
+        this.dataChange.next(data);
+      }
+    });
+  }
+
+  buildFileTree(list): PermissionNode[] {
+    let map = {};
+    let node, roots = [];
+
+    for (let i = 0; i < list.length; i += 1) {
+      map[list[i].id] = i; // initialize the map
+      console.log("set map " + list[i].id + " = " + i);
+      // list[i].children = []; // initialize the children
+    }
+    for (let i = 0; i < list.length; i += 1) {
+      node = list[i];
+      if (node.parentId != null) {
+        // if you have dangling branches check that map[node.parentId] exists
+        if (!list[map[node.parentId]].children) {
+          list[map[node.parentId]].children = [];
+        }
+        list[map[node.parentId]].children.push(node);
+      } else {
+        roots.push(node);
+      }
+    }
+    return roots;
   }
 
 
@@ -241,7 +157,7 @@ export class ChecklistDatabase {
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss']
 })
-export class RoleFormComponent {
+export class RoleFormComponent implements OnInit {
   /** Map from flat node to nested node. This helps us finding the nested node to be modified */
   flatNodeMap = new Map<PermissionFlatNode, PermissionNode>();
 
@@ -260,41 +176,111 @@ export class RoleFormComponent {
   /** The selection for checklist */
   checklistSelection = new SelectionModel<PermissionFlatNode>(true /* multiple */);
 
-  name = new FormControl('', [Validators.required]);
-  description = new FormControl('', [Validators.required]);
+  roleForm: FormGroup;
+  title = 'Tạo mới vai trò';
+  isEdit = false;
+
+  role: Role;
+  grantedActionNames = [];
+  formErrors: any;
+  submitting = false;
 
 
   constructor(
     public dialogRef: MatDialogRef<RoleFormComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
+    private formBuilder: FormBuilder,
+    private roleService: RoleService,
+    private roleFormService: RoleFormService,
+    private snackBar: MatSnackBar,
     private database: ChecklistDatabase) {
+
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<PermissionFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     database.dataChange.subscribe(data => {
+      console.log("get data tree")
       this.dataSource.data = data;
+      this.treeControl.expandAll();
     });
+  }
 
-    this.treeControl.expandAll();
+  ngOnInit() {
+    if (this.data && this.data.roleId) {
+      this.isEdit = true;
+      this.title = 'Chỉnh sửa vai trò';
+    }
+
+    this.formErrors = this.roleFormService.formErrors;
+
+    this.buildForm();
+  }
+
+  checkGrantedActions() {
+    console.log("check granted");
     for (let node of this.treeControl.dataNodes) {
-      if (GRANTED_PERMISSIONS.includes(node.name)) {
+      if (this.grantedActionNames.includes(node.name)) {
         this.checklistSelection.select(node);
       }
     }
-
   }
 
-  // ngAfterViewInit() {
-  //   this.treeControl.expandAll();
-  //   for (let node of this.treeControl.dataNodes) {
-  //     if (GRANTED_PERMISSIONS.includes(node.item)) {
-  //       this.checklistSelection.select(node);
-  //     }
-  //   }
 
-  // }
+  buildForm() {
+    this.roleForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      description: null
+    });
+
+    if (this.isEdit) {
+      this.getRoleAndPopulateForm(this.data.roleId);
+    }
+
+    this.roleForm.valueChanges.subscribe(data => this.onValueChanged());
+  }
+
+  onValueChanged() {
+    if (!this.roleForm) { return; }
+
+    this.roleFormService.logValidationErrors(this.roleForm);
+
+    this.formErrors = this.roleFormService.formErrors;
+
+    console.log(this.formErrors);
+  }
+
+  getRoleAndPopulateForm(id: any) {
+    this.roleService.getRole(id).subscribe((response) => {
+      this.role = response.data.role;
+      this.grantedActionNames = response.data.grantedActionNames;
+
+      this.setFormValue(this.role);
+      this.roleFormService.markDirty(this.roleForm);
+
+      this.checkGrantedActions();
+    });
+  }
+
+  setFormValue(role: Role) {
+    this.roleForm.patchValue({
+      name: role.name,
+      description: role.description
+    });
+  }
+
+  getSubmitModel() {
+    const formValue = Object.assign({}, this.roleForm.value);
+
+    return new RoleModel(
+      this.role ? this.role.id : null,
+      formValue.name,
+      formValue.description,
+      this.checklistSelection.selected.map(i => i.id)
+    );
+  }
+
 
   getLevel = (node: PermissionFlatNode) => node.level;
 
@@ -404,30 +390,47 @@ export class RoleFormComponent {
     return null;
   }
 
-
-
-  // constructor(
-  //   public dialogRef: MatDialogRef<RoleFormComponent>,
-  //   @Inject(MAT_DIALOG_DATA) private data: any
-
-  // ) { }
-
-  // ngOnInit() {
-  //   console.log(this.data);
-  // }
-
   onSubmit() {
-    console.log(this.checklistSelection.selected);
+    this.submitting = true;
+
+    if (this.roleForm.valid) {
+      const role = this.getSubmitModel();
+      console.log(role);
+
+      if (this.isEdit) {
+        this.roleService.updateRole(role.id, role).subscribe(
+          response => this.handleSubmitSuccess(response),
+          error => this.handleSubmitError(error)
+        );
+      } else {
+        this.roleService.createRole(role).subscribe(
+          response => this.handleSubmitSuccess(response),
+          error => this.handleSubmitError(error)
+        )
+      }
+    }
+
   }
 
-  // onClose() {
-  //   // form reset
-  //   this.dialogRef.close();
-  // }
+  handleSubmitSuccess(response) {
+    this.submitting = false;
+    const message = this.isEdit ? "Cập nhật vai trò thành công" : "Thêm vai trò thành công";
 
-  // //--------------------------------------------------------------------
+    this.snackBar.open(message, '', {
+      duration: 2000,
+    });
 
+    this.dialogRef.close(true);
+  }
 
+  handleSubmitError(error) {
+    this.submitting = false;
+    console.log(error);
+
+    this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {
+      duration: 2000,
+    });
+  }
 }
 
 

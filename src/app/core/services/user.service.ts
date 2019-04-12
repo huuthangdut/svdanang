@@ -1,10 +1,10 @@
-import { UserPasswordModel } from '../models/user-password.model';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { UserModel, UserProfileModel } from '../models';
+import { UserPasswordModel } from '../models/user-password.model';
 import { ApiService } from './api.service';
-import { FormUserModel, UserProfileModel } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private apiService: ApiService) { }
 
-  getUsers(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any[]> {
+  getUsers(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any> {
     return this.apiService.get('/users',
       new HttpParams()
         .set('filter', filter)
@@ -35,7 +35,7 @@ export class UserService {
     return this.apiService.put('/users/me/password', userPassword);
   }
 
-  createUser(user: FormUserModel) {
+  createUser(user: UserModel) {
     return this.apiService.post('/users', user);
   }
 
@@ -43,7 +43,7 @@ export class UserService {
     return this.apiService.get(`/users/${id}`);
   }
 
-  updateUser(id: number, user: FormUserModel) {
+  updateUser(id: number, user: UserModel) {
     return this.apiService.put(`/users/${id}`, user);
   }
 
