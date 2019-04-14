@@ -80,17 +80,18 @@ export class UserFormComponent implements OnInit {
 
   getUserAndPopulateForm(id: number) {
     this.userService.getUser(id).subscribe((response) => {
-      this.user = response.data;
+      if (response.success) {
+        this.user = response.data;
 
-      this.userForm.controls['userName'].setAsyncValidators(UsernameValidators.unique(this.userService, this.user.userName));
+        this.userForm.controls['userName'].setAsyncValidators(UsernameValidators.unique(this.userService, this.user.userName));
 
-      this.userForm.controls['email'].setAsyncValidators(UserEmailValidators.unique(this.userService, this.user.email));
+        this.userForm.controls['email'].setAsyncValidators(UserEmailValidators.unique(this.userService, this.user.email));
 
-      this.setFormValue(this.user);
-      this.userFormService.markDirty(this.userForm);
+        this.setFormValue(this.user);
+        this.userFormService.markDirty(this.userForm);
 
-      this.userForm.updateValueAndValidity();
-
+        this.userForm.updateValueAndValidity();
+      }
     });
   }
 

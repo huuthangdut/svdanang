@@ -7,7 +7,120 @@
 </mat-toolbar>
 
 <mat-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
+  <div class="search-container">
+    <td-search-box class="push-left push-right" placeholder="Tìm kiếm" [alwaysVisible]="true" #input></td-search-box>
 
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Tìm kiếm nâng cao
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxFlex fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.gt-sm="30px">
+            <mat-form-field fxFlex="50" class="field-full-width">
+              <mat-label>Ban</mat-label>
+              <mat-select>
+                <mat-option>Tất cả thành viên diễn đàn</mat-option>
+                <!-- <mat-option *ngFor="let department of departments" [value]="department">
+                  {{department.name}}
+                </mat-option> -->
+
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="50" class="field-full-width">
+              <mat-label>Vai trò</mat-label>
+              <mat-select>
+                <mat-option>--</mat-option>
+                <!-- <mat-option *ngFor="let department of departments" [value]="department">
+                  {{department.name}}
+                </mat-option> -->
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start">
+            <mat-checkbox>Tài khoản bị khoá</mat-checkbox>
+          </div>
+
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div class="table-container">
+    <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
+      matSortDirection="asc" matSortDisableClear>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên sự kiện</mat-header-cell>
+        <mat-cell *matCellDef="let event">{{event.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.description}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Địa điểm</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.location}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="topic">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Chủ đề</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.topic?.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="startTime">
+        <mat-header-cell *matHeaderCellDef>Ngày bắt đầu</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.startTime }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="endTime">
+        <mat-header-cell *matHeaderCellDef>Ngày kết thúc</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.endTime }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">{{event.createdDate }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let event">Status here..</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let event">
+          <button mat-icon-button color="primary" (click)="onEdit(event.id)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDelete(event.id)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+
+    </mat-table>
+
+    <div *ngIf="dataSource.loading$ | async">
+      <app-spinner-overlay>
+      </app-spinner-overlay>
+    </div>
+
+    <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
 
 
 </mat-card>

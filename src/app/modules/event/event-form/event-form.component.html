@@ -1,7 +1,7 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Thêm sự kiện mới</div>
+      <div>{{ title }}</div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -11,63 +11,128 @@
     <mat-tab-group>
       <mat-tab label="Thông tin cơ bản">
         <div class="mat-container">
-          <form flex fxLayout="column" fxLayoutGap="15px">
+          <form [formGroup]="eventForm" flex fxLayout="column" fxLayoutGap="15px">
             <div fxLayout="row">
-              <mat-icon>title</mat-icon>
+              <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
-                <input matInput placeholder="Tên sự kiện" type="text">
+                <input (blur)="onValueChanged()" matInput placeholder="Tên sự kiện" type="text" formControlName="name"
+                  required>
+                <mat-error *ngIf="formErrors.name">
+                  {{ formErrors.name }}
+                </mat-error>
               </mat-form-field>
             </div>
             <div fxLayout="row">
-              <mat-icon>title</mat-icon>
+              <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
-                <input matInput placeholder="Mô tả" type="text">
+                <input matInput placeholder="Mô tả" type="text" formControlName="description">
               </mat-form-field>
             </div>
             <div fxLayout="row">
-              <mat-icon>subject</mat-icon>
+              <mat-icon class="custom-icon">title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input (blur)="onValueChanged()" matInput placeholder="Địa điểm" type="text" formControlName="location"
+                  required>
+                <mat-error *ngIf="formErrors.location">
+                  {{ formErrors.location }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">subject</mat-icon>
               <mat-form-field class="field-full-width">
                 <mat-label>Chủ đề</mat-label>
-                <mat-select required>
+                <mat-select (change)="onValueChanged()" required formControlName="topicId">
                   <mat-option>--</mat-option>
-                  <mat-option *ngFor="let topic of topics" [value]="topic">
+                  <mat-option *ngFor="let topic of topics" [value]="topic.id">
                     {{topic.name}}
                   </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formErrors.topicId">
+                  {{ formErrors.topicId }}
+                </mat-error>
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
-                <mat-icon>date_range</mat-icon>
+                <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
-                  <input matInput [matDatepicker]="picker" placeholder="Ngày bắt đầu">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Ngày bắt đầu"
+                    formControlName="startTime" required>
+                  <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startTimePicker></mat-datepicker>
+                  <mat-error *ngIf="formErrors.startTime">
+                    {{ formErrors.startTime }}
+                  </mat-error>
                 </mat-form-field>
               </div>
-              <div fxFlex="50" fxLayout="row">
-                <mat-icon>date_range</mat-icon>
+              <div fxFlex=" 50" fxLayout="row">
+                <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
-                  <input matInput [matDatepicker]="myDatepicker" placeholder="Ngày kết thúc">
-                  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-                  <mat-datepicker #myDatepicker></mat-datepicker>
+                  <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc"
+                    formControlName="endTime" required>
+                  <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endTimePicker></mat-datepicker>
+                  <mat-error *ngIf="formErrors.endTime">
+                    {{ formErrors.endTime }}
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
 
             <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
-                <mat-icon>group</mat-icon>
+                <mat-icon class="custom-icon">group</mat-icon>
                 <mat-form-field class="field-full-width">
-                  <input matInput placeholder="Số lượng dự kiến" type="number" min="0">
+                  <input (blur)="onValueChanged()" matInput placeholder="Số lượng dự kiến" type="number" min="0"
+                    formControlName="expectedQuantity" required>
+                  <mat-error *ngIf="formErrors.expectedQuantity">
+                    {{ formErrors.expectedQuantity }}
+                  </mat-error>
                 </mat-form-field>
               </div>
-              <div fxFlex="50" fxLayout="row">
-                <mat-icon>attach_money</mat-icon>
-                <mat-form-field class="field-full-width">
-                  <input matInput placeholder="Lệ phí tham gia" type="text">
-                  <span matSuffix>VNĐ</span>
-                </mat-form-field>
+              <div fxFlex="50">
+                <div fxLayout="row" fxLayoutGap="15px">
+                  <div fxFlex="80" fxLayout="row">
+                    <mat-icon class="custom-icon">attach_money</mat-icon>
+                    <mat-form-field class="field-full-width">
+                      <input (blur)="onValueChanged()" matInput placeholder="Lệ phí tham gia" type="text"
+                        formControlName="fee" required>
+                      <mat-error *ngIf="formErrors.fee">
+                        {{ formErrors.fee }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex="20" fxLayout="row">
+                    <mat-form-field class="field-full-width">
+                      <mat-label>Loại tiền</mat-label>
+                      <mat-select (change)="onValueChanged()" required formControlName="currencyId">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                          {{currency.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="formErrors.currencyId">
+                        {{ formErrors.currencyId }}
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <!-- <div fxFlex="80">
+                  <mat-icon class="custom-icon">attach_money</mat-icon>
+                  <mat-form-field>
+                    <input matInput placeholder="Lệ phí tham gia" type="text" formControlName="fee">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="20">
+                  <mat-form-field class="field-full-width">
+                    <mat-label>Loại tiền</mat-label>
+                    <mat-select required formControlName="topicId">
+                      <mat-option value="VND">VND</mat-option>
+                      <mat-option value="USD">USD</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div> -->
               </div>
             </div>
 
@@ -76,7 +141,8 @@
       </mat-tab>
       <mat-tab label="Kế hoạch">
         <div class="mat-container">
-          <app-event-schedule></app-event-schedule>
+          <app-event-schedule [schedules]="schedules" (changeSchedules)="changeEventSchedules($event)">
+          </app-event-schedule>
         </div>
 
       </mat-tab>
@@ -88,10 +154,10 @@
     </mat-tab-group>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-raised-button>
+    <button mat-flat-button>
       Trở về
     </button>
-    <button mat-raised-button color="accent">
+    <button mat-raised-button color="accent" [disabled]="eventForm.invalid" (click)="onSubmit()">
       Lưu
     </button>
   </mat-card-actions>

@@ -72,6 +72,7 @@
     "highlight.js": "9.13.1",
     "luxon": "^1.12.0",
     "mat-progress-buttons": "^8.0.3",
+    "moment": "^2.24.0",
     "ngx-contextmenu": "^5.1.1",
     "ngx-material-timepicker": "^3.0.2",
     "rxjs": "^6.3.3",
