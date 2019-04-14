@@ -1,131 +1,107 @@
-<mat-toolbar class="toolbar">
-  <mat-toolbar-row>
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Quản lý người dùng</div>
-    </div>
-  </mat-toolbar-row>
+<mat-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Người dùng</span>
+    <span flex></span>
+  </div>
 </mat-toolbar>
 
 
-<mat-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
-  <div class="search-container">
-    <td-search-box class="push-left push-right" placeholder="Tìm kiếm" [alwaysVisible]="true" #input></td-search-box>
-
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Tìm kiếm nâng cao
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div fxFlex fxLayout="column" fxLayoutGap="10px">
-          <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.gt-sm="30px">
-            <mat-form-field fxFlex="50" class="field-full-width">
-              <mat-label>Ban</mat-label>
-              <mat-select>
-                <mat-option>Tất cả thành viên diễn đàn</mat-option>
-                <!-- <mat-option *ngFor="let department of departments" [value]="department">
-                  {{department.name}}
-                </mat-option> -->
-
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field fxFlex="50" class="field-full-width">
-              <mat-label>Vai trò</mat-label>
-              <mat-select>
-                <mat-option>--</mat-option>
-                <!-- <mat-option *ngFor="let department of departments" [value]="department">
-                  {{department.name}}
-                </mat-option> -->
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="start">
-            <mat-checkbox>Tài khoản bị khoá</mat-checkbox>
-          </div>
-
-        </div>
-
-      </mat-expansion-panel>
-    </mat-accordion>
+<mat-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span class="push-left-sm">
+      <span class="mat-title">Danh sách người dùng</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
+      (searchDebounce)="search($event)" flex>
+    </td-search-box>
+    <span>
+      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #toolbarMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </mat-menu>
+    </span>
   </div>
-
-  <div class="table-container">
-    <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="username"
-      matSortDirection="asc" matSortDisableClear>
-
-      <ng-container matColumnDef="avatar">
-        <mat-header-cell *matHeaderCellDef> Ảnh đại diện </mat-header-cell>
-        <mat-cell *matCellDef="let user">
-          <img mat-card-avatar [src]="user.avatar">
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="userName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên đăng nhập</mat-header-cell>
-        <mat-cell *matCellDef="let user">{{user.userName }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef>Họ và tên đệm</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.lastName}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="firstName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.firstName}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.email}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="department">
-        <mat-header-cell *matHeaderCellDef>Ban</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.department?.name}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="roles">
-        <mat-header-cell *matHeaderCellDef>Vai trò</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.roles}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="isActive">
-        <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let user">{{user.isActive}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let user">
-          <button mat-icon-button color="primary" (click)="onEdit(user.id)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="onDelete(user.id)">
-            <mat-icon>delete_outline</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <mat-divider></mat-divider>
 
 
-    </mat-table>
-
-    <div *ngIf="dataSource.loading$ | async">
-      <app-spinner-overlay>
-      </app-spinner-overlay>
-    </div>
-
-    <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
-      [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
-    </mat-paginator>
-  </div>
+  <br><br><br>
 
 
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="username"
+    matSortDirection="asc" matSortDisableClear>
+
+    <ng-container matColumnDef="avatar">
+      <mat-header-cell *matHeaderCellDef> Ảnh đại diện </mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <img mat-card-avatar [src]="user.avatar">
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="userName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tên đăng nhập</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.userName }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef>Họ và tên đệm</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.lastName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.firstName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.email}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="department">
+      <mat-header-cell *matHeaderCellDef>Ban</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.department?.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="roles">
+      <mat-header-cell *matHeaderCellDef>Vai trò</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.roles}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+      <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{user.isActive}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        <button mat-icon-button color="primary" (click)="onEdit(user.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(user.id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-divider></mat-divider>
+
+  <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
+    [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+  </mat-paginator>
 </mat-card>
 
 <a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">

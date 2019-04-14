@@ -1,107 +1,89 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TdMediaService } from '@covalent/core';
-
-import { AuthService } from '../../services/auth.service';
-import { NavItem } from './../../models/nav-item.model';
+import { AuthUser } from '../../models';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
-  navItems: NavItem[] = [
-    {
-      displayName: 'Dashboard',
-      iconName: 'dashboard',
-      route: '/',
-      divider: true
-    },
-    {
-      displayName: 'Người dùng',
-      iconName: 'group',
-      route: '/users'
-    },
-    {
-      displayName: 'Phân quyền',
-      iconName: 'security',
-      route: '/roles',
-      divider: true
-    },
-    {
-      displayName: 'Quản lý bài đăng',
-      iconName: 'recent_actors',
-      route: '/posts',
-      divider: true
-    },
-    {
-      displayName: 'Quản lý lịch họp',
-      iconName: 'event',
-      route: '/meetings',
-      divider: true
-    },
-    {
-      displayName: 'Quản lý sự kiện',
-      iconName: 'event',
-      children: [
-        {
-          displayName: 'Chủ đề',
-          iconName: 'group',
-          route: '/events/topics'
-        },
-        {
-          displayName: 'Sự kiện',
-          iconName: 'speaker_notes',
-          route: '/events'
-        }
-      ]
-    },
-    {
-      displayName: 'Quản lý dự án',
-      iconName: 'recent_actors',
-      divider: true,
-      children: [
-        {
-          displayName: 'Chủ đề',
-          iconName: 'group',
-          route: '/projects/topics'
-        },
-        {
-          displayName: 'Dự án',
-          iconName: 'speaker_notes',
-          route: '/projects',
+export class SidenavComponent {
+  name = "Diễn đàn sinh viên Đà nẵng";
 
-        }
-      ]
-    },
+  routes: Object[] = [{
+    icon: 'build',
+    route: '/',
+    title: 'Console',
+  }, {
+    icon: 'library_books',
+    route: '/profile',
+    title: 'Trang cá nhân',
+  }
+  ];
+  mgmtmenu: Object[] = [{
+    icon: 'people',
+    route: '/users',
+    title: 'Người dùng',
+    description: 'Item description',
+  }, {
+    icon: 'dns',
+    route: '/meetings',
+    title: 'Lịch họp',
+    description: 'Item description',
+  },
+  {
+    icon: 'dns',
+    route: '/posts',
+    title: 'Bài đăng',
+    description: 'Item description',
+  },
+  {
+    icon: 'dns',
+    route: '/events',
+    title: 'Sự kiện',
+    description: 'Item description',
+  },
+  {
+    icon: 'dns',
+    route: '/projects',
+    title: 'Dự án gây quỹ',
+    description: 'Item description',
+  }
+  ];
+  monitormenu: Object[] = [{
+    icon: 'verified_user',
+    route: '/roles',
+    title: 'Phân quyền',
+    description: 'Item description',
+  }
+  ];
+  settingsmenu: Object[] = [
     {
-      displayName: 'Cài đặt',
-      iconName: 'settings',
-      route: '/settings'
+      icon: 'settings',
+      route: '.',
+      title: 'Cấu hình',
+      description: 'Item description',
     }
   ];
 
-  screenWidth: number;
+  user: any;
 
-  constructor(public media: TdMediaService, private router: Router, private authService: AuthService) {
-    // set screenWidth on page load
-    this.screenWidth = window.innerWidth;
-    window.onresize = () => {
-      // set screenWidth on screen size change
-      this.screenWidth = window.innerWidth;
-    };
+  constructor(
+    public media: TdMediaService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.authService.currentUser.subscribe(user => {
+      this.user = user;
+      this.user.displayName = user.lastName + " " + user.firstName;
+    });
   }
 
-  ngOnInit() {
-
-  }
-
-  navigateToProfilePage(): void {
-    this.router.navigate(['/profile']);
-  }
-
-  logout(): void {
+  logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }

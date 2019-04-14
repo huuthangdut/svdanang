@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-blog-post-form',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog-post-form.component.scss']
 })
 export class BlogPostFormComponent implements OnInit {
+
+  public Editor = ClassicEditor;
 
   topics;
 
@@ -27,6 +30,13 @@ export class BlogPostFormComponent implements OnInit {
       { id: 3, name: 'Topic 3' },
       { id: 4, name: 'Topic 4' },
     ]
+  }
+
+  public onReady(editor) {
+    editor.ui.getEditableElement().parentElement.insertBefore(
+      editor.ui.view.toolbar.element,
+      editor.ui.getEditableElement()
+    );
   }
 
 }

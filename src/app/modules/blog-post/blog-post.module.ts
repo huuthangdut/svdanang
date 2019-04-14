@@ -5,6 +5,8 @@ import { SharedModule } from './../../shared/shared.module';
 import { BlogPostFormComponent } from './blog-post-form/blog-post-form.component';
 import { BlogPostListComponent } from './blog-post-list/blog-post-list.component';
 import { BlogPostRoutingModule } from './blog-post-routing.module';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { BlogPostRoutingModule } from './blog-post-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    BlogPostRoutingModule
+    BlogPostRoutingModule,
+    CKEditorModule
   ]
 })
 export class BlogPostModule { }

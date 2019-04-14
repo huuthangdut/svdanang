@@ -1,9 +1,11 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Thiết lập thông tin cá nhân</div>
-    </div>
-  </mat-toolbar-row>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Thông tin cá nhân</span>
+    <span flex></span>
+  </div>
 </mat-toolbar>
 
 <div flex fxLayout="row" fxLayout.lt-md="column">

@@ -1,18 +1,37 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Quản lý vai trò và phân quyền</div>
-    </div>
-  </mat-toolbar-row>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Quản lý vai trò</span>
+    <span flex></span>
+  </div>
 </mat-toolbar>
 
-<mat-card class="push-bottom-xxl" tdMediaToggle="gt-xs" [mediaClasses]="['push']">
 
-  <td-search-box class="push-left push-right" placeholder="Tìm kiếm" [alwaysVisible]="true" #input></td-search-box>
+<mat-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span class="push-left-sm">
+      <span class="mat-title">Danh sách vai trò</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
+      (searchDebounce)="search($event)" flex>
+    </td-search-box>
+    <span>
+      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #toolbarMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </mat-menu>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
 
-  <!-- <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div> -->
+  <br><br><br>
 
   <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="name"
     matSortDirection="asc" matSortDisableClear>

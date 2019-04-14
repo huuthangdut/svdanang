@@ -32,7 +32,9 @@
       </div>
       <div fxLayout="row">
         <mat-icon>subtitles</mat-icon>
-        <td-text-editor class="full-width" [options]="options"></td-text-editor>
+        <!-- <td-text-editor class="full-width" [options]="options"></td-text-editor> -->
+        <ckeditor tagName="textarea" class="field-full-width editor" [editor]="Editor" data="<p>Hello, world!</p>"
+          (ready)="onReady($event)"></ckeditor>
       </div>
     </form>
   </mat-card-content>
