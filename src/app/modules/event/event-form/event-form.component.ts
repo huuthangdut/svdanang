@@ -187,7 +187,7 @@ export class EventFormComponent implements OnInit {
 
   handleSubmitSuccess(response) {
     this.submitting = false;
-    const message = this.isEdit ? "Cập nhật sự kiện thành công" : "Thêm sự kiện  thành công";
+    const message = this.isEdit ? "Cập nhật sự kiện thành công" : "Thêm sự kiện thành công";
 
     this.snackBar.open(message, '', {
       duration: 2000,

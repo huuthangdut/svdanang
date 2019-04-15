@@ -1,48 +1,82 @@
 <mat-toolbar>
   <mat-toolbar-row>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Thêm bài đăng mới</div>
+      <div>Quản lý bài đăng</div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-card class="card-container">
-  <mat-card-title>
-    <p>Thông tin bài đăng</p>
-  </mat-card-title>
-  <mat-card-content>
-    <form flex fxLayout="column" fxLayoutGap="15px">
+<mat-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+    <span class="push-left-sm">
+      <span class="mat-title">{{ title }}</span>
+    </span>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
+      (searchDebounce)="search($event)" flex>
+    </td-search-box>
+    <span>
+      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #toolbarMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </mat-menu>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-card-content class="card-container">
+    <form [formGroup]="blogPostForm" flex fxLayout="column" fxLayoutGap="15px">
       <div fxLayout="row">
-        <mat-icon>title</mat-icon>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Tiêu đề" type="text">
+        <mat-icon class="custom-icon">title</mat-icon>
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" formControlName="title" matInput placeholder="Tiêu đề" type="text" required>
+          <mat-error *ngIf="formErrors.title">
+            {{ formErrors.title }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-icon>subject</mat-icon>
-        <mat-form-field class="full-width">
+        <mat-icon class="custom-icon">title</mat-icon>
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" formControlName="shortDescription" matInput placeholder="Mô tả ngắn"
+            type="text" required>
+          <mat-error *ngIf="formErrors.shortDescription">
+            {{ formErrors.shortDescription }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon class="custom-icon">subject</mat-icon>
+        <mat-form-field class="field-full-width">
           <mat-label>Chủ đề</mat-label>
-          <mat-select required>
+          <mat-select (change)="onValueChanged()" required formControlName="topicId">
             <mat-option>--</mat-option>
-            <mat-option *ngFor="let topic of topics" [value]="topic">
+            <mat-option *ngFor="let topic of topics" [value]="topic.id">
               {{topic.name}}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="formErrors.topicId">
+            {{ formErrors.topicId }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-icon>subtitles</mat-icon>
-        <!-- <td-text-editor class="full-width" [options]="options"></td-text-editor> -->
-        <ckeditor tagName="textarea" class="field-full-width editor" [editor]="Editor" data="<p>Hello, world!</p>"
-          (ready)="onReady($event)"></ckeditor>
+        <mat-icon class="custom-icon">subtitles</mat-icon>
+        <td-text-editor #textEditor formControlName="content" class="field-full-width" [options]="options">
+        </td-text-editor>
+        <div>
+        </div>
       </div>
     </form>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-raised-button>
+    <button mat-flat-button>
       Trở về
     </button>
-    <button mat-raised-button color="accent">
+    <button mat-raised-button color="accent" [disabled]="blogPostForm.invalid" (click)="onSubmit()">
       Lưu
     </button>
   </mat-card-actions>
