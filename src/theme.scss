@@ -107,15 +107,28 @@ mat-card-title{
 }
 
 
-// .custom-icon {
-//     color: #ef6c00;
-//     width: 24px;
-//     margin: 23px 20px 0 0 ;
-// }
+.custom-icon {
+    color: grey;
+    width: 24px;
+    margin: 23px 20px 0 0 ;
+}
 
-// .mat-icon {
-//    color: #ef6c00 !important;
-// }
+.mat-icon {
+  //  color: grey;
+}
+
+.layout-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.search-box {
+  padding: 10px 20px;
+}
+
+.w60 {
+  width: 60%;
+}
 
 .mat-drawer.mat-drawer-side {
     z-index: 1 !important;;

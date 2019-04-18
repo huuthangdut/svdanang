@@ -1,14 +1,12 @@
-import { CollectionViewer } from '@angular/cdk/collections';
-import { DataSource } from '@angular/cdk/table';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/material';
-import { BehaviorSubject, merge, Observable, of } from 'rxjs';
-import { catchError, finalize, first, tap } from 'rxjs/operators';
+import { merge, fromEvent } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { User } from '../../../core/models';
 import { UserService } from './../../../core/services';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { UserFormComponent } from './../user-form/user-form.component';
+import { UsersDataSource } from './user.data-source';
 
 @Component({
   selector: 'app-user-list',
@@ -22,7 +20,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('search') search: ElementRef;
 
   constructor(
     private dialog: MatDialog,
@@ -35,16 +33,16 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // fromEvent(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //     debounceTime(150),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 1;
-    //       this.loadUsersPage();
-    //     })
-    //   )
-    //   .subscribe();
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadUsersPage();
+        })
+      )
+      .subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -57,8 +55,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   loadUsersPage() {
     this.dataSource.loadUsers(
-      // this.input.nativeElement.value,
-      '',
+      this.search.nativeElement.value,
       this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,
@@ -112,48 +109,3 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
 }
 
-
-class UsersDataSource implements DataSource<User> {
-  private usersSubject = new BehaviorSubject<User[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
-  public loading$ = this.loadingSubject.asObservable();
-
-  public page: number;
-  public pageSize: number;
-  public totalElements: number;
-
-  constructor(private userService: UserService) {
-
-  }
-
-  connect(collectionViewer: CollectionViewer): Observable<User[]> {
-    return this.usersSubject.asObservable();
-  }
-
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.usersSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadUsers(filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
-    this.loadingSubject.next(true);
-
-    this.userService.getUsers(filter, sortBy, sortDirection, pageIndex, pageSize)
-      .pipe(
-        first(),
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false))
-      )
-      .subscribe((response: any) => {
-        if (response.success) {
-          let users = response.data.content;
-          this.page = response.data.page;
-          this.pageSize = response.data.size;
-          this.totalElements = response.data.totalElements;
-          this.usersSubject.next(users);
-        }
-      });
-  }
-}

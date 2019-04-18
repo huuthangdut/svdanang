@@ -10,27 +10,21 @@
 
 
 <mat-card>
-  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
     <span class="push-left-sm">
       <span class="mat-title">Danh sách vai trò</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
-    </td-search-box>
-    <span>
-      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #toolbarMenu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
-      </mat-menu>
-    </span>
+
   </div>
   <mat-divider></mat-divider>
 
-  <br><br><br>
+  <div class="search-box" flex fxLayout="row" fxLayoutAlign="end center">
+    <mat-form-field class="w60">
+      <mat-label>Tìm kiếm</mat-label>
+      <input #search matInput>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
 
   <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="name"
     matSortDirection="asc" matSortDisableClear>

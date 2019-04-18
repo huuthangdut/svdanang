@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { TINY_MCE } from './../blog-post.module';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +14,8 @@ import { BlogPostFormService } from './../../../core/services/forms/blog-post-fo
   styleUrls: ['./blog-post-form.component.scss']
 })
 export class BlogPostFormComponent implements OnInit {
+  @ViewChild("editor") editor: ElementRef;
+
   title = 'Tạo mới bài đăng';
   topics = [];
 
@@ -26,14 +29,7 @@ export class BlogPostFormComponent implements OnInit {
 
   submitting: boolean;
 
-  options: any = {
-    lineWrapping: true,
-    toolbar: ["bold", "italic", "heading", "|", "quote", "ordered-list", "unordered-list", "table", "|", "link", "image", "|", "preview", "side-by-side", "fullscreen"],
-    toolbarTips: true,
-    status: true,
-    placeholder: "Nhập nội dung bài đăng",
-    spellCheck: false
-  };
+  tinyMCE = TINY_MCE;
 
   constructor(
     private blogPostService: BlogPostService,
@@ -114,6 +110,7 @@ export class BlogPostFormComponent implements OnInit {
       topicId: post.topic.id
     })
   }
+
 
   getSubmitModel() {
     const formValue = Object.assign({}, this.blogPostForm.value);

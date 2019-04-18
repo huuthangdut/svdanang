@@ -64,8 +64,8 @@
       </div>
       <div fxLayout="row">
         <mat-icon class="custom-icon">subtitles</mat-icon>
-        <td-text-editor #textEditor formControlName="content" class="field-full-width" [options]="options">
-        </td-text-editor>
+        <editor formControlName="content" #editor class="field-full-width" [apiKey]="tinyMCE.API_KEY"
+          [init]="tinyMCE.SETTINGS"></editor>
         <div>
         </div>
       </div>

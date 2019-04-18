@@ -15,11 +15,10 @@
     </button>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
       <span flex></span>
-      <button mat-icon-button>
-        <mat-icon>notifications</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
+      <button mat-icon-button matTooltip="Đi đến svdanang.com">
+        <mat-icon>
+          launch
+        </mat-icon>
       </button>
     </div>
     <td-layout-manage-list #manageList [opened]="media.registerQuery('gt-sm') | async"

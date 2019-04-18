@@ -36,4 +36,15 @@ export class EventService {
   deleteEvent(id: number) {
     return this.apiService.delete(`/events/${id}`);
   }
+
+  getVolunteers(eventId: number, filter: string, sortBy: string, sortOrder: string, pageNumber: number, pageSize: number): any {
+    return this.apiService.get('/volunteers',
+      new HttpParams()
+        .set('eventId', eventId.toString())
+        .set('filter', filter)
+        .set('sortBy', sortBy)
+        .set('sortOrder', sortOrder)
+        .set('page', pageNumber.toString())
+        .set('pageSize', pageSize.toString()));
+  }
 }

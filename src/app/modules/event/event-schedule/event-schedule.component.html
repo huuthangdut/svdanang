@@ -23,13 +23,13 @@
           <p matLine>
             {{ schedule.location }}
           </p>
-          <button mat-icon-button (click)="onEdit(schedule, i)">
-            <!-- <mat-icon class="custom-icon">edit</mat-icon> -->
+          <button mat-button color="accent" (click)="onEdit(schedule, i)">
+            <!-- <mat-icon>edit</mat-icon> -->
             Sửa
           </button>
-          <button mat-icon-button (click)="onRemoveSchedule(i)">
-            <!-- <mat-icon class="custom-icon">delete_outline</mat-icon> -->
+          <button mat-button color="warn" (click)="onRemoveSchedule(i)">
             Xoá
+            <!-- <mat-icon>delete_outline</mat-icon> -->
           </button>
         </mat-list-item>
       </mat-list>

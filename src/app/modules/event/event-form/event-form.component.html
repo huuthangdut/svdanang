@@ -148,9 +148,9 @@
         </div>
 
       </mat-tab>
-      <mat-tab label="Tình nguyện viên">
+      <mat-tab *ngIf="isEdit" label="Tình nguyện viên">
         <div class="mat-container">
-          <app-volunteer-list></app-volunteer-list>
+          <app-volunteer-list [eventId]="eventId"></app-volunteer-list>
         </div>
       </mat-tab>
     </mat-tab-group>
