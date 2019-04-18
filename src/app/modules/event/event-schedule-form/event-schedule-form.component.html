@@ -1,0 +1,54 @@
+<h2 mat-dialog-title class="mat-dialog-title">{{ title }}</h2>
+<mat-dialog-content>
+  <div class="mat-container">
+    <form [formGroup]="scheduleForm" flex fxLayout="column" fxLayoutGap="15px">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+        <div fxFlex="50" fxLayout="row">
+          <mat-form-field class="field-full-width">
+            <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Thời gian bắt đầu"
+              formControlName="startTime" required>
+            <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+            <mat-datepicker type="datetime" #startTimePicker></mat-datepicker>
+            <mat-error *ngIf="formErrors.startTime">
+              {{ formErrors.startTime }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50" fxLayout="row">
+          <mat-form-field class="field-full-width">
+            <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Thời gian kết thúc"
+              formControlName="endTime" required>
+            <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+            <mat-datepicker type="datetime" #endTimePicker></mat-datepicker>
+            <mat-error *ngIf="formErrors.endTime">
+              {{ formErrors.endTime }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <textarea cdkTextareaAutosize (blur)="onValueChanged()" matInput placeholder="Nội dung" type="text"
+            formControlName="schedule" required></textarea>
+          <mat-error *ngIf="formErrors.schedule">
+            {{ formErrors.schedule }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" matInput placeholder="Địa điểm" type="text" formControlName="location"
+            required>
+          <mat-error *ngIf="formErrors.location">
+            {{ formErrors.location }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Trở về</button>
+  <button mat-button mat-raised-button color="accent" [disabled]="scheduleForm.invalid"
+    (click)="onSubmit()">Lưu</button>
+</mat-dialog-actions>

@@ -1,7 +1,10 @@
+
 export class EventSchedule {
-  id: number;
-  startTime: number;
-  endTime: number;
-  location: string;
-  schedule: string;
+  constructor(
+    public id: number,
+    public startTime: number,
+    public endTime: number,
+    public location: string,
+    public schedule: string
+  ) { }
 }

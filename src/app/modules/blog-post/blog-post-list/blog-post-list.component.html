@@ -13,8 +13,7 @@
     <span class="push-left-sm">
       <span class="mat-title">Danh sách bài đăng</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
-      (searchDebounce)="search($event)" flex>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
     </td-search-box>
     <span>
       <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
@@ -89,7 +88,7 @@
 
   <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
     [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
-    </mat-paginator>
+  </mat-paginator>
 </mat-card>
 
 <a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">

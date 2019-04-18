@@ -1,3 +1,4 @@
+import { DepartmentService } from './../../../core/services/department.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
@@ -7,6 +8,7 @@ import { UserFormService } from '../../../core/services/forms/user-form.service'
 import { UserService } from './../../../core/services/user.service';
 import { PasswordValidators, UserEmailValidators, UsernameValidators } from './../../../core/validators';
 import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
+import { RoleService } from '../../../core/services/role.service';
 
 @Component({
   selector: 'app-user-form',
@@ -40,6 +42,8 @@ export class UserFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
+    private departmentService: DepartmentService,
+    private roleService: RoleService,
     private userService: UserService,
     private userFormService: UserFormService,
     private snackBar: MatSnackBar) {
@@ -62,20 +66,19 @@ export class UserFormComponent implements OnInit {
   }
 
   loadDepartments() {
-    this.departments = [
-      { id: 1, name: 'Ban 1' },
-      { id: 2, name: 'Ban 2' },
-      { id: 3, name: 'Ban 3' },
-      { id: 4, name: 'Ban 4' },
-    ]
+    this.departmentService.getAll().subscribe(response => {
+      if (response.success) {
+        this.departments = response.data;
+      }
+    });
   }
 
   loadRoles() {
-    this.roles = [
-      { id: 1, name: 'Admin' },
-      { id: 2, name: 'Admod' },
-      { id: 3, name: 'Admoedd' },
-    ]
+    this.roleService.getRoles('', '', '', 0, 30).subscribe(response => {
+      if (response.success) {
+        this.roles = response.data.content;
+      }
+    });
   }
 
   getUserAndPopulateForm(id: number) {
@@ -103,7 +106,7 @@ export class UserFormComponent implements OnInit {
       email: user.email,
       departmentId: user.department ? user.department.id : null,
       isActive: true,
-      roles: [1, 2]
+      roles: user.roles.map(i => i.id)
     });
   }
 
@@ -158,8 +161,6 @@ export class UserFormComponent implements OnInit {
     this.userFormService.logValidationErrors(this.userForm);
 
     this.formErrors = this.userFormService.formErrors;
-
-    console.log(this.formErrors);
   }
 
   getSubmitModel() {

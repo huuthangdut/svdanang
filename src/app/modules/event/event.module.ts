@@ -10,6 +10,7 @@ import { EventTopicFormComponent } from './event-topic-form/event-topic-form.com
 import { EventScheduleComponent } from './event-schedule/event-schedule.component';
 import { VolunteerListComponent } from './volunteer-list/volunteer-list.component';
 import { VolunteerDetailsComponent } from './volunteer-details/volunteer-details.component';
+import { EventScheduleFormComponent } from './event-schedule-form/event-schedule-form.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +20,16 @@ import { VolunteerDetailsComponent } from './volunteer-details/volunteer-details
     EventTopicFormComponent,
     EventScheduleComponent,
     VolunteerListComponent,
-    VolunteerDetailsComponent
+    VolunteerDetailsComponent,
+    EventScheduleFormComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     EventRoutingModule
+  ],
+  entryComponents: [
+    EventScheduleFormComponent
   ]
 })
 export class EventModule { }

@@ -14,8 +14,7 @@
     <span class="push-left-sm">
       <span class="mat-title">Danh sách người dùng</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
-      (searchDebounce)="search($event)" flex>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
     </td-search-box>
     <span>
       <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
@@ -41,7 +40,11 @@
     <ng-container matColumnDef="avatar">
       <mat-header-cell *matHeaderCellDef> Ảnh đại diện </mat-header-cell>
       <mat-cell *matCellDef="let user">
-        <img mat-card-avatar [src]="user.avatar">
+        <img mat-card-avatar *ngIf="user.avatar;else noAvatar" [src]="user.avatar">
+        <ng-template #noAvatar>
+          <img mat-card-avatar alt=""
+            src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
+        </ng-template>
       </mat-cell>
     </ng-container>
 
@@ -77,10 +80,10 @@
 
     <ng-container matColumnDef="isActive">
       <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let user">{{user.isActive}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let user">{{ user.isActive ? "Kích hoạt" : "Khoá" }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" width="10%">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let user">
         <button mat-icon-button color="primary" (click)="onEdit(user.id)">
@@ -96,6 +99,11 @@
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
+
+  <div *ngIf="dataSource.loading$ | async">
+    <app-spinner-overlay>
+    </app-spinner-overlay>
+  </div>
 
   <mat-divider></mat-divider>
 

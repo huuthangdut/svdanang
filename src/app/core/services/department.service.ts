@@ -7,4 +7,8 @@ import { ApiService } from './api.service';
 export class DepartmentService {
 
   constructor(private apiService: ApiService) { }
+
+  getAll() {
+    return this.apiService.get('/departments');
+  }
 }

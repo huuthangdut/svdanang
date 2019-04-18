@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
   error = '';
-  formSubmitted = false;
 
   validationMessages = {
     'username': [
@@ -62,8 +61,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.form.invalid)
       return;
-
-    this.formSubmitted = true;
 
     this.loading = true;
     this.authService.login(this.f.username.value, this.f.password.value)

@@ -4,6 +4,7 @@
 
 @import '~@angular/material/theming';
 @import '~@covalent/core/theming/all-theme';
+@import '~@coachcare/datepicker/theming';
 // Plus imports for other components in your app.
 
 // Custom typography
@@ -46,11 +47,16 @@ $warn:    mat-palette($mat-red, 600, 100, 900);
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: mat-light-theme($primary, $accent, $warn);
 
+
+
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($theme);
 @include covalent-theme($theme);
+@include mat-datepicker-theme($theme);
 
 // Active icon color in list nav
 mat-nav-list, mat-list {
@@ -101,12 +107,25 @@ mat-card-title{
 }
 
 
-.custom-icon {
-    color: grey;
-    width: 24px;
-    margin: 23px 20px 0 0 ;
-}
+// .custom-icon {
+//     color: #ef6c00;
+//     width: 24px;
+//     margin: 23px 20px 0 0 ;
+// }
+
+// .mat-icon {
+//    color: #ef6c00 !important;
+// }
 
 .mat-drawer.mat-drawer-side {
     z-index: 1 !important;;
+}
+
+// CUSTOM MAT CALENDAR
+body {
+  --bg-dialog: white;
+  --primary:  #ef6c00;
+  --primary-contrast: #fff;
+  --primary-a60: #ef6c00;
+  --primary-a80: #ef6c00;
 }

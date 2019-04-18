@@ -13,8 +13,7 @@
     <span class="push-left-sm">
       <span class="mat-title">Danh sách sự kiện</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here"
-      (searchDebounce)="search($event)" flex>
+    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
     </td-search-box>
     <span>
       <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
@@ -57,17 +56,17 @@
 
     <ng-container matColumnDef="startTime">
       <mat-header-cell *matHeaderCellDef>Ngày bắt đầu</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.startTime }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">{{event.startTime | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="endTime">
       <mat-header-cell *matHeaderCellDef>Ngày kết thúc</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.endTime }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">{{event.endTime | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdDate">
       <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.createdDate }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">{{event.createdDate | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">

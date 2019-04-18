@@ -9,6 +9,7 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 import { ErrorInterceptor, JwtInterceptor } from './interceptors';
 
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -44,3 +45,5 @@ export class CoreModule {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }
+
+

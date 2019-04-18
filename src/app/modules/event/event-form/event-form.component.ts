@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, EventModel } from '../../../core/models/event.model';
 import { DateValidators } from '../../../core/validators/date.validator';
 import { EventSchedule } from '../../../core/models/event-schedule.model';
+import { DatePipeService } from '../../../shared/services/date-pipe.service';
 
 @Component({
   selector: 'app-event-form',
@@ -38,6 +39,7 @@ export class EventFormComponent implements OnInit {
     private eventService: EventService,
     private eventFormService: EventFormService,
     private eventTopicService: EventTopicService,
+    private datePipeService: DatePipeService,
     private snackBar: MatSnackBar) {
 
     let param = +this.route.snapshot.paramMap.get('id');
@@ -50,15 +52,6 @@ export class EventFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.schedules = [
-        { id: 1, startTime: null, endTime: null, schedule: 'Ke hoach 1', location: 'Thon Among 1' },
-        { id: 2, startTime: null, endTime: null, schedule: 'Ke hoach 2', location: 'Thon Among 2' },
-        { id: 3, startTime: null, endTime: null, schedule: 'Ke hoach 3', location: 'Thon Among 3' }
-      ]
-    }, 3000);
-
-
     this.formErrors = this.eventFormService.formErrors;
     this.loadCurrencies();
     this.loadEventTopics();
@@ -153,8 +146,8 @@ export class EventFormComponent implements OnInit {
       formValue.name,
       formValue.description,
       formValue.location,
-      null,
-      null,
+      this.datePipeService.toUnixTimestamp(formValue.startTime),
+      this.datePipeService.toUnixTimestamp(formValue.endTime),
       null,
       formValue.topicId,
       formValue.expectedQuantity,

@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://api-svdanang.herokuapp.com/api'
+  apiURL: 'https://svdanang.herokuapp.com/api'
 };

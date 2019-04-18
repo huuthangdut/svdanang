@@ -1,83 +1,38 @@
-<form [formGroup]="scheduleForm" flex fxLayout="column" fxLayoutGap="15px">
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
-    <div fxFlex="30" fxLayout="row">
-      <mat-icon class="custom-icon">date_range</mat-icon>
-      <mat-form-field class="field-full-width">
-        <input matInput [matDatepicker]="picker" placeholder="Thời gian bắt đầu" formControlName="startTime">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div fxFlex="70" fxLayout="row">
-      <mat-icon class="custom-icon">title</mat-icon>
-      <mat-form-field class="field-full-width">
-        <input matInput placeholder="Nội dung" type="text" formControlName="schedule">
-      </mat-form-field>
-    </div>
-  </div>
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
-    <div fxFlex="30" fxLayout="row">
-      <mat-icon class="custom-icon">date_range</mat-icon>
-      <mat-form-field class="field-full-width">
-        <input matInput [matDatepicker]="myDatepicker" placeholder="Thời gian kết thúc" formControlName="endTime">
-        <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-        <mat-datepicker #myDatepicker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div fxFlex="70" fxLayout="row">
-      <mat-icon class="custom-icon">title</mat-icon>
-      <mat-form-field class="field-full-width">
-        <input matInput placeholder="Địa điểm" type="text" formControlName="location">
-      </mat-form-field>
-    </div>
-  </div>
-  <div align="end">
-    <button mat-fab color="accent" (click)="onAddSchedule() ">
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-</form>
+<div align="start">
+  <button mat-raised-button color="accent" (click)="onCreate()">
+    Thêm lịch trình
+  </button>
+</div>
 
 
-<h3 align="center">Lịch trình sự kiện</h3>
+<h3 align="center" *ngIf="schedules.length > 0">Lịch trình sự kiện</h3>
+
 
 <div *ngFor="let schedule of schedules; index as i">
   <td-expansion-panel [expand]="false">
     <ng-template td-expansion-panel-label class="expansion-header">
       <mat-icon>access_time</mat-icon>
-      <span style="padding-left: 10px;">{{ schedule.startTime | date:'dd/MM/yyyy' }} -
-        {{ schedule.endTime | date:'dd/MM/yyyy' }}</span>
+      <span style="padding-left: 10px;">{{ schedule.startTime | datetimeFormat }} -
+        {{ schedule.endTime | datetimeFormat }}</span>
     </ng-template>
     <td-expansion-summary>
       <mat-list>
         <mat-list-item>
           <mat-icon matListAvatar>pin_drop</mat-icon>
-          <!-- <h3 matLine>{{ schedule.schedule }}</h3> -->
           <h4 matLine>{{ schedule.schedule }}</h4>
           <p matLine>
             {{ schedule.location }}
           </p>
+          <button mat-icon-button (click)="onEdit(schedule, i)">
+            <!-- <mat-icon class="custom-icon">edit</mat-icon> -->
+            Sửa
+          </button>
+          <button mat-icon-button (click)="onRemoveSchedule(i)">
+            <!-- <mat-icon class="custom-icon">delete_outline</mat-icon> -->
+            Xoá
+          </button>
         </mat-list-item>
       </mat-list>
     </td-expansion-summary>
-    <form class="md-padding">
-      <div layout="row">
-        <mat-form-field flex>
-          <textarea matInput cdkTextareaAutosize placeholder="Nội dung"></textarea>
-        </mat-form-field>
-      </div>
-      <div layout="row">
-        <mat-form-field flex>
-          <input matInput placeholder="Địa điểm" />
-        </mat-form-field>
-      </div>
-    </form>
-    <!-- <mat-divider></mat-divider> -->
-    <div layout="row" class="pad-sm">
-      <button mat-button color="accent" class="text-upper">Lưu</button>
-      <button mat-button color="warn" class="text-upper" (click)="onRemoveSchedule(i)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </div>
   </td-expansion-panel>
 </div>
