@@ -5,7 +5,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { Route, Router } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge } from 'hammerjs';
-import { tap } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-event-list',
@@ -15,11 +16,11 @@ import { tap } from 'rxjs/operators';
 export class EventListComponent implements OnInit, AfterViewInit {
 
   dataSource: EventsDataSource;
-  displayedColumns = ['name', 'description', 'location', 'topic', 'startTime', 'endTime', 'createdDate', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'description', 'location', 'topic', 'startTime', 'endTime', 'createdDate', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('search') search: ElementRef;
 
 
   constructor(private router: Router,
@@ -33,16 +34,16 @@ export class EventListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // fromEvent(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //     debounceTime(150),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 1;
-    //       this.loadUsersPage();
-    //     })
-    //   )
-    //   .subscribe();
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadEventsPage();
+        })
+      )
+      .subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -55,8 +56,7 @@ export class EventListComponent implements OnInit, AfterViewInit {
 
   loadEventsPage() {
     this.dataSource.loadEvents(
-      // this.input.nativeElement.value,
-      '',
+      this.search.nativeElement.value,
       this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,

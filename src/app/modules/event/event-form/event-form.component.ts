@@ -84,6 +84,7 @@ export class EventFormComponent implements OnInit {
   buildForm() {
     this.eventForm = this.formBuilder.group({
       name: [null, Validators.required],
+      shortDescription: null,
       description: null,
       topicId: [null, Validators.required],
       dateGroup: this.formBuilder.group({
@@ -130,6 +131,7 @@ export class EventFormComponent implements OnInit {
   setFormValue(event: Event): any {
     this.eventForm.patchValue({
       name: event.name,
+      shortDescription: event.shortDescription,
       description: event.description,
       topicId: event.eventTopic.id,
       startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
@@ -148,6 +150,7 @@ export class EventFormComponent implements OnInit {
     return new EventModel(
       this.event ? this.event.id : null,
       formValue.name,
+      formValue.shortDescription,
       formValue.description,
       formValue.location,
       this.datePipeService.toUnixTimestamp(formValue.startTime),

@@ -1,6 +1,8 @@
+import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
+import { DateValidators } from './../../../core/validators/date.validator';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { EventSchedule } from '../../../core/models/event-schedule.model';
 import { EventScheduleFormService } from '../../../core/services/forms/event-schedule-form.service';
@@ -15,6 +17,7 @@ export class EventScheduleFormComponent implements OnInit {
   title = 'Tạo mới lịch trình';
   scheduleForm: FormGroup;
   formErrors: any;
+  errorMatcher = new CrossFieldErrorMatcher();
 
   schedule: EventSchedule;
   isEdit: boolean = false;
@@ -42,17 +45,21 @@ export class EventScheduleFormComponent implements OnInit {
   buildForm() {
     if (this.isEdit) {
       this.scheduleForm = this.formBuilder.group({
-        startTime: this.datePipeService.fromUnixTimeStamp(this.schedule.startTime),
-        endTime: this.datePipeService.fromUnixTimeStamp(this.schedule.endTime),
-        schedule: this.schedule.schedule,
-        location: this.schedule.location
+        dateGroup: this.formBuilder.group({
+          startTime: [this.datePipeService.fromUnixTimeStamp(this.schedule.startTime), Validators.required],
+          endTime: [this.datePipeService.fromUnixTimeStamp(this.schedule.endTime), Validators.required]
+        }, { validators: DateValidators.dateRange }),
+        schedule: [this.schedule.schedule, Validators.required],
+        location: [this.schedule.location, Validators.required]
       });
     } else {
       this.scheduleForm = this.formBuilder.group({
-        startTime: new Date(),
-        endTime: new Date(),
-        schedule: null,
-        location: null
+        dateGroup: this.formBuilder.group({
+          startTime: [new Date(), Validators.required],
+          endTime: [new Date(), Validators.required],
+        }, { validators: DateValidators.dateRange }),
+        schedule: [null, Validators.required],
+        location: [null, Validators.required]
       });
     }
 

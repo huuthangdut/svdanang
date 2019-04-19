@@ -12,7 +12,7 @@ export class BlogPostService {
   constructor(private apiService: ApiService) { }
 
   getPosts(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any> {
-    return this.apiService.get('/posts',
+    return this.apiService.get('/blog-posts',
       new HttpParams()
         .set('filter', filter)
         .set('sortBy', sortBy)
@@ -22,18 +22,18 @@ export class BlogPostService {
   }
 
   getPost(id: number): any {
-    return this.apiService.get(`/posts/${id}`);
+    return this.apiService.get(`/blog-posts/${id}`);
   }
 
   createPost(post) {
-    return this.apiService.post(`/posts`, post);
+    return this.apiService.post(`/blog-posts`, post);
   }
 
   updatePost(id: number, post) {
-    return this.apiService.put(`/posts/${id}`, post);
+    return this.apiService.put(`/blog-posts/${id}`, post);
   }
 
   deletePost(id: number): any {
-    return this.apiService.delete(`/posts/${id}`);
+    return this.apiService.delete(`/blog-posts/${id}`);
   }
 }

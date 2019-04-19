@@ -6,6 +6,7 @@ import { EventSchedule } from './event-schedule.model';
 class Event {
   id: number;
   name: string;
+  shortDescription: string;
   description: string;
   location: string;
   startTime: number;
@@ -30,7 +31,6 @@ class Event {
     avatar: string;
   };
   eventSchedules: EventSchedule[];
-  volunteers: Volunteer[];
 }
 
 
@@ -38,6 +38,7 @@ class EventModel {
   constructor(
     public id: number,
     public name: string,
+    public shortDescription: string,
     public description: string,
     public location: string,
     public startTime: number,

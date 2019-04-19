@@ -1,4 +1,8 @@
-export const TINY_MCE = {
+import { environment } from "../../../environments/environment";
+
+const BASE_URL = environment.apiURL;
+
+export const TINY_MCE_SETTINGS = {
   API_KEY: "9byhcrv7dz1t8bdwslufkff61j23dt5zoo6kovgiia8ws443",
   SETTINGS: {
     selector: 'textarea',
@@ -13,7 +17,7 @@ export const TINY_MCE = {
 
       xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
-      xhr.open('POST', 'https://svdanang.herokuapp.com/uploadFile');
+      xhr.open('POST', BASE_URL + '/uploadFile');
 
       xhr.onload = function () {
         var json;

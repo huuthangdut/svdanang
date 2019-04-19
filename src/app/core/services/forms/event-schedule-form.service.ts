@@ -11,6 +11,7 @@ export class EventScheduleFormService {
   formErrors = {
     startTime: '',
     endTime: '',
+    dateGroup: '',
     schedule: '',
     location: ''
   }
@@ -22,6 +23,9 @@ export class EventScheduleFormService {
       },
       endTime: {
         required: 'Vui lòng nhập thời gian kết thúc.'
+      },
+      dateGroup: {
+        dateRange: 'Khoảng thời gian không hợp lệ.'
       },
       schedule: {
         required: 'Vui lòng nhập nội dung.'

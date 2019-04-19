@@ -1,3 +1,4 @@
+import { MAT_MOMENT_DATE_FORMATS } from './settings/date-format.settings';
 import { DateTimeFormatPipe } from './pipes/datetime-format.pipe';
 import { DateFormatPipe } from './pipes/date-format.pipe';
 import { CommonModule } from '@angular/common';
@@ -67,24 +68,6 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
 
-export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
-  parse: {
-    date: ['DD/MM/YYYY', 'DD-MM-YYYY', 'll'],
-    datetime: ['DD/MM/YYYY HH:mm', 'DD-MM-YYYY HH:mm', 'll h:mma'],
-    time: ['HH:mm', 'H:mm', 'h:mm a', 'hh:mm a'],
-  },
-  display: {
-    date: 'DD/MM/YYYY',
-    datetime: 'DD/MM/YYYY HH:mm',
-    time: 'HH:mm',
-    dateA11yLabel: 'DD/MM/YYYY HH:mm',
-    monthDayLabel: 'DD/MM',
-    monthDayA11yLabel: 'DD/MM',
-    monthYearLabel: 'MM/YYYY',
-    monthYearA11yLabel: 'MM/YYYY',
-    timeLabel: 'HH:mm',
-  }
-};
 
 @NgModule({
   declarations: [

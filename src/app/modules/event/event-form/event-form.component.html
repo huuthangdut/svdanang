@@ -27,7 +27,14 @@
             <div fxLayout="row">
               <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
-                <input matInput placeholder="Mô tả" type="text" formControlName="description">
+                <input matInput placeholder="Mô tả ngắn" type="text" formControlName="shortDescription">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">short_text</mat-icon>
+              <mat-form-field class="field-full-width">
+                <textarea cdkTextareaAutosize matInput placeholder="Nội dung" type="text"
+                  formControlName="description"></textarea>
               </mat-form-field>
             </div>
             <div fxLayout="row">
@@ -55,7 +62,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div formGroupName="dateGroup" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+            <div [formGroup]="eventForm.get('dateGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">

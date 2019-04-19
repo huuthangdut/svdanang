@@ -2,6 +2,7 @@ import { EventService } from './../../../core/services/event.service';
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { first, catchError, finalize } from 'rxjs/operators';
+import { Event } from '../../../core/models/event.model';
 
 export class EventsDataSource implements DataSource<Event> {
   private eventsSubject = new BehaviorSubject<Event[]>([]);

@@ -1,14 +1,12 @@
-import { DialogService } from './../../../shared/services/dialog.service';
-import { Router } from '@angular/router';
-import { CollectionViewer } from '@angular/cdk/collections';
-import { DataSource } from '@angular/cdk/table';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { BehaviorSubject, Observable, of, fromEvent, merge } from 'rxjs';
-import { catchError, finalize, debounceTime, distinctUntilChanged, tap, first } from 'rxjs/operators';
-
-import { BlogPost } from './../../../core/models/blog-post.model';
-import { BlogPostService } from './../../../core/services/blog-post.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
+import { merge, fromEvent } from 'rxjs';
+import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { BlogPostService } from './../../../core/services/blog-post.service';
+import { DialogService } from './../../../shared/services/dialog.service';
+import { BlogPostsDataSource } from './blog-post.data-source';
 
 @Component({
   selector: 'app-blog-post-list',
@@ -18,11 +16,11 @@ import { MatPaginator, MatSort } from '@angular/material';
 export class BlogPostListComponent implements OnInit {
   dataSource: BlogPostsDataSource;
 
-  displayedColumns = ['thumbnailImage', 'title', 'shortDescription', 'createdDate', 'createdBy', 'isPublish', 'actions']
+  displayedColumns = ['thumbnailImage', 'title', 'shortContent', 'createdDate', 'createdBy', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('search') search: ElementRef;
 
   constructor(
     private blogPostService: BlogPostService,
@@ -36,16 +34,16 @@ export class BlogPostListComponent implements OnInit {
 
   ngAfterViewInit() {
     // server-side search
-    // fromEvent(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //     debounceTime(150),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 0;
-    //       this.loadPostsPage();
-    //     })
-    //   )
-    //   .subscribe();
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadPostsPage();
+        })
+      )
+      .subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -58,8 +56,7 @@ export class BlogPostListComponent implements OnInit {
 
   loadPostsPage() {
     this.dataSource.loadPosts(
-      // this.input.nativeElement.value,
-      '',
+      this.search.nativeElement.value,
       this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,
@@ -89,48 +86,3 @@ export class BlogPostListComponent implements OnInit {
 
 
 }
-
-
-class BlogPostsDataSource implements DataSource<BlogPost> {
-  private postsSubject = new BehaviorSubject<BlogPost[]>([]);
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-
-  public page: number;
-  public pageSize: number;
-  public totalElements: number;
-
-  constructor(private blogPostService: BlogPostService) {
-
-  }
-
-  connect(collectionViewer: CollectionViewer): Observable<BlogPost[]> {
-    return this.postsSubject.asObservable();
-  }
-
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.postsSubject.complete();
-    this.loadingSubject.complete();
-  }
-
-  loadPosts(filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
-    this.loadingSubject.next(true);
-
-    this.blogPostService.getPosts(filter, sortBy, sortDirection, pageIndex, pageSize)
-      .pipe(
-        first(),
-        catchError(() => of([])),
-        finalize(() => this.loadingSubject.next(false))
-      )
-      .subscribe((response: any) => {
-        if (response.success) {
-          let posts = response.data.content;
-          this.page = response.data.page;
-          this.pageSize = response.data.size;
-          this.totalElements = response.data.totalElements;
-          this.postsSubject.next(posts);
-        }
-      });
-  }
-}
-

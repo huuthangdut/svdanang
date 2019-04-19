@@ -58,7 +58,7 @@
       </div>
 
       <div *ngIf="!isEdit">
-        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" formGroupName="passwordGroup">
+        <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" [formGroup]="userForm.get('passwordGroup')">
           <div fxFlex="50" fxLayout="row">
             <mat-icon class="custom-icon">lock</mat-icon>
             <mat-form-field class="field-full-width">

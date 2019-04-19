@@ -9,20 +9,19 @@
 </mat-toolbar>
 
 <mat-card>
-  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
     <span class="push-left-sm">
       <span class="mat-title">Danh sách bài đăng</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
-    </td-search-box>
+    <span flex></span>
     <span>
       <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #toolbarMenu="matMenu">
         <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
+          <mat-icon>import_export</mat-icon>
+          <span>Xuất excel</span>
         </button>
       </mat-menu>
     </span>
@@ -30,7 +29,13 @@
   <mat-divider></mat-divider>
 
 
-  <br><br><br>
+  <div class="search-box" flex fxLayout="row" fxLayoutAlign="end center">
+    <mat-form-field class="w100">
+      <mat-label>Tìm kiếm</mat-label>
+      <input #search matInput>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
 
 
 
@@ -38,7 +43,10 @@
     matSortDirection="asc" matSortDisableClear>
     <ng-container matColumnDef="thumbnailImage">
       <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
-      <mat-cell *matCellDef="let post">{{post.thumbnailImage}}</mat-cell>
+      <mat-cell *matCellDef="let post">
+        <img mat-card-image [src]="post.thumbnailImage" [attr.alt]="post.title">
+      </mat-cell>
+
     </ng-container>
 
     <ng-container matColumnDef="title">
@@ -46,30 +54,31 @@
       <mat-cell class="description-cell" *matCellDef="let post">{{post.title}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="shortDescription">
+    <ng-container matColumnDef="shortContent">
       <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.shortDescription}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.shortContent}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdDate">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdDate}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdDate | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdBy">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Người tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdBy}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdBy?.lastName}}
+        {{ post.createdBy?.firstName}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="isPublish">
+    <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.isPublish}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.status}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let post">
-        <button mat-icon-button (click)="onEdit(post.id)">
+        <button mat-icon-button color="accent" (click)="onEdit(post.id)">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="onDelete(post.id)">
