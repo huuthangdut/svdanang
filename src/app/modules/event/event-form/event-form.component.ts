@@ -10,6 +10,7 @@ import { Event, EventModel } from '../../../core/models/event.model';
 import { DateValidators } from '../../../core/validators/date.validator';
 import { EventSchedule } from '../../../core/models/event-schedule.model';
 import { DatePipeService } from '../../../shared/services/date-pipe.service';
+import { CrossFieldErrorMatcher } from '../../../core/validators/cross-field-error-matcher';
 
 @Component({
   selector: 'app-event-form',
@@ -29,6 +30,7 @@ export class EventFormComponent implements OnInit {
   eventForm: FormGroup;
 
   formErrors: any;
+  errorMatcher = new CrossFieldErrorMatcher();
 
   submitting: boolean;
 
@@ -84,8 +86,10 @@ export class EventFormComponent implements OnInit {
       name: [null, Validators.required],
       description: null,
       topicId: [null, Validators.required],
-      startTime: [null, [Validators.required, DateValidators.date]],
-      endTime: [null, [Validators.required, DateValidators.date]],
+      dateGroup: this.formBuilder.group({
+        startTime: [null, [Validators.required]],
+        endTime: [null, [Validators.required]],
+      }, { validators: DateValidators.dateRange }),
       location: [null, Validators.required],
       expectedQuantity: [null, Validators.required],
       fee: [null, Validators.required],
@@ -128,8 +132,8 @@ export class EventFormComponent implements OnInit {
       name: event.name,
       description: event.description,
       topicId: event.eventTopic.id,
-      startTime: null,
-      endTime: null,
+      startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
+      endTime: this.datePipeService.fromUnixTimeStamp(event.endTime),
       location: event.location,
       expectedQuantity: event.expectedQuantity,
       fee: event.fee,

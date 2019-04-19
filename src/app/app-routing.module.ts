@@ -1,3 +1,4 @@
+import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -44,6 +45,10 @@ const routes: Routes = [{
     {
       path: 'projects',
       loadChildren: './modules/project/project.module#ProjectModule'
+    },
+    {
+      path: 'file',
+      component: UploadImageComponent
     },
   ],
 },

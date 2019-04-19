@@ -1,10 +1,8 @@
-import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { TdMediaService } from '@covalent/core';
-import { AuthUser } from '../../models';
-import { Route, Router } from '@angular/router';
+
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,15 +12,12 @@ import { Route, Router } from '@angular/router';
 export class SidenavComponent {
   name = "Diễn đàn sinh viên Đà nẵng";
 
-  routes: Object[] = [{
-    icon: 'build',
-    route: '/',
-    title: 'Console',
-  }, {
-    icon: 'library_books',
-    route: '/profile',
-    title: 'Trang cá nhân',
-  }
+  routes: Object[] = [
+    {
+      icon: 'account_box',
+      route: '/profile',
+      title: 'Trang cá nhân',
+    }
   ];
   mgmtmenu: Object[] = [{
     icon: 'people',

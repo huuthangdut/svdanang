@@ -1,12 +1,13 @@
-import { TINY_MCE } from './../blog-post.module';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
+import { TINY_MCE } from '../tiny-mce.setting';
 import { BlogPost, BlogPostModel } from './../../../core/models/blog-post.model';
 import { BlogPostService } from './../../../core/services/blog-post.service';
 import { BlogPostFormService } from './../../../core/services/forms/blog-post-form.service';
+
 
 @Component({
   selector: 'app-blog-post-form',

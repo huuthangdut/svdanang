@@ -11,6 +11,7 @@ export class EventFormService {
   formErrors = {
     name: '',
     topicId: '',
+    dateGroup: '',
     startTime: '',
     endTime: '',
     location: '',
@@ -28,12 +29,13 @@ export class EventFormService {
         required: 'Vui lòng chọn chủ đề sự kiện.'
       },
       startTime: {
-        required: 'Vui lòng chọn ngày bắt đầu.',
-        date: 'Ngày không đúng định dạng dd/MM/yyyy.'
+        required: 'Vui lòng chọn ngày bắt đầu.'
       },
       endTime: {
-        required: 'Vui lòng chọn ngày kết thúc.',
-        date: 'Ngày không đúng định dạng dd/MM/yyyy.'
+        required: 'Vui lòng chọn ngày kết thúc.'
+      },
+      dateGroup: {
+        dateRange: 'Khoảng thời gian không hợp lệ.'
       },
       location: {
         required: 'Vui lòng nhập địa điểm tổ chức sự kiện.'

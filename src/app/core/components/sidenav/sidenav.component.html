@@ -25,11 +25,11 @@
       [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
       [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
       <mat-toolbar td-sidenav-content>
-        <mat-icon class="push-left-xs">build</mat-icon>
-        <span class="push-left">Console</span>
+        <mat-icon class="push-left-xs">home</mat-icon>
+        <span class="push-left">CMS</span>
       </mat-toolbar>
       <mat-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
-        <a mat-list-item>
+        <a mat-list-item [routerLink]="['/']">
           <mat-icon matListIcon>dashboard</mat-icon> Trang tổng quan
         </a>
         <h3 matSubheader>Quản lý</h3>
@@ -39,13 +39,13 @@
           </a>
           <mat-divider *ngIf="item.divider"></mat-divider>
         </ng-template>
-        <h3 matSubheader>Monitor</h3>
+        <h3 matSubheader>Quyền hạn</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="monitormenu">
           <a mat-list-item [routerLink]="item.route">
             <mat-icon matListIcon>{{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
-        <h3 matSubheader>Settings</h3>
+        <h3 matSubheader>Cài đặt</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="settingsmenu">
           <a mat-list-item [routerLink]="item.route">
             <mat-icon matListIcon>{{item.icon}}</mat-icon> {{item.title}}

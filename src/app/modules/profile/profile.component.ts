@@ -1,3 +1,4 @@
+import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
@@ -36,6 +37,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private userProfileFormService: UserProfileFormService,
     private updatePasswordFormService: UpdatePasswordFormService,
+    private datePipeService: DatePipeService,
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -47,7 +49,6 @@ export class ProfileComponent implements OnInit {
 
     this.getUserProfileAndPopulateToProfileForm();
   }
-
 
   getUserProfileAndPopulateToProfileForm() {
     this.userService.getCurrentUser()
@@ -69,7 +70,7 @@ export class ProfileComponent implements OnInit {
       department: userProfile.department,
       email: userProfile.email,
       phoneNumber: userProfile.phoneNumber,
-      birthDate: userProfile.birthDate,
+      birthDate: this.datePipeService.fromUnixTimeStamp(userProfile.birthDate),
       gender: userProfile.gender,
       address: userProfile.address,
       city: userProfile.city,
@@ -133,7 +134,7 @@ export class ProfileComponent implements OnInit {
       formValue.firstName,
       formValue.lastName,
       formValue.phoneNumber,
-      null,
+      this.datePipeService.toUnixTimestamp(formValue.birthDate),
       formValue.gender,
       formValue.address,
       formValue.city,

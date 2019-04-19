@@ -1,0 +1,8 @@
+<p>{{fileSelectMsg}}</p>
+<td-file-upload class="file-upload" (select)="selectEvent($event)" accept=".img,.png,.jpg,.jpeg" (upload)="uploadEvent($event)"
+  (cancel)="cancelEvent()" required>
+  <mat-icon>file_upload</mat-icon>
+  <ng-template td-file-input-label>
+    <mat-icon>add_a_photo</mat-icon>
+  </ng-template>
+</td-file-upload>

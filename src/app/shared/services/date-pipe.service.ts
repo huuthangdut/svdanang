@@ -8,19 +8,19 @@ export class DatePipeService {
 
   constructor() { }
 
-  toUnixTimestamp(value): number {
+  toUnixTimestamp(value): number | null {
     if (moment(value).isValid()) {
       return +moment(value);
     }
 
-    return +moment();
+    return null;
   }
 
-  fromUnixTimeStamp(value: number): Date {
+  fromUnixTimeStamp(value: number): Date | null {
     if (moment(value).isValid()) {
       return moment(value).toDate();
     }
 
-    return moment().toDate();
+    return null;
   }
 }

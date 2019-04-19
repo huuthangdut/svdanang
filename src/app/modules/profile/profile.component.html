@@ -18,7 +18,14 @@
         <form [formGroup]="profileForm" flex fxLayout="column" fxLayoutGap="10px">
           <div flex fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
             <div fxFlex="25">
-              <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
+              <div fxLayout="column" fxLayoutGap="5px">
+                <div align="center">
+                  <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
+                </div>
+                <!-- <div align="center">
+                  <app-upload-image (upload)="onUploadAvatar($event)"></app-upload-image>
+                </div> -->
+              </div>
             </div>
             <div fxFlex="75">
               <div fxLayout="column" fxLayoutGap="10px">

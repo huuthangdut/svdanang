@@ -55,7 +55,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+            <div formGroupName="dateGroup" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
@@ -72,11 +72,11 @@
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
                   <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc"
-                    formControlName="endTime" required>
+                    formControlName="endTime" required [errorStateMatcher]="errorMatcher">
                   <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
                   <mat-datepicker #endTimePicker></mat-datepicker>
-                  <mat-error *ngIf="formErrors.endTime">
-                    {{ formErrors.endTime }}
+                  <mat-error *ngIf="formErrors.endTime || formErrors.dateGroup">
+                    {{ formErrors.endTime ? formErrors.endTime : formErrors.dateGroup}}
                   </mat-error>
                 </mat-form-field>
               </div>

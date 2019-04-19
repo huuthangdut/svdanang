@@ -25,6 +25,13 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
+  postFile(url: string, file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+
+    return this.httpClient.post('https://svdanang.herokuapp.com' + url, formData);
+  }
+
   put(url: string, body: object = {}): Observable<any> {
     return this.httpClient
       .put(BASE_URL + url, JSON.stringify(body))

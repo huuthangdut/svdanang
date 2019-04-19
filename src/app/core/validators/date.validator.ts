@@ -1,11 +1,16 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import * as moment from 'moment';
 
 export class DateValidators {
 
-  static date(control: AbstractControl): ValidationErrors | null {
-    // if (control && control.value && !moment(control.value, 'dd/mm/yyyy', true).isValid()) {
-    //   return { 'date': true };
-    // }
+  static dateRange(group: AbstractControl): ValidationErrors | null {
+    const startTime = group.get('startTime').value;
+    const endTime = group.get('endTime').value;
+
+    if (moment(endTime).isBefore(moment(startTime))) {
+      return { dateRange: true };
+    }
+
     return null;
   }
 }

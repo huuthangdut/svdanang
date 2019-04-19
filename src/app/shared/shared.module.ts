@@ -65,6 +65,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
+import { UploadImageComponent } from './components/upload-image/upload-image.component';
 
 export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -92,7 +93,8 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
     SpinnerComponent,
     ConfirmDialogComponent,
     DateFormatPipe,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    UploadImageComponent
 
   ],
   imports: [
@@ -227,7 +229,8 @@ export const MAT_MOMENT_DATE_FORMATS: MatDateFormats = {
 
     HasPermissionDirective,
     DateFormatPipe,
-    DateTimeFormatPipe
+    DateTimeFormatPipe,
+    UploadImageComponent
 
   ],
   entryComponents: [
