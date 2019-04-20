@@ -11,7 +11,7 @@ export class BlogPostFormService {
   formErrors = {
     title: '',
     topicId: '',
-    shortDescription: ''
+    shortContent: ''
   }
 
   constructor() {
@@ -22,7 +22,7 @@ export class BlogPostFormService {
       topicId: {
         required: 'Vui lòng chọn chủ đề bài đăng.'
       },
-      shortDescription: {
+      shortContent: {
         required: 'Vui lòng nhập mô tả ngắn.',
       }
     }

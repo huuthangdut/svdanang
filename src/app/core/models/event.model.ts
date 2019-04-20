@@ -12,6 +12,7 @@ class Event {
   startTime: number;
   endTime: number;
   image: string;
+  topicId: number;
   eventTopic: EventTopic;
   expectedQuantity: number;
   fee: number;
@@ -44,7 +45,7 @@ class EventModel {
     public startTime: number,
     public endTime: number,
     public image: string,
-    public eventTopicId: number,
+    public topicId: number,
     public expectedQuantity: number,
     public fee: number,
     public currencyId: number,

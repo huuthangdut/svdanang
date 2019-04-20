@@ -1,9 +1,15 @@
-import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { debounceTime, map, tap } from 'rxjs/operators';
+
 import { UserService } from '../services/user.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 export class UsernameValidators {
+
+  constructor(public changeRef: ChangeDetectorRef) {
+    // this.contructor.changeRef = changeRef;
+  }
 
   static unique(userService: UserService, oldUsername?: string) {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -16,8 +22,12 @@ export class UsernameValidators {
           if (!response.success) {
             return { unique: true };
           }
-        }));
+        },
+          // tap(() => setTimeout(() => UsernameValidators.changeRef.detectChanges(), 0))
+        ));
     }
   }
+
+
 }
 

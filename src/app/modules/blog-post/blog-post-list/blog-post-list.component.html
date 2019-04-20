@@ -39,7 +39,7 @@
 
 
 
-  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="title"
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
     matSortDirection="asc" matSortDisableClear>
     <ng-container matColumnDef="thumbnailImage">
       <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
@@ -54,9 +54,9 @@
       <mat-cell class="description-cell" *matCellDef="let post">{{post.title}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="shortContent">
-      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.shortContent}}</mat-cell>
+    <ng-container matColumnDef="topic">
+      <mat-header-cell *matHeaderCellDef>Danh mục</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.blogPostTopic.name}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdDate">

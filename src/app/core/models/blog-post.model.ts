@@ -2,10 +2,11 @@ import { BlogPostTopic } from './blog-post-topic.model';
 class BlogPost {
   id: number;
   title: string;
-  shortDescription: string;
+  shortContent: string;
   content: string;
   thumbnailImage: string;
-  topic: BlogPostTopic;
+  blogPostTopic: BlogPostTopic;
+  blogPostTopicId: number;
   createdDate: number;
   updatedDate: number;
   createdBy: string;
@@ -16,9 +17,9 @@ class BlogPostModel {
   constructor(
     public id: number,
     public title: string,
-    public shortDescription: string,
+    public shortContent: string,
     public content: string,
-    public topicId: number,
+    public blogPostTopicId: number,
     public thumbnailImage: string
   ) {
 

@@ -84,8 +84,8 @@ export class EventScheduleFormComponent implements OnInit {
 
     return new EventSchedule(
       this.schedule ? this.schedule.id : null,
-      this.datePipeService.toUnixTimestamp(formValue.startTime),
-      this.datePipeService.toUnixTimestamp(formValue.endTime),
+      this.datePipeService.toUnixTimestamp(formValue.dateGroup.startTime),
+      this.datePipeService.toUnixTimestamp(formValue.dateGroup.endTime),
       formValue.location,
       formValue.schedule
     )

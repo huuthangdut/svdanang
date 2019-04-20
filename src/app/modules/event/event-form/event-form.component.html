@@ -105,7 +105,7 @@
                   <div fxFlex="80" fxLayout="row">
                     <mat-icon class="custom-icon">attach_money</mat-icon>
                     <mat-form-field class="field-full-width">
-                      <input (blur)="onValueChanged()" matInput placeholder="Lệ phí tham gia" type="text"
+                      <input (blur)="onValueChanged()" matInput placeholder="Lệ phí tham gia" type="number"
                         formControlName="fee" required>
                       <mat-error *ngIf="formErrors.fee">
                         {{ formErrors.fee }}

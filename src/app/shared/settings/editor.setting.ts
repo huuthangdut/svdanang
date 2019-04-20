@@ -17,7 +17,7 @@ export const TINY_MCE_SETTINGS = {
 
       xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
-      xhr.open('POST', BASE_URL + '/uploadFile');
+      xhr.open('POST', 'https://svdanang.herokuapp.com/uploadFile');
 
       xhr.onload = function () {
         var json;

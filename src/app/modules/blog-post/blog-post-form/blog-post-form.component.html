@@ -38,16 +38,6 @@
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-icon class="custom-icon">title</mat-icon>
-        <mat-form-field class="field-full-width">
-          <input (blur)="onValueChanged()" formControlName="shortDescription" matInput placeholder="Mô tả ngắn"
-            type="text" required>
-          <mat-error *ngIf="formErrors.shortDescription">
-            {{ formErrors.shortDescription }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div fxLayout="row">
         <mat-icon class="custom-icon">subject</mat-icon>
         <mat-form-field class="field-full-width">
           <mat-label>Chủ đề</mat-label>
@@ -62,6 +52,37 @@
           </mat-error>
         </mat-form-field>
       </div>
+      <div fxLayout="row">
+        <mat-icon class="custom-icon">title</mat-icon>
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" formControlName="shortContent" matInput placeholder="Mô tả ngắn" type="text"
+            required>
+          <mat-error *ngIf="formErrors.shortContent">
+            {{ formErrors.shortContent }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-icon class="custom-icon">image</mat-icon>
+        <mat-form-field tdFileDrop (fileDrop)="onSelectImage($event)" (click)="fileInput.inputElement.click()"
+          (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
+          (keyup.backspace)="fileInput.clear()" flex>
+          <input matInput placeholder="Chọn ảnh thumbnail"
+            [value]="file?.length ? (file?.length + ' file') : file?.name" readonly />
+        </mat-form-field>
+        <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <td-file-input class="push-left-sm push-right-sm" accept='image/*' #fileInput (select)="onSelectImage($event)">
+          <mat-icon>folder</mat-icon>
+          <span class="text-upper"> Duyệt</span>
+        </td-file-input>
+      </div>
+      <div fxLayout="row" *ngIf="thumbnailImage">
+        <mat-icon class="custom-icon"></mat-icon>
+        <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
+      </div>
+
       <div fxLayout="row">
         <mat-icon class="custom-icon">subtitles</mat-icon>
         <editor formControlName="content" #editor class="field-full-width" [apiKey]="tinyMCE.API_KEY"

@@ -1,12 +1,14 @@
-import { TINY_MCE_SETTINGS } from './../../../shared/settings/editor.setting';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { map, switchMap } from 'rxjs/operators';
+import { UploadService } from './../../../core/services/upload.service';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { BlogPost, BlogPostModel } from './../../../core/models/blog-post.model';
 import { BlogPostService } from './../../../core/services/blog-post.service';
 import { BlogPostFormService } from './../../../core/services/forms/blog-post-form.service';
+import { TINY_MCE_SETTINGS } from './../../../shared/settings/editor.setting';
 
 
 @Component({
@@ -15,7 +17,9 @@ import { BlogPostFormService } from './../../../core/services/forms/blog-post-fo
   styleUrls: ['./blog-post-form.component.scss']
 })
 export class BlogPostFormComponent implements OnInit {
-  @ViewChild("editor") editor: ElementRef;
+
+  file: File;
+  thumbnailImage: string;
 
   title = 'Tạo mới bài đăng';
   topics = [];
@@ -35,8 +39,10 @@ export class BlogPostFormComponent implements OnInit {
   constructor(
     private blogPostService: BlogPostService,
     private blogPostFormService: BlogPostFormService,
+    private uploadService: UploadService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private snackBar: MatSnackBar
   ) {
     let param = +this.route.snapshot.paramMap.get('id');
@@ -69,7 +75,7 @@ export class BlogPostFormComponent implements OnInit {
     this.blogPostForm = this.formBuilder.group({
       title: [null, Validators.required],
       topicId: [null, Validators.required],
-      shortDescription: null,
+      shortContent: null,
       content: [null, Validators.required]
     });
 
@@ -106,10 +112,12 @@ export class BlogPostFormComponent implements OnInit {
   setFormValue(post: BlogPost) {
     this.blogPostForm.patchValue({
       title: post.title,
-      shortDescription: post.shortDescription,
+      shortContent: post.shortContent,
       content: post.content,
-      topicId: post.topic.id
+      topicId: post.blogPostTopicId
     })
+
+    this.thumbnailImage = post.thumbnailImage;
   }
 
 
@@ -122,27 +130,71 @@ export class BlogPostFormComponent implements OnInit {
       formValue.shortDescription,
       formValue.content,
       formValue.topicId,
-      formValue.thumbnailImage
+      this.post ? this.post.thumbnailImage : null
     );
   }
+
+  onSelectImage(file: File) {
+    this.file = file;
+
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event: any) => {
+      this.thumbnailImage = event.target.result;
+    }
+  }
+
+  onClearImage() {
+    this.file = null;
+    this.thumbnailImage = this.post ? this.post.thumbnailImage : '';
+  }
+
 
   onSubmit() {
     this.submitting = true;
     if (this.blogPostForm.valid) {
       const blogPost = this.getSubmitModel();
-      console.log(blogPost);
 
       if (this.isEdit) {
-        this.blogPostService.updatePost(blogPost.id, event).subscribe(
-          response => this.handleSubmitSuccess(response),
-          error => this.handleSubmitError(error)
-        );
-      } else {
-        this.blogPostService.createPost(blogPost)
-          .subscribe(
+        if (this.file) {
+          this.uploadService.uploadFile(this.file).pipe(
+            map(params => params['fileDownloadUri']),
+            switchMap(fileUrl => {
+              blogPost.thumbnailImage = fileUrl
+              return this.blogPostService.updatePost(blogPost.id, event)
+            })
+          ).subscribe(
             response => this.handleSubmitSuccess(response),
             error => this.handleSubmitError(error)
           );
+        }
+        else {
+          this.blogPostService.updatePost(blogPost.id, event).subscribe(
+            response => this.handleSubmitSuccess(response),
+            error => this.handleSubmitError(error)
+          );
+        }
+
+      } else {
+        if (this.file) {
+          this.uploadService.uploadFile(this.file).pipe(
+            map(params => params['fileDownloadUri']),
+            switchMap(fileUrl => {
+              blogPost.thumbnailImage = fileUrl
+              return this.blogPostService.createPost(blogPost)
+            })
+          ).subscribe(
+            response => this.handleSubmitSuccess(response),
+            error => this.handleSubmitError(error)
+          );
+        } else {
+          this.blogPostService.createPost(blogPost)
+            .subscribe(
+              response => this.handleSubmitSuccess(response),
+              error => this.handleSubmitError(error)
+            );
+        }
+
       }
     }
   }
@@ -154,6 +206,8 @@ export class BlogPostFormComponent implements OnInit {
     this.snackBar.open(message, '', {
       duration: 2000,
     });
+
+    this.router.navigate(['/posts']);
   }
 
   handleSubmitError(error) {

@@ -2,7 +2,7 @@ import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
 const BASE_URL = environment.apiURL;
 
@@ -10,6 +10,10 @@ const BASE_URL = environment.apiURL;
   providedIn: 'root'
 })
 export class ApiService {
+
+  private header: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,7 +25,7 @@ export class ApiService {
 
   post(url: string, body: object = {}): Observable<any> {
     return this.httpClient
-      .post(BASE_URL + url, JSON.stringify(body))
+      .post(BASE_URL + url, JSON.stringify(body), { headers: this.header })
       .pipe(catchError(this.formatErrors));
   }
 
@@ -34,7 +38,7 @@ export class ApiService {
 
   put(url: string, body: object = {}): Observable<any> {
     return this.httpClient
-      .put(BASE_URL + url, JSON.stringify(body))
+      .put(BASE_URL + url, JSON.stringify(body), { headers: this.header })
       .pipe(catchError(this.formatErrors));
   }
 

@@ -120,6 +120,7 @@ export class EventFormComponent implements OnInit {
     this.eventService.getEvent(eventId).subscribe((response) => {
       if (response.success) {
         this.event = response.data;
+        this.schedules = response.data.schedules;
 
         this.setFormValue(this.event);
         this.eventFormService.markDirty(this.eventForm);
@@ -133,13 +134,15 @@ export class EventFormComponent implements OnInit {
       name: event.name,
       shortDescription: event.shortDescription,
       description: event.description,
-      topicId: event.eventTopic.id,
-      startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
-      endTime: this.datePipeService.fromUnixTimeStamp(event.endTime),
+      topicId: event.topicId, // DOI TEN
+      dateGroup: {
+        startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
+        endTime: this.datePipeService.fromUnixTimeStamp(event.endTime),
+      },
       location: event.location,
       expectedQuantity: event.expectedQuantity,
       fee: event.fee,
-      currencyId: event.currency.id
+      currencyId: event.currency // DOI TEN
     })
   }
 
@@ -153,8 +156,8 @@ export class EventFormComponent implements OnInit {
       formValue.shortDescription,
       formValue.description,
       formValue.location,
-      this.datePipeService.toUnixTimestamp(formValue.startTime),
-      this.datePipeService.toUnixTimestamp(formValue.endTime),
+      this.datePipeService.toUnixTimestamp(formValue.dateGroup.startTime),
+      this.datePipeService.toUnixTimestamp(formValue.dateGroup.endTime),
       null,
       formValue.topicId,
       formValue.expectedQuantity,

@@ -63,7 +63,7 @@
 
     <ng-container matColumnDef="topic">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Chủ đề</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.topic?.name}}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">{{event.eventTopic?.name}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="startTime">
