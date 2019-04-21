@@ -41,6 +41,7 @@
 
   <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
     matSortDirection="asc" matSortDisableClear>
+
     <ng-container matColumnDef="thumbnailImage">
       <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
       <mat-cell *matCellDef="let post">
@@ -87,13 +88,30 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">
+    </mat-footer-row>
+
   </mat-table>
 
-  <mat-divider></mat-divider>
+  <!--
+  <div *ngIf="dataSource.loading$ | async">
+    <app-spinner-overlay>
+    </app-spinner-overlay>
+  </div> -->
+
+  <!-- <mat-divider></mat-divider> -->
 
   <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
     [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">

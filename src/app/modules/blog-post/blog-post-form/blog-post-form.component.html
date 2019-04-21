@@ -68,7 +68,7 @@
           (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
           (keyup.backspace)="fileInput.clear()" flex>
           <input matInput placeholder="Chọn ảnh thumbnail"
-            [value]="file?.length ? (file?.length + ' file') : file?.name" readonly />
+            [value]="file?.name" readonly />
         </mat-form-field>
         <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
           <mat-icon>cancel</mat-icon>

@@ -10,6 +10,8 @@ export class RolesDataSource implements DataSource<Role> {
   private rolesSubject = new BehaviorSubject<Role[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
+  public loading$ = this.loadingSubject.asObservable();
+
   public page: number;
   public pageSize: number;
   public totalElements: number;

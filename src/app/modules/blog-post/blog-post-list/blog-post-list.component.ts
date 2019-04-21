@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
-import { merge, fromEvent } from 'rxjs';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { BlogPostService } from './../../../core/services/blog-post.service';
 import { DialogService } from './../../../shared/services/dialog.service';
@@ -25,6 +25,7 @@ export class BlogPostListComponent implements OnInit {
   constructor(
     private blogPostService: BlogPostService,
     private dialogService: DialogService,
+    private snackBar: MatSnackBar,
     private router: Router) { }
 
   ngOnInit() {
@@ -77,9 +78,27 @@ export class BlogPostListComponent implements OnInit {
       message: 'Bạn có chắc chắn muốn xoá bài đăng này?'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.blogPostService.deletePost(id).subscribe(() =>
-          this.loadPostsPage());
+        this.blogPostService.deletePost(id).subscribe(
+          response => this.handleDeleteSuccess(),
+          error => this.handleDeleteError(error)
+        );
       }
+    });
+
+
+  }
+
+  handleDeleteSuccess() {
+    this.snackBar.open("Xoá bài viết thành công.", '', {
+      duration: 2000
+    });
+    this.paginator.pageIndex = 0;
+    this.loadPostsPage();
+  }
+
+  handleDeleteError(error) {
+    this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {
+      duration: 2000,
     });
   }
 

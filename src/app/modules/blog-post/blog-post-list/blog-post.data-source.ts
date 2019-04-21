@@ -10,6 +10,8 @@ export class BlogPostsDataSource implements DataSource<BlogPost> {
   private postsSubject = new BehaviorSubject<BlogPost[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
+  public loading$ = this.loadingSubject.asObservable();
+
   public page: number;
   public pageSize: number;
   public totalElements: number;

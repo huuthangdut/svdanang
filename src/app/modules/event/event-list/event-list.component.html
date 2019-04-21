@@ -51,11 +51,6 @@
       <mat-cell *matCellDef="let event">{{event.name }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.description}}</mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="location">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Địa điểm</mat-header-cell>
       <mat-cell class="description-cell" *matCellDef="let event">{{event.location}}</mat-cell>
@@ -98,17 +93,21 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">
+    </mat-footer-row>
+
 
   </mat-table>
-
-  <div *ngIf="dataSource.loading$ | async">
-    <app-spinner-overlay>
-    </app-spinner-overlay>
-  </div>
 
   <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
     [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">

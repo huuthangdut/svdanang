@@ -17,6 +17,20 @@ a[mat-icon-button] {
     width: 50%;
 }
 
+.hide {
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}
+
+mat-spinner .loading-spinner {
+  width: 30px;
+  height: 30px;
+}
+
 
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');

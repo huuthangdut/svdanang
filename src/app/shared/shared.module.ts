@@ -32,6 +32,7 @@ import {
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
+  MatProgressBarModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import {
@@ -93,6 +94,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     FlexLayoutModule,
     // material modules
     MatNativeDateModule,
+    MatProgressBarModule,
     MatSidenavModule,
     MatRadioModule,
     MatSelectModule,
@@ -158,6 +160,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     HttpClientModule,
     FlexLayoutModule,
     // material modules
+    MatProgressBarModule,
     MatNativeDateModule,
     MatSidenavModule,
     MatRadioModule,

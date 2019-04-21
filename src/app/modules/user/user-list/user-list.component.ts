@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -25,7 +25,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private userService: UserService,
-    private dialogService: DialogService) { }
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.dataSource = new UsersDataSource(this.userService);
@@ -101,9 +102,25 @@ export class UserListComponent implements OnInit, AfterViewInit {
       message: 'Bạn có chắc chắn muốn xoá người dùng này?'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.userService.deleteUser(id).subscribe(() =>
-          this.loadUsersPage());
+        this.userService.deleteUser(id).subscribe(
+          response => this.handleDeleteSuccess(),
+          error => this.handleDeleteError(error)
+        );
       }
+    });
+  }
+
+  handleDeleteSuccess(): void {
+    this.snackBar.open('Xoá người dùng thành công.', '', {
+      duration: 2000
+    });
+    this.paginator.pageIndex = 0;
+    this.loadUsersPage();
+  }
+
+  handleDeleteError(error: any): void {
+    this.snackBar.open('Có lỗi xảy ra. Vui lòng thử lại', '', {
+      duration: 2000
     });
   }
 

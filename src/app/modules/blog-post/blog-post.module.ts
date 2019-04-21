@@ -6,6 +6,7 @@ import { BlogPostFormComponent } from './blog-post-form/blog-post-form.component
 import { BlogPostListComponent } from './blog-post-list/blog-post-list.component';
 import { BlogPostRoutingModule } from './blog-post-routing.module';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { CovalentLoadingModule } from '@covalent/core/loading';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     CommonModule,
     SharedModule,
     BlogPostRoutingModule,
-    EditorModule
+    EditorModule,
+    CovalentLoadingModule
   ]
 })
 export class BlogPostModule { }

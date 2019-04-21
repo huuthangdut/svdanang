@@ -3,7 +3,7 @@ import { EventService } from './../../../core/services/event.service';
 import { EventsDataSource } from './event.data-source';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { merge } from 'hammerjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
@@ -16,7 +16,7 @@ import { fromEvent } from 'rxjs';
 export class EventListComponent implements OnInit, AfterViewInit {
 
   dataSource: EventsDataSource;
-  displayedColumns = ['image', 'name', 'description', 'location', 'topic', 'startTime', 'endTime', 'createdDate', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'location', 'topic', 'startTime', 'endTime', 'createdDate', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,7 +25,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router,
     private eventService: EventService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -77,9 +78,26 @@ export class EventListComponent implements OnInit, AfterViewInit {
       message: 'Bạn có chắc chắn muốn xoá sự kiện này?'
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.eventService.deleteEvent(id).subscribe(() =>
-          this.loadEventsPage());
+        this.eventService.deleteEvent(id).subscribe(
+          () => this.handleDeleteSuccess(),
+          (error) => this.handleDeleteError(error)
+
+        );
       }
+    });
+  }
+
+  handleDeleteSuccess(): void {
+    this.snackBar.open('Xoá sự kiện thành công.', '', {
+      duration: 2000
+    });
+    this.paginator.pageIndex = 0;
+    this.loadEventsPage();
+  }
+
+  handleDeleteError(error: any): void {
+    this.snackBar.open('Có lỗi xảy ra. Vui lòng thử lại', '', {
+      duration: 2000
     });
   }
 

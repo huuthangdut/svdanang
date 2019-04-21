@@ -102,20 +102,24 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     }).afterClosed().subscribe(result => {
       if (result) {
         this.roleService.deleteRole(id).subscribe(
-          () => this.handleDeleteSuccess,
-          (error) => this.handleDeleteError);
+          (response) => this.handleDeleteSuccess(),
+          (error) => this.handleDeleteError(error));
       }
     });
   }
 
   handleDeleteSuccess() {
+    this.snackBar.open("Xoá vai trò thành công.", '', {
+      duration: 2000
+    });
     this.paginator.pageIndex = 0;
     this.loadRolesPage();
-    this.snackBar.open("Xoá thành công.", "");
   }
 
-  handleDeleteError() {
-    this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.")
+  handleDeleteError(error) {
+    this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {
+      duration: 2000
+    })
   }
 
 }
