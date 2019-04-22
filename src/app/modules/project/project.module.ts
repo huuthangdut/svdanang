@@ -1,3 +1,5 @@
+import { CovalentLoadingModule } from '@covalent/core/loading';
+import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -10,10 +12,18 @@ import { DonationListComponent } from './donation-list/donation-list.component';
 import { DonationDetailsComponent } from './donation-details/donation-details.component';
 
 @NgModule({
-  declarations: [ProjectListComponent, ProjectFormComponent, ProjectTopicListComponent, ProjectTopicFormComponent, DonationListComponent, DonationDetailsComponent],
+  declarations: [
+    ProjectListComponent,
+    ProjectFormComponent,
+    ProjectTopicListComponent,
+    ProjectTopicFormComponent,
+    DonationListComponent,
+    DonationDetailsComponent],
   imports: [
     CommonModule,
-    ProjectRoutingModule
+    ProjectRoutingModule,
+    SharedModule,
+    CovalentLoadingModule
   ]
 })
 export class ProjectModule { }

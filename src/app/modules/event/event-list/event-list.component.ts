@@ -1,12 +1,12 @@
-import { DialogService } from './../../../shared/services/dialog.service';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+
 import { EventService } from './../../../core/services/event.service';
+import { DialogService } from './../../../shared/services/dialog.service';
 import { EventsDataSource } from './event.data-source';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { MatPaginator, MatSort, MatSnackBar } from '@angular/material';
-import { merge } from 'hammerjs';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-event-list',

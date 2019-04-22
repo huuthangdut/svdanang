@@ -1,3 +1,135 @@
-<p>
-  project-form works!
-</p>
+<mat-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{ title }}</span>
+    <span flex></span>
+  </div>
+</mat-toolbar>
+
+<mat-card>
+  <mat-card-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
+    <mat-tab-group>
+      <mat-tab label="Thông tin dự án">
+        <div class="mat-container">
+          <form [formGroup]="projectForm" flex fxLayout="column" fxLayoutGap="15px">
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input (blur)="onValueChanged()" matInput placeholder="Tên dự án" type="text" formControlName="name"
+                  required>
+                <mat-error *ngIf="formErrors.name">
+                  {{ formErrors.name }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input matInput placeholder="Mô tả ngắn" type="text" formControlName="shortDescription">
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">short_text</mat-icon>
+              <mat-form-field class="field-full-width">
+                <textarea cdkTextareaAutosize matInput placeholder="Nội dung" type="text"
+                  formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">image</mat-icon>
+              <mat-form-field tdFileDrop (fileDrop)="onSelectImage($event)" (click)="fileInput.inputElement.click()"
+                (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
+                (keyup.backspace)="fileInput.clear()" flex>
+                <input matInput placeholder="Chọn ảnh thumbnail" [value]="file?.name" readonly />
+              </mat-form-field>
+              <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <td-file-input class="push-left-sm push-right-sm" accept='image/*' #fileInput
+                (select)="onSelectImage($event)">
+                <mat-icon>folder</mat-icon>
+                <span class="text-upper"> Duyệt</span>
+              </td-file-input>
+            </div>
+            <div fxLayout="row" *ngIf="thumbnailImage">
+              <mat-icon class="custom-icon"></mat-icon>
+              <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
+            </div>
+            
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">subject</mat-icon>
+              <mat-form-field class="field-full-width">
+                <mat-label>Chủ đề</mat-label>
+                <mat-select (change)="onValueChanged()" required formControlName="projectTopicId">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let topic of topics" [value]="topic.id">
+                    {{topic.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formErrors.projectTopicId">
+                  {{ formErrors.projectTopicId }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div [formGroup]="projectForm.get('dateGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+              <div fxFlex="50" fxLayout="row">
+                <mat-icon class="custom-icon">date_range</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Ngày bắt đầu"
+                    formControlName="startTime" required>
+                  <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startTimePicker></mat-datepicker>
+                  <mat-error *ngIf="formErrors.startTime">
+                    {{ formErrors.startTime }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex=" 50" fxLayout="row">
+                <mat-icon class="custom-icon">date_range</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc"
+                    formControlName="endTime" required [errorStateMatcher]="errorMatcher">
+                  <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endTimePicker></mat-datepicker>
+                  <mat-error *ngIf="formErrors.endTime || formErrors.dateGroup">
+                    {{ formErrors.endTime ? formErrors.endTime : formErrors.dateGroup}}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">group</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input (blur)="onValueChanged()" matInput placeholder="Số tiền cần gây quỹ" type="number" min="0"
+                  formControlName="goal" required>
+                <mat-error *ngIf="formErrors.goal">
+                  {{ formErrors.goal }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+          </form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Danh sách ủng hộ">
+        <div class="mat-container">
+          <app-donation-list>
+          </app-donation-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-flat-button>
+      Trở về
+    </button>
+    <button mat-raised-button color="accent" [disabled]="projectForm.invalid || submitting" (click)="onSubmit()">
+      Lưu
+    </button>
+  </mat-card-actions>
+
+</mat-card>

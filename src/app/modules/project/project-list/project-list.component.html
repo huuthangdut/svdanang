@@ -1,3 +1,115 @@
-<p>
-  project-list works!
-</p>
+<mat-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Quản lý dự án gây quỹ</span>
+    <span flex></span>
+  </div>
+</mat-toolbar>
+
+<mat-card>
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
+    <span class="push-left-sm">
+      <span class="mat-title">Danh sách dự án</span>
+    </span>
+    <span flex></span>
+    <span>
+      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #toolbarMenu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>import_export</mat-icon>
+          <span>Xuất excel</span>
+        </button>
+      </mat-menu>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+
+
+  <div class="search-box" flex fxLayout="row" fxLayoutAlign="end center">
+    <mat-form-field class="w100">
+      <mat-label>Tìm kiếm</mat-label>
+      <input #search matInput>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
+    matSortDirection="desc" matSortDisableClear>
+
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
+      <mat-cell *matCellDef="let project">
+        <img mat-card-image [src]="project.image" [attr.alt]="project.name">
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Tên dự án</mat-header-cell>
+      <mat-cell *matCellDef="let project">{{project.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="topic">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Chủ đề</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">{{project.projectTopic?.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef>Ngày bắt đầu</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">{{project.startTime | dateFormat }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="endTime">
+      <mat-header-cell *matHeaderCellDef>Ngày kết thúc</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">{{project.endTime | dateFormat }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdDate">
+      <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">{{project.createdDate | dateFormat }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">Status here..</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let project">
+        <button mat-icon-button color="accent" (click)="onEdit(project.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(project.id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">
+    </mat-footer-row>
+
+
+  </mat-table>
+
+  <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize"
+    [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+  </mat-paginator>
+
+</mat-card>
+
+<a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">
+  <mat-icon>add</mat-icon>
+</a>

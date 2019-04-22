@@ -18,3 +18,14 @@
 .custom-icon {
   margin: 18px 30px 0 0;
 }
+
+.thumbnail-preview {
+  height: 100%;
+  max-height: 300px;
+  width: 360px;
+  object-fit: contain;
+}
+
+.mat-icon {
+  color: grey;
+}

@@ -1,17 +1,20 @@
-import { MatSnackBar } from '@angular/material';
-import { EventFormService } from './../../../core/services/forms/event-form.service';
-import { EventService } from './../../../core/services/event.service';
-import { EventTopicService } from './../../../core/services/event-topic.service';
-import { CurrencyService } from './../../../core/services/currency.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { Event, EventModel } from '../../../core/models/event.model';
-import { DateValidators } from '../../../core/validators/date.validator';
-import { EventSchedule } from '../../../core/models/event-schedule.model';
-import { DatePipeService } from '../../../shared/services/date-pipe.service';
-import { CrossFieldErrorMatcher } from '../../../core/validators/cross-field-error-matcher';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TdLoadingService } from '@covalent/core/loading';
+
+import { EventSchedule } from '../../../core/models/event-schedule.model';
+import { Event, EventModel } from '../../../core/models/event.model';
+import { UploadService } from '../../../core/services/upload.service';
+import { CrossFieldErrorMatcher } from '../../../core/validators/cross-field-error-matcher';
+import { DateValidators } from '../../../core/validators/date.validator';
+import { DatePipeService } from '../../../shared/services/date-pipe.service';
+import { CurrencyService } from './../../../core/services/currency.service';
+import { EventTopicService } from './../../../core/services/event-topic.service';
+import { EventService } from './../../../core/services/event.service';
+import { EventFormService } from './../../../core/services/forms/event-form.service';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-form',
@@ -19,6 +22,9 @@ import { TdLoadingService } from '@covalent/core/loading';
   styleUrls: ['./event-form.component.scss']
 })
 export class EventFormComponent implements OnInit {
+  file: File;
+  thumbnailImage: string;
+
   title = 'Tạo mới sự kiện';
   topics = [];
   currencies = [];
@@ -46,6 +52,7 @@ export class EventFormComponent implements OnInit {
     private eventTopicService: EventTopicService,
     private datePipeService: DatePipeService,
     private loadingService: TdLoadingService,
+    private uploadService: UploadService,
     private snackBar: MatSnackBar) {
 
     let param = +this.route.snapshot.paramMap.get('id');
@@ -141,7 +148,7 @@ export class EventFormComponent implements OnInit {
       name: event.name,
       shortDescription: event.shortDescription,
       description: event.description,
-      topicId: event.topicId, // DOI TEN
+      topicId: null, // FIX
       dateGroup: {
         startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
         endTime: this.datePipeService.fromUnixTimeStamp(event.endTime),
@@ -149,7 +156,7 @@ export class EventFormComponent implements OnInit {
       location: event.location,
       expectedQuantity: event.expectedQuantity,
       fee: event.fee,
-      currencyId: event.currency // DOI TEN
+      currencyId: event.currency.id
     })
   }
 
@@ -182,25 +189,68 @@ export class EventFormComponent implements OnInit {
     this.loadingService.resolve('loading');
   }
 
+  onSelectImage(file: File) {
+    this.file = file;
+
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event: any) => {
+      this.thumbnailImage = event.target.result;
+    }
+  }
+
+  onClearImage() {
+    this.file = null;
+    this.thumbnailImage = this.event ? this.event.image : '';
+  }
+
   onSubmit() {
     this.submitting = true;
     this.startLoading();
 
     if (this.eventForm.valid) {
       const event = this.getSubmitModel();
-      console.log(event);
 
       if (this.isEdit) {
-        this.eventService.updateEvent(event.id, event).subscribe(
-          response => this.handleSubmitSuccess(response),
-          error => this.handleSubmitError(error)
-        );
-      } else {
-        this.eventService.createEvent(event)
-          .subscribe(
+        if (this.file) {
+          this.uploadService.uploadFile(this.file).pipe(
+            map(params => params['fileDownloadUri']),
+            switchMap(fileUrl => {
+              event.image = fileUrl
+              return this.eventService.updateEvent(event.id, event)
+            })
+          ).subscribe(
             response => this.handleSubmitSuccess(response),
             error => this.handleSubmitError(error)
           );
+        }
+        else {
+          this.eventService.updateEvent(event.id, event).subscribe(
+            response => this.handleSubmitSuccess(response),
+            error => this.handleSubmitError(error)
+          );
+        }
+
+      } else {
+        if (this.file) {
+          this.uploadService.uploadFile(this.file).pipe(
+            map(params => params['fileDownloadUri']),
+            switchMap(fileUrl => {
+              event.image = fileUrl
+              return this.eventService.createEvent(event)
+            })
+          ).subscribe(
+            response => this.handleSubmitSuccess(response),
+            error => this.handleSubmitError(error)
+          );
+        } else {
+          this.eventService.createEvent(event)
+            .subscribe(
+              response => this.handleSubmitSuccess(response),
+              error => this.handleSubmitError(error)
+            );
+        }
+
       }
     }
   }

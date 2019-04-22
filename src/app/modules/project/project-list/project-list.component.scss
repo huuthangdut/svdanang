@@ -1,0 +1,23 @@
+mat-table img{
+  object-fit: cover;
+  width: 80%;
+  height: 80%;
+  max-height: 200px;
+}
+
+mat-cell:nth-child(1),
+mat-header-cell:nth-child(1) {
+    flex: 0 0 15%;
+}
+
+mat-cell:nth-child(2),
+mat-header-cell:nth-child(2) {
+    flex: 0 0 21%;
+}
+
+
+
+mat-cell:nth-child(8),
+mat-header-cell:nth-child(8) {
+    flex: 0 0 7%;
+}

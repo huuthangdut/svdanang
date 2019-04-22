@@ -1,0 +1,31 @@
+.mat-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  // padding-top: 20px;
+}
+
+.mat-container > * {
+  width: 100%;
+}
+
+//  .mat-icon {
+//     color: grey;
+//     width: 24px;
+//     margin: 18px 30px 0 0;
+// }
+
+.custom-icon {
+  margin: 18px 30px 0 0;
+}
+
+.thumbnail-preview {
+  height: 100%;
+  max-height: 300px;
+  width: 360px;
+  object-fit: contain;
+}
+
+.mat-icon {
+  color: grey;
+}
