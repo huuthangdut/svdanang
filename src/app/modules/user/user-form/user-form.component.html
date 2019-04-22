@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
-  <div class="mat-container">
+<mat-dialog-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
+  <div class=" mat-container">
     <form [formGroup]="userForm" flex fxLayout="column" fxLayoutGap="10px">
       <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
         <div fxFlex="25">
@@ -116,33 +116,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-
-      <!-- <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-sm="column">
-        <div fxFlex="50" fxLayout="row">
-          <mat-icon class="custom-icon">group</mat-icon>
-          <mat-form-field class="field-full-width">
-            <mat-label>Ban</mat-label>
-            <mat-select formControlName="departmentId">
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let department of departments" [value]="department.id">
-                {{department.name}}
-              </mat-option>
-            </mat-select>
-            <mat-hint>
-              Bỏ trống nếu không thuộc thành viên diễn đàn.
-            </mat-hint>
-          </mat-form-field>
-        </div>
-        <div fxFlex="50" fxLayout="row">
-          <mat-icon class="custom-icon">pan_tool</mat-icon>
-          <mat-form-field class="field-full-width">
-            <mat-label>Vai trò</mat-label>
-            <mat-select multiple formControlName="roles">
-              <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div> -->
       <div fxLayout="row">
         <mat-icon class="custom-icon"></mat-icon>
         <mat-slide-toggle formControlName="isActive">Kích hoạt tài khoản</mat-slide-toggle>
@@ -152,10 +125,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="false">Trở về</button>
-  <button mat-button mat-raised-button color="accent" [disabled]="!userForm.valid || userForm.pending"
+  <button mat-button mat-raised-button color="accent" [disabled]="!userForm.valid || userForm.pending || submitting"
     (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>
-
-<div *ngIf="submitting">
-  <app-spinner-overlay></app-spinner-overlay>
-</div>

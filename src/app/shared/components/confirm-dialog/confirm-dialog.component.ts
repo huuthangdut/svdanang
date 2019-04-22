@@ -1,3 +1,4 @@
+import { TdLoadingService } from '@covalent/core/loading';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -13,14 +14,13 @@ export class ConfirmDialogComponent {
   disagreeText: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel) {
-    console.log(this.data);
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogModel
+  ) {
     this.title = data.title;
     this.message = data.message;
     this.agreeText = data.agreeText || 'Có';
     this.disagreeText = data.disagreeText || 'Không';
   }
-
 }
 
 export class ConfirmDialogModel {

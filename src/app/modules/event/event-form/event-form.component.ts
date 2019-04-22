@@ -3,7 +3,7 @@ import { EventFormService } from './../../../core/services/forms/event-form.serv
 import { EventService } from './../../../core/services/event.service';
 import { EventTopicService } from './../../../core/services/event-topic.service';
 import { CurrencyService } from './../../../core/services/currency.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Event, EventModel } from '../../../core/models/event.model';
@@ -11,6 +11,7 @@ import { DateValidators } from '../../../core/validators/date.validator';
 import { EventSchedule } from '../../../core/models/event-schedule.model';
 import { DatePipeService } from '../../../shared/services/date-pipe.service';
 import { CrossFieldErrorMatcher } from '../../../core/validators/cross-field-error-matcher';
+import { TdLoadingService } from '@covalent/core/loading';
 
 @Component({
   selector: 'app-event-form',
@@ -33,15 +34,18 @@ export class EventFormComponent implements OnInit {
   errorMatcher = new CrossFieldErrorMatcher();
 
   submitting: boolean;
+  loading: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private currencyService: CurrencyService,
     private eventService: EventService,
     private eventFormService: EventFormService,
     private eventTopicService: EventTopicService,
     private datePipeService: DatePipeService,
+    private loadingService: TdLoadingService,
     private snackBar: MatSnackBar) {
 
     let param = +this.route.snapshot.paramMap.get('id');
@@ -117,6 +121,7 @@ export class EventFormComponent implements OnInit {
   }
 
   getEventAndPopulateForm(eventId: number): any {
+    this.startLoading();
     this.eventService.getEvent(eventId).subscribe((response) => {
       if (response.success) {
         this.event = response.data;
@@ -125,6 +130,8 @@ export class EventFormComponent implements OnInit {
         this.setFormValue(this.event);
         this.eventFormService.markDirty(this.eventForm);
         this.eventForm.updateValueAndValidity();
+
+        this.endLoading();
       }
     })
   }
@@ -167,8 +174,18 @@ export class EventFormComponent implements OnInit {
     );
   }
 
+  startLoading() {
+    this.loadingService.register('loading');
+  }
+
+  endLoading() {
+    this.loadingService.resolve('loading');
+  }
+
   onSubmit() {
     this.submitting = true;
+    this.startLoading();
+
     if (this.eventForm.valid) {
       const event = this.getSubmitModel();
       console.log(event);
@@ -190,15 +207,21 @@ export class EventFormComponent implements OnInit {
 
   handleSubmitSuccess(response) {
     this.submitting = false;
+    this.endLoading();
+
     const message = this.isEdit ? "Cập nhật sự kiện thành công" : "Thêm sự kiện thành công";
 
     this.snackBar.open(message, '', {
       duration: 2000,
     });
+
+    this.router.navigate(['/events']);
   }
 
   handleSubmitError(error) {
     this.submitting = false;
+    this.endLoading();
+
     console.log(error);
 
     this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {

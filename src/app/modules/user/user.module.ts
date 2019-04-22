@@ -5,6 +5,7 @@ import { SharedModule } from './../../shared/shared.module';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserRoutingModule } from './user-routing.module';
+import { CovalentLoadingModule } from '@covalent/core/loading';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { UserRoutingModule } from './user-routing.module';
   imports: [
     CommonModule,
     UserRoutingModule,
-    SharedModule
+    SharedModule,
+    CovalentLoadingModule
   ],
   entryComponents: [
     UserFormComponent

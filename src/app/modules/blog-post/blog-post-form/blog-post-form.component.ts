@@ -1,3 +1,4 @@
+import { TdLoadingService } from '@covalent/core/loading';
 import { map, switchMap } from 'rxjs/operators';
 import { UploadService } from './../../../core/services/upload.service';
 import { Component, OnInit } from '@angular/core';
@@ -33,6 +34,7 @@ export class BlogPostFormComponent implements OnInit {
   formErrors: any;
 
   submitting: boolean;
+  loading: boolean;
 
   tinyMCE = TINY_MCE_SETTINGS;
 
@@ -43,7 +45,8 @@ export class BlogPostFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private loadingService: TdLoadingService
   ) {
     let param = +this.route.snapshot.paramMap.get('id');
     param = !isNaN(param) ? param : null;
@@ -98,6 +101,7 @@ export class BlogPostFormComponent implements OnInit {
   }
 
   getBlogPostAndPopulateForm(postId: number) {
+    this.startLoading();
     this.blogPostService.getPost(postId).subscribe(response => {
       if (response.success) {
         this.post = response.data;
@@ -105,6 +109,8 @@ export class BlogPostFormComponent implements OnInit {
         this.setFormValue(this.post);
         this.blogPostFormService.markDirty(this.blogPostForm);
         this.blogPostForm.updateValueAndValidity();
+
+        this.endLoading();
       }
     });
   }
@@ -149,9 +155,20 @@ export class BlogPostFormComponent implements OnInit {
     this.thumbnailImage = this.post ? this.post.thumbnailImage : '';
   }
 
+  startLoading() {
+    this.loadingService.register('loading');
+  }
+
+  endLoading() {
+    this.loadingService.resolve('loading');
+  }
+
+
 
   onSubmit() {
     this.submitting = true;
+    this.startLoading();
+
     if (this.blogPostForm.valid) {
       const blogPost = this.getSubmitModel();
 
@@ -201,6 +218,8 @@ export class BlogPostFormComponent implements OnInit {
 
   handleSubmitSuccess(response) {
     this.submitting = false;
+    this.endLoading();
+
     const message = this.isEdit ? "Cập nhật bài đăng thành công" : "Thêm bài đăng thành công";
 
     this.snackBar.open(message, '', {
@@ -212,6 +231,7 @@ export class BlogPostFormComponent implements OnInit {
 
   handleSubmitError(error) {
     this.submitting = false;
+    this.endLoading();
     console.log(error);
 
     this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {

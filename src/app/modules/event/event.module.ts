@@ -11,6 +11,7 @@ import { EventScheduleComponent } from './event-schedule/event-schedule.componen
 import { VolunteerListComponent } from './volunteer-list/volunteer-list.component';
 import { VolunteerDetailsComponent } from './volunteer-details/volunteer-details.component';
 import { EventScheduleFormComponent } from './event-schedule-form/event-schedule-form.component';
+import { CovalentLoadingModule } from '@covalent/core/loading';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { EventScheduleFormComponent } from './event-schedule-form/event-schedule
   imports: [
     CommonModule,
     SharedModule,
-    EventRoutingModule
+    EventRoutingModule,
+    CovalentLoadingModule
   ],
   entryComponents: [
     EventScheduleFormComponent

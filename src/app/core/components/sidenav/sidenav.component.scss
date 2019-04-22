@@ -12,10 +12,15 @@
     box-shadow: 3px 0 6px rgba(0, 0, 0, 0.24);
 }
 
-.logo-sidebar > img {
-  height: 64px;
+.logo-sidebar {
+  height: 100%;
   width: 100%;
   object-fit: contain;
+  margin: 0 auto;
+}
+
+.sidenav-icon {
+  color: #ef6c00;
 }
 
 // .mat-drawer.mat-drawer-side {

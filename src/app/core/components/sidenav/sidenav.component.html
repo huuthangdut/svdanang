@@ -2,10 +2,10 @@
   <td-navigation-drawer flex [sidenavTitle]="name" [name]="user.displayName" [email]="user.email">
     <mat-nav-list>
       <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route">
-        <mat-icon>{{item.icon}}</mat-icon>{{item.title}}
+        <mat-icon class="sidenav-icon">{{item.icon}}</mat-icon>{{item.title}}
       </a>
       <a mat-list-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon> Đăng xuất
+        <mat-icon class="sidenav-icon">exit_to_app</mat-icon> Đăng xuất
       </a>
     </mat-nav-list>
   </td-navigation-drawer>
@@ -15,40 +15,42 @@
     </button>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
       <span flex></span>
-      <button mat-icon-button matTooltip="Đi đến svdanang.com">
+      <a mat-icon-button matTooltip="Đi đến svdanang.com" [href]="PUBLIC_URL" target="_blank">
         <mat-icon>
           launch
         </mat-icon>
-      </button>
+      </a>
     </div>
     <td-layout-manage-list #manageList [opened]="media.registerQuery('gt-sm') | async"
       [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
       [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
       <mat-toolbar td-sidenav-content>
-        <mat-icon class="push-left-xs">home</mat-icon>
-        <span class="push-left">CMS</span>
+        <!-- <mat-icon class="push-left-xs">home</mat-icon>
+        <span class="push-left">CMS</span> -->
+
+        <img class="push-left logo-sidebar" src="assets/icons/sv-logo.png" alt="">
       </mat-toolbar>
       <mat-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
         <a mat-list-item [routerLink]="['/']">
-          <mat-icon matListIcon>dashboard</mat-icon> Trang tổng quan
+          <mat-icon matListIcon class="sidenav-icon">dashboard</mat-icon> Trang tổng quan
         </a>
         <h3 matSubheader>Quản lý</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="mgmtmenu">
           <a mat-list-item [routerLink]="item.route">
-            <mat-icon matListIcon>{{item.icon}}</mat-icon> {{item.title}}
+            <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
           </a>
           <mat-divider *ngIf="item.divider"></mat-divider>
         </ng-template>
         <h3 matSubheader>Quyền hạn</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="monitormenu">
           <a mat-list-item [routerLink]="item.route">
-            <mat-icon matListIcon>{{item.icon}}</mat-icon> {{item.title}}
+            <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
         <h3 matSubheader>Cài đặt</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="settingsmenu">
           <a mat-list-item [routerLink]="item.route">
-            <mat-icon matListIcon>{{item.icon}}</mat-icon> {{item.title}}
+            <mat-icon matListIcon class="sidenav-icon"> {{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
       </mat-nav-list>

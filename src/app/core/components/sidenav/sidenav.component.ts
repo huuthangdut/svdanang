@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TdMediaService } from '@covalent/core';
 
 import { AuthService } from './../../services/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sidenav',
@@ -10,6 +11,8 @@ import { AuthService } from './../../services/auth.service';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent {
+  PUBLIC_URL = environment.publicURL;
+
   name = "Diễn đàn sinh viên Đà nẵng";
 
   routes: Object[] = [
@@ -81,5 +84,9 @@ export class SidenavComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  navigateToPublicPage() {
+
   }
 }

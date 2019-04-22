@@ -1,14 +1,15 @@
-import { DepartmentService } from './../../../core/services/department.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { TdLoadingService } from '@covalent/core/loading';
 
-import { UserModel, User } from '../../../core/models';
+import { User, UserModel } from '../../../core/models';
 import { UserFormService } from '../../../core/services/forms/user-form.service';
+import { RoleService } from '../../../core/services/role.service';
+import { DepartmentService } from './../../../core/services/department.service';
 import { UserService } from './../../../core/services/user.service';
 import { PasswordValidators, UserEmailValidators, UsernameValidators } from './../../../core/validators';
 import { CrossFieldErrorMatcher } from './../../../core/validators/cross-field-error-matcher';
-import { RoleService } from '../../../core/services/role.service';
 
 @Component({
   selector: 'app-user-form',
@@ -38,6 +39,8 @@ export class UserFormComponent implements OnInit {
   error: boolean;
   submitting: boolean;
 
+  loading: boolean;
+
   constructor(
     public dialogRef: MatDialogRef<UserFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -46,6 +49,7 @@ export class UserFormComponent implements OnInit {
     private roleService: RoleService,
     private userService: UserService,
     private userFormService: UserFormService,
+    private loadingService: TdLoadingService,
     private snackBar: MatSnackBar) {
 
   }
@@ -82,6 +86,7 @@ export class UserFormComponent implements OnInit {
   }
 
   getUserAndPopulateForm(id: number) {
+    this.startLoading();
     this.userService.getUser(id).subscribe((response) => {
       if (response.success) {
         this.user = response.data;
@@ -94,6 +99,8 @@ export class UserFormComponent implements OnInit {
         this.userFormService.markDirty(this.userForm);
 
         this.userForm.updateValueAndValidity();
+
+        this.endLoading();
       }
     });
   }
@@ -180,8 +187,17 @@ export class UserFormComponent implements OnInit {
     )
   }
 
+  startLoading() {
+    this.loadingService.register('loading');
+  }
+
+  endLoading() {
+    this.loadingService.resolve('loading');
+  }
+
   onSubmit() {
     this.submitting = true;
+    this.startLoading();
 
     if (this.userForm.valid) {
 
@@ -204,6 +220,7 @@ export class UserFormComponent implements OnInit {
 
   handleSubmitSuccess(response) {
     this.submitting = false;
+    this.endLoading();
     const message = this.isEdit ? "Cập nhật người dùng thành công" : "Thêm người dùng thành công";
 
     this.snackBar.open(message, '', {
@@ -215,6 +232,7 @@ export class UserFormComponent implements OnInit {
 
   handleSubmitError(error) {
     this.submitting = false;
+    this.endLoading();
     console.log(error);
 
     this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {

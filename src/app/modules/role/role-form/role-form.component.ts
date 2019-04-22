@@ -1,3 +1,4 @@
+import { TdLoadingService } from '@covalent/core/loading';
 import { ActionService } from './../../../core/services/action.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -25,81 +26,6 @@ export class PermissionFlatNode {
   expandable: boolean;
 }
 
-export const PERMISSIONS = [
-  {
-    id: 2,
-    name: "Pages.Administration.AuditLogs",
-    displayName: "Audit logs",
-    parentId: 1
-  },
-  {
-    id: 3,
-    name: "Pages.Administration.Users",
-    displayName: "User",
-    parentId: 1
-  },
-  {
-    id: 4,
-    name: "Pages.Administration.Users.Delete",
-    displayName: "Deleting user",
-    parentId: 3
-  },
-  {
-    id: 5,
-    name: "Pages.Administration.Users.Edit",
-    displayName: "Editing user",
-    parentId: 3
-  },
-  {
-    id: 1,
-    name: "Pages.Administration",
-    displayName: "Administration",
-    parentId: null,
-  },
-  {
-    id: 6,
-    name: "Pages.Administration.Users.Create",
-    displayName: "Creating user",
-    parentId: 3
-  },
-  {
-    id: 7,
-    name: "Pages.Administration.Users.Read",
-    displayName: "View user",
-    parentId: 3
-  }
-]
-export const GRANTED_PERMISSIONS = [
-  "Pages",
-  "Pages.DemoUiComponents",
-  "Pages.Administration",
-  "Pages.Administration.Roles",
-  "Pages.Administration.Roles.Create",
-  // "Pages.Administration.Roles.Edit",
-  "Pages.Administration.Roles.Delete",
-  "Pages.Administration.Users",
-  // "Pages.Administration.Users.Create",
-  "Pages.Administration.Users.Edit",
-  "Pages.Administration.Users.Delete",
-  "Pages.Administration.Users.ChangePermissions",
-  "Pages.Administration.Users.Impersonation",
-  // "Pages.Administration.Languages",
-  "Pages.Administration.Languages.Create",
-  "Pages.Administration.Languages.Edit",
-  "Pages.Administration.Languages.Delete",
-  "Pages.Administration.Languages.ChangeTexts",
-  "Pages.Administration.AuditLogs",
-  "Pages.Administration.OrganizationUnits",
-  "Pages.Administration.OrganizationUnits.ManageOrganizationTree",
-  "Pages.Administration.OrganizationUnits.ManageMembers",
-  "Pages.Administration.OrganizationUnits.ManageRoles",
-  "Pages.Administration.UiCustomization",
-  "Pages.Administration.Tenant.Settings",
-  "Pages.Administration.Tenant.SubscriptionManagement",
-  "Pages.Tenant.Dashboard"
-]
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -108,13 +34,15 @@ export class ChecklistDatabase {
 
   get data(): PermissionNode[] { return this.dataChange.value; }
 
-  constructor(private actionService: ActionService) {
+  constructor(
+    private actionService: ActionService) {
     this.initialize();
   }
 
   initialize() {
     this.actionService.getAll().subscribe((response: any) => {
       if (response.success) {
+
         // Build the tree nodes from Json object.
         const data = this.buildFileTree(response.data);
 
@@ -130,13 +58,10 @@ export class ChecklistDatabase {
 
     for (let i = 0; i < list.length; i += 1) {
       map[list[i].id] = i; // initialize the map
-      console.log("set map " + list[i].id + " = " + i);
-      // list[i].children = []; // initialize the children
     }
     for (let i = 0; i < list.length; i += 1) {
       node = list[i];
       if (node.parentId != null) {
-        // if you have dangling branches check that map[node.parentId] exists
         if (!list[map[node.parentId]].children) {
           list[map[node.parentId]].children = [];
         }
@@ -184,6 +109,7 @@ export class RoleFormComponent implements OnInit {
   grantedActionNames = [];
   formErrors: any;
   submitting = false;
+  loading: boolean;
 
 
   constructor(
@@ -193,6 +119,7 @@ export class RoleFormComponent implements OnInit {
     private roleService: RoleService,
     private roleFormService: RoleFormService,
     private snackBar: MatSnackBar,
+    private loadingService: TdLoadingService,
     private database: ChecklistDatabase) {
 
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
@@ -201,7 +128,6 @@ export class RoleFormComponent implements OnInit {
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     database.dataChange.subscribe(data => {
-      console.log("get data tree")
       this.dataSource.data = data;
       this.treeControl.expandAll();
     });
@@ -219,7 +145,6 @@ export class RoleFormComponent implements OnInit {
   }
 
   checkGrantedActions() {
-    console.log("check granted");
     for (let node of this.treeControl.dataNodes) {
       if (this.grantedActionNames.includes(node.name)) {
         this.checklistSelection.select(node);
@@ -252,6 +177,7 @@ export class RoleFormComponent implements OnInit {
   }
 
   getRoleAndPopulateForm(id: any) {
+    this.startLoading();
     this.roleService.getRole(id).subscribe((response) => {
       this.role = response.data.role;
       this.grantedActionNames = response.data.grantedActionNames;
@@ -260,6 +186,8 @@ export class RoleFormComponent implements OnInit {
       this.roleFormService.markDirty(this.roleForm);
 
       this.checkGrantedActions();
+
+      this.endLoading();
     });
   }
 
@@ -390,12 +318,20 @@ export class RoleFormComponent implements OnInit {
     return null;
   }
 
+  startLoading() {
+    this.loadingService.register('loading');
+  }
+
+  endLoading() {
+    this.loadingService.resolve('loading');
+  }
+
   onSubmit() {
     this.submitting = true;
+    this.startLoading();
 
     if (this.roleForm.valid) {
       const role = this.getSubmitModel();
-      console.log(role);
 
       if (this.isEdit) {
         this.roleService.updateRole(role.id, role).subscribe(
@@ -414,6 +350,7 @@ export class RoleFormComponent implements OnInit {
 
   handleSubmitSuccess(response) {
     this.submitting = false;
+    this.endLoading();
     const message = this.isEdit ? "Cập nhật vai trò thành công" : "Thêm vai trò thành công";
 
     this.snackBar.open(message, '', {
@@ -425,6 +362,7 @@ export class RoleFormComponent implements OnInit {
 
   handleSubmitError(error) {
     this.submitting = false;
+    this.endLoading();
     console.log(error);
 
     this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {

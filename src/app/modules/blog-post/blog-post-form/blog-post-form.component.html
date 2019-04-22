@@ -7,26 +7,16 @@
 </mat-toolbar>
 
 <mat-card>
-  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
     <span class="push-left-sm">
       <span class="mat-title">{{ title }}</span>
     </span>
-    <td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Search here" flex>
-    </td-search-box>
-    <span>
-      <button mat-icon-button [matMenuTriggerFor]="toolbarMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #toolbarMenu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>settings</mat-icon>
-          <span>Settings</span>
-        </button>
-      </mat-menu>
-    </span>
+
+    <span flex></span>
   </div>
   <mat-divider></mat-divider>
-  <mat-card-content class="card-container">
+  <mat-card-content class="card-container"
+    *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
     <form [formGroup]="blogPostForm" flex fxLayout="column" fxLayoutGap="15px">
       <div fxLayout="row">
         <mat-icon class="custom-icon">title</mat-icon>
@@ -67,8 +57,7 @@
         <mat-form-field tdFileDrop (fileDrop)="onSelectImage($event)" (click)="fileInput.inputElement.click()"
           (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
           (keyup.backspace)="fileInput.clear()" flex>
-          <input matInput placeholder="Chọn ảnh thumbnail"
-            [value]="file?.name" readonly />
+          <input matInput placeholder="Chọn ảnh thumbnail" [value]="file?.name" readonly />
         </mat-form-field>
         <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
           <mat-icon>cancel</mat-icon>
@@ -96,7 +85,7 @@
     <button mat-flat-button>
       Trở về
     </button>
-    <button mat-raised-button color="accent" [disabled]="blogPostForm.invalid" (click)="onSubmit()">
+    <button mat-raised-button color="accent" [disabled]="blogPostForm.invalid || submitting" (click)="onSubmit()">
       Lưu
     </button>
   </mat-card-actions>

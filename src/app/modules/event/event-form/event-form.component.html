@@ -9,7 +9,7 @@
 </mat-toolbar>
 
 <mat-card>
-  <mat-card-content>
+  <mat-card-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
     <mat-tab-group>
       <mat-tab label="Thông tin cơ bản">
         <div class="mat-container">
@@ -167,7 +167,7 @@
     <button mat-flat-button>
       Trở về
     </button>
-    <button mat-raised-button color="accent" [disabled]="eventForm.invalid" (click)="onSubmit()">
+    <button mat-raised-button color="accent" [disabled]="eventForm.invalid || submitting" (click)="onSubmit()">
       Lưu
     </button>
   </mat-card-actions>

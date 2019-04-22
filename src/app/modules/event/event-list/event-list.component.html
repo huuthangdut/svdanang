@@ -84,7 +84,7 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let event">
-        <button mat-icon-button color="primary" (click)="onEdit(event.id)">
+        <button mat-icon-button color="accent" (click)="onEdit(event.id)">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="onDelete(event.id)">

@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
+<mat-dialog-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary'">
   <mat-tab-group>
     <mat-tab label="Vai trò">
       <div class="mat-container">
@@ -38,7 +38,8 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
-  <button mat-button mat-raised-button color="accent" [disabled]="roleForm.invalid" (click)="onSubmit()">Lưu</button>
+  <button mat-button mat-raised-button color="accent" [disabled]="roleForm.invalid || submitting"
+    (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>
 
 <!-- <mat-tab-group>

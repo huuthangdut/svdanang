@@ -14,7 +14,6 @@ import { UsersDataSource } from './user.data-source';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit, AfterViewInit {
-
   dataSource: UsersDataSource;
   displayedColumns = ['avatar', 'userName', 'lastName', 'firstName', 'email', 'department', 'roles', 'isActive', 'actions']
 
