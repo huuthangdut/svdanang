@@ -57,7 +57,7 @@
               <mat-icon class="custom-icon"></mat-icon>
               <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
             </div>
-            
+
             <div fxLayout="row">
               <mat-icon class="custom-icon">subject</mat-icon>
               <mat-form-field class="field-full-width">
@@ -100,15 +100,31 @@
               </div>
             </div>
 
-            <div fxLayout="row">
-              <mat-icon class="custom-icon">group</mat-icon>
-              <mat-form-field class="field-full-width">
-                <input (blur)="onValueChanged()" matInput placeholder="Số tiền cần gây quỹ" type="number" min="0"
-                  formControlName="goal" required>
-                <mat-error *ngIf="formErrors.goal">
-                  {{ formErrors.goal }}
-                </mat-error>
-              </mat-form-field>
+            <div fxLayout="row" fxLayoutGap="30px">
+              <div fxFlex="85" fxLayout="row">
+                <mat-icon class="custom-icon">attach_money</mat-icon>
+                <mat-form-field class="field-full-width">
+                  <input (blur)="onValueChanged()" matInput placeholder="Số tiền cần gây quỹ" type="number" min="0"
+                    formControlName="goal" required>
+                  <mat-error *ngIf="formErrors.goal">
+                    {{ formErrors.goal }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex="15" fxLayout="row">
+                <mat-form-field class="field-full-width">
+                  <mat-label>Loại tiền</mat-label>
+                  <mat-select (change)="onValueChanged()" required formControlName="currencyId">
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                      {{currency.name}}
+                    </mat-option>s
+                  </mat-select>
+                  <mat-error *ngIf="formErrors.currencyId">
+                    {{ formErrors.currencyId }}
+                  </mat-error>
+                </mat-form-field>
+              </div>
             </div>
 
           </form>

@@ -1,44 +1,45 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectFormService {
+export class MeetingFormService {
+
   validationMessages: any;
 
   formErrors = {
-    name: '',
+    day: '',
+    timeGroup: '',
     startTime: '',
     endTime: '',
-    dateGroup: '',
-    goal: '',
-    projectTopicId: '',
-    currencyId: ''
+    location: '',
+    title: '',
+    content: ''
   }
 
   constructor() {
     this.validationMessages = {
-      name: {
-        required: 'Vui lòng nhập tên dự án.'
+      day: {
+        required: 'Vui lòng chọn ngày họp.'
       },
       startTime: {
-        required: 'Vui lòng nhập ngày bắt đầu.'
+        required: 'Vui lòng chọn thời gian bắt đầu cuộc họp.'
       },
       endTime: {
-        required: 'Vui lòng nhập ngày kết thúc.'
+        required: 'Vui lòng chọn thời gian kết thúc cuộc họp.'
       },
-      dateGroup: {
+      timeGroup: {
         dateRange: 'Khoảng thời gian không hợp lệ.'
       },
-      goal: {
-        required: 'Vui lòng nhập số tiền cần gây quỹ.'
+      location: {
+        required: 'Vui lòng nhập địa điểm họp.'
       },
-      projectTopicId: {
-        required: 'Vui lòng chọn loại dự án.'
+      title: {
+        required: 'Vui lòng nhập tiêu đề cuộc họp.'
       },
-      currencyId: {
-        required: 'Vui lòng chọn đơn vị tiền tệ.'
+      content: {
+        required: 'Vui lòng nhập nội dung cuộc họp.'
       }
     }
   }

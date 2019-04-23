@@ -1,3 +1,4 @@
+import { Currency } from './currency.model';
 import { ProjectTopic } from './project-topic.model';
 import { AuditUser } from './audit-user.model';
 class Project {
@@ -11,6 +12,7 @@ class Project {
   goal: number;
   image: string;
   projectTopic: ProjectTopic;
+  currency: Currency;
 
   createdAt: number;
   updatedAt: number;
@@ -29,7 +31,8 @@ class ProjectModel {
     public endTime: number,
     public goal: number,
     public image: string,
-    public projectTopicId: number
+    public projectTopicId: number,
+    public currencyId: number
   ) { }
 }
 

@@ -1,3 +1,4 @@
+import { CurrencyService } from './../../../core/services/currency.service';
 import { UploadService } from './../../../core/services/upload.service';
 import { MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core/loading';
@@ -24,6 +25,7 @@ export class ProjectFormComponent implements OnInit {
 
   title = 'Tạo mới dự án';
   topics = [];
+  currencies = [];
 
   projectId: number;
   project: Project;
@@ -44,6 +46,7 @@ export class ProjectFormComponent implements OnInit {
     private projectService: ProjectService,
     private projectFormService: ProjectFormService,
     private projectTopicService: ProjectTopicService,
+    private currencyService: CurrencyService,
     private datePipeService: DatePipeService,
     private loadingService: TdLoadingService,
     private uploadService: UploadService,
@@ -63,7 +66,16 @@ export class ProjectFormComponent implements OnInit {
     this.formErrors = this.projectFormService.formErrors;
 
     this.loadProjectTopics();
+    this.loadCurrencies();
     this.buildForm();
+  }
+
+  loadCurrencies() {
+    this.currencyService.getAll().subscribe(response => {
+      if (response.success) {
+        this.currencies = response.data;
+      }
+    })
   }
 
 
@@ -85,7 +97,8 @@ export class ProjectFormComponent implements OnInit {
         startTime: [null, [Validators.required]],
         endTime: [null, [Validators.required]],
       }, { validators: DateValidators.dateRange }),
-      goal: [null, Validators.required]
+      goal: [null, Validators.required],
+      currencyId: [null, Validators.required]
     });
 
     if (this.isEdit) {
@@ -117,12 +130,13 @@ export class ProjectFormComponent implements OnInit {
       name: project.name,
       shortDescription: project.shortDescription,
       description: project.description,
-      projectTopicId: project.projectTopic.id,
+      projectTopicId: project.projectTopic ? project.projectTopic.id : null,
       dateGroup: {
         startTime: this.datePipeService.fromUnixTimeStamp(project.startTime),
         endTime: this.datePipeService.fromUnixTimeStamp(project.endTime),
       },
-      goal: project.goal
+      goal: project.goal,
+      currencyId: project.currency ? project.currency.id : null
     })
 
     this.thumbnailImage = project.image;
@@ -155,7 +169,8 @@ export class ProjectFormComponent implements OnInit {
       this.datePipeService.toUnixTimestamp(formValue.dateGroup.endTime),
       formValue.goal,
       this.project ? this.project.image : null,
-      formValue.projectTopicId
+      formValue.projectTopicId,
+      formValue.currencyId
     )
   }
 

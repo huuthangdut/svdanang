@@ -1,38 +1,71 @@
-<h2 mat-dialog-title>Tạo mới cuộc họp cho ngày {{ date | date:'dd/MM/yyyy' }}</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
   <div class="mat-container">
-    <form (ngSubmit)="onSubmit(form)" #form="ngForm" flex fxLayout="column" fxLayoutGap="10px">
+    <form [formGroup]="meetingForm" flex fxLayout="column" fxLayoutGap="10px">
       <div fxLayout="row">
-        <mat-icon>title</mat-icon>
+        <mat-icon class="custom-icon">title</mat-icon>
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Tiêu đề" type="text" required>
+          <input (blur)="onValueChanged()" matInput placeholder="Tiêu đề" type="text" formControlName="title" required>
+          <mat-error *ngIf="formErrors.title">
+            {{ formErrors.title }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-icon>short_text</mat-icon>
+        <mat-icon class="custom-icon">short_text</mat-icon>
         <mat-form-field class="field-full-width">
-          <textarea cdkTextareaAutosize matInput placeholder="Nội dung" type="text" required></textarea>
+          <textarea (blur)="onValueChanged()" cdkTextareaAutosize matInput placeholder="Nội dung" type="text"
+            formControlName="content" required></textarea>
+          <mat-error *ngIf="formErrors.content">
+            {{ formErrors.content }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <mat-icon>place</mat-icon>
+        <mat-icon class="custom-icon">place</mat-icon>
         <mat-form-field class="field-full-width">
-          <input matInput placeholder="Địa điểm" type="text" required>
+          <input (blur)="onValueChanged()" matInput placeholder="Địa điểm" type="text" formControlName="location"
+            required>
+          <mat-error *ngIf="formErrors.location">
+            {{ formErrors.location }}
+          </mat-error>
         </mat-form-field>
       </div>
       <div fxLayout="row">
-        <div fxFlex="50">
-          <mat-icon>access_time</mat-icon>
-          <mat-form-field class="field-half-width">
-            <input matInput [ngxTimepicker]="startTimePicker" placeholder="Thời gian bắt đầu" [format]="24">
-            <ngx-material-timepicker #startTimePicker></ngx-material-timepicker>
+        <mat-icon class="custom-icon">access_time</mat-icon>
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" matInput [matDatepicker]="meetingDay" placeholder="Ngày họp"
+            formControlName="day" readonly required>
+          <mat-datepicker-toggle matSuffix [for]="meetingDay"></mat-datepicker-toggle>
+          <mat-datepicker type="date" #meetingDay></mat-datepicker>
+          <mat-error *ngIf="formErrors.day">
+            {{ formErrors.day }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div [formGroup]="meetingForm.get('timeGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon">access_time</mat-icon>
+          <mat-form-field class="field-full-width">
+            <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Thời gian bắt đầu"
+              formControlName="startTime" readonly required>
+            <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+            <mat-datepicker type="time" #startTimePicker></mat-datepicker>
+            <mat-error *ngIf="formErrors.startTime">
+              {{ formErrors.startTime }}
+            </mat-error>
           </mat-form-field>
         </div>
-        <div fxFlex="50">
-          <mat-icon>access_time</mat-icon>
-          <mat-form-field class="field-half-width">
-            <input matInput [ngxTimepicker]="endTimePicker" placeholder="Thời gian kết thúc" [format]="24">
-            <ngx-material-timepicker #endTimePicker></ngx-material-timepicker>
+        <div fxFlex="50" fxLayout="row">
+          <mat-icon class="custom-icon">access_time</mat-icon>
+          <mat-form-field class="field-full-width">
+            <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Thời gian kết thúc"
+              formControlName="endTime" readonly required [errorStateMatcher]="errorMatcher">
+            <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
+            <mat-datepicker type="time" #endTimePicker></mat-datepicker>
+            <mat-error *ngIf="formErrors.endTime || formErrors.timeGroup">
+              {{ formErrors.endTime ? formErrors.endTime : formErrors.timeGroup}}
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -41,5 +74,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
-  <button mat-button [mat-dialog-close]="true" mat-flat-button color="accent">Lưu</button>
+  <button mat-button mat-flat-button [disabled]="meetingForm.invalid || submitting" (click)="onSubmit()"
+    color="accent">Lưu</button>
 </mat-dialog-actions>

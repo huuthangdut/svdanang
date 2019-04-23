@@ -23,4 +23,33 @@ export class DatePipeService {
 
     return null;
   }
+
+  extractTime(value: number): string {
+    if (moment(value).isValid()) {
+      return moment(value).format('HH:mm:ss');
+
+    }
+
+    return null;
+  }
+
+  resetTime(value): any {
+    if (moment(value).isValid()) {
+      return moment(value).set({
+        hour: 0,
+        minute: 0,
+        second: 0
+      });
+    }
+
+    return value;
+  }
+
+  setDate(dateTime: any, day: any) {
+    return moment(dateTime).set({
+      day: day.get('day'),
+      month: day.get('month'),
+      year: day.get('year')
+    })
+  }
 }
