@@ -189,6 +189,11 @@ export class MeetingComponent implements OnInit {
     });
   }
 
+  eventClicked(event: CalendarEvent) {
+    this.editMeeting(event.id);
+  }
+
+
   startLoading() {
     this.loadingService.register('isLoading');
   }

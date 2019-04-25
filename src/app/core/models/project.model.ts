@@ -1,7 +1,7 @@
+import { AuditInfo } from './audit-info.model';
 import { Currency } from './currency.model';
 import { ProjectTopic } from './project-topic.model';
-import { AuditUser } from './audit-user.model';
-class Project {
+class Project extends AuditInfo {
   id: number;
   name: string;
   shortDescription: string;
@@ -13,11 +13,6 @@ class Project {
   image: string;
   projectTopic: ProjectTopic;
   currency: Currency;
-
-  createdAt: number;
-  updatedAt: number;
-  createBy: AuditUser;
-  updatedBy: AuditUser;
 
 }
 
