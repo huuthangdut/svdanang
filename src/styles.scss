@@ -18,12 +18,25 @@ a[mat-icon-button] {
 }
 
 .hide {
-  display: none;
+ display: none;
+}
+
+.show {
+ display: flex !important;
 }
 
 mat-footer-row mat-footer-cell {
   justify-content: center;
   font-style: italic;
+}
+
+mat-header-row mat-header-cell {
+  background-color: whitesmoke  ;
+}
+
+.mat-paginator-container {
+   background-color: whitesmoke  ;
+   padding-right: 65px;
 }
 
 mat-spinner .loading-spinner {

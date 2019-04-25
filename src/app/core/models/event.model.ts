@@ -2,8 +2,9 @@ import { Volunteer } from './volunteer.model';
 import { Currency } from './currency.model';
 import { EventTopic } from './event-topic.model';
 import { EventSchedule } from './event-schedule.model';
+import { AuditInfo } from './audit-info.model';
 
-class Event {
+class Event extends AuditInfo {
   id: number;
   name: string;
   shortDescription: string;
@@ -12,25 +13,10 @@ class Event {
   startTime: number;
   endTime: number;
   image: string;
-  topicId: number;
   eventTopic: EventTopic;
   expectedQuantity: number;
   fee: number;
   currency: Currency;
-  createdDate: number;
-  createdBy: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-  }
-  updatedDate: number;
-  updatedBy: {
-    id: number;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-  };
   eventSchedules: EventSchedule[];
 }
 

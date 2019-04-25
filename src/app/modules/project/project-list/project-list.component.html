@@ -66,9 +66,9 @@
       <mat-cell class="description-cell" *matCellDef="let project">{{project.endTime | dateFormat }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="createdDate">
+    <ng-container matColumnDef="createdAt">
       <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let project">{{project.createdDate | dateFormat }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let project">{{project.createdAt | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">

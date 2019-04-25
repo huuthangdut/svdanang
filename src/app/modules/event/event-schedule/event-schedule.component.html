@@ -1,8 +1,11 @@
-<div align="start">
+<div align="start" *ngIf="minDate && maxDate;else chooseDate">
   <button mat-raised-button color="accent" (click)="onCreate()">
     Thêm lịch trình
   </button>
 </div>
+<ng-template #chooseDate>
+  Vui lòng chọn ngày bắt đầu và kết thúc sự kiện trước khi tạo lịch trình.
+</ng-template>
 
 
 <h3 align="center" *ngIf="schedules.length > 0">Lịch trình sự kiện</h3>

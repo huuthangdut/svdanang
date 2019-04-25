@@ -86,8 +86,9 @@
               <div fxFlex="50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
-                  <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Ngày bắt đầu"
-                    formControlName="startTime" required>
+                  <input (blur)="onValueChanged()" (dateChange)="onStartTimeChange($event.target.value)" matInput
+                    [matDatepicker]="startTimePicker" placeholder="Ngày bắt đầu" formControlName="startTime" required
+                    readonly>
                   <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
                   <mat-datepicker #startTimePicker></mat-datepicker>
                   <mat-error *ngIf="formErrors.startTime">
@@ -98,8 +99,9 @@
               <div fxFlex=" 50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
-                  <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc"
-                    formControlName="endTime" required [errorStateMatcher]="errorMatcher">
+                  <input (blur)="onValueChanged()" (dateChange)="onEndTimeChange($event.target.value)" matInput
+                    [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc" formControlName="endTime" required
+                    readonly [errorStateMatcher]="errorMatcher">
                   <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
                   <mat-datepicker #endTimePicker></mat-datepicker>
                   <mat-error *ngIf="formErrors.endTime || formErrors.dateGroup">
@@ -170,7 +172,8 @@
       </mat-tab>
       <mat-tab label="Kế hoạch">
         <div class="mat-container">
-          <app-event-schedule [schedules]="schedules" (changeSchedules)="changeEventSchedules($event)">
+          <app-event-schedule [schedules]="schedules" [maxDate]="maxDate" [minDate]="minDate"
+            (changeSchedules)="changeEventSchedules($event)">
           </app-event-schedule>
         </div>
 

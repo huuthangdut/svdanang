@@ -42,6 +42,9 @@ export class EventFormComponent implements OnInit {
   submitting: boolean;
   loading: boolean;
 
+  maxDate: Date;
+  minDate: Date;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -148,7 +151,7 @@ export class EventFormComponent implements OnInit {
       name: event.name,
       shortDescription: event.shortDescription,
       description: event.description,
-      topicId: null, // FIX
+      topicId: event.eventTopic ? event.eventTopic.id : null,
       dateGroup: {
         startTime: this.datePipeService.fromUnixTimeStamp(event.startTime),
         endTime: this.datePipeService.fromUnixTimeStamp(event.endTime),
@@ -156,7 +159,7 @@ export class EventFormComponent implements OnInit {
       location: event.location,
       expectedQuantity: event.expectedQuantity,
       fee: event.fee,
-      currencyId: event.currency.id
+      currencyId: event.currency ? event.currency.id : null
     })
   }
 
@@ -202,6 +205,14 @@ export class EventFormComponent implements OnInit {
   onClearImage() {
     this.file = null;
     this.thumbnailImage = this.event ? this.event.image : '';
+  }
+
+  onStartTimeChange(date: Date) {
+    this.minDate = date;
+  }
+
+  onEndTimeChange(date: Date) {
+    this.maxDate = date;
   }
 
   onSubmit() {

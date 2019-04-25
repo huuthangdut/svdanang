@@ -16,7 +16,7 @@ import { BlogPostsDataSource } from './blog-post.data-source';
 export class BlogPostListComponent implements OnInit {
   dataSource: BlogPostsDataSource;
 
-  displayedColumns = ['thumbnailImage', 'title', 'topic', 'createdDate', 'createdBy', 'status', 'actions']
+  displayedColumns = ['thumbnailImage', 'title', 'topic', 'createdAt', 'createdBy', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

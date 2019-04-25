@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventSchedule } from '../../../core/models/event-schedule.model';
 import { EventScheduleFormService } from '../../../core/services/forms/event-schedule-form.service';
 import { DatePipeService } from '../../../shared/services/date-pipe.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event-schedule-form',
@@ -22,6 +23,9 @@ export class EventScheduleFormComponent implements OnInit {
   schedule: EventSchedule;
   isEdit: boolean = false;
 
+  minDate: Date = new Date();
+  maxDate: Date = new Date();
+
   constructor(
     public dialogRef: MatDialogRef<EventScheduleFormComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -31,10 +35,17 @@ export class EventScheduleFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data && this.data.schedule) {
-      this.isEdit = true;
-      this.schedule = this.data.schedule;
-      this.title = "Chỉnh sửa lịch trình";
+    if (this.data) {
+      this.minDate = moment(this.data.minDate)
+        .set({ hour: 0, minute: 0, second: 0 }).toDate();
+      this.maxDate = moment(this.data.maxDate)
+        .set({ hour: 23, minute: 59, second: 59 }).toDate();
+
+      if (this.data.schedule) {
+        this.isEdit = true;
+        this.schedule = this.data.schedule;
+        this.title = "Chỉnh sửa lịch trình";
+      }
     }
 
     this.formErrors = this.scheduleFormService.formErrors;
@@ -55,8 +66,8 @@ export class EventScheduleFormComponent implements OnInit {
     } else {
       this.scheduleForm = this.formBuilder.group({
         dateGroup: this.formBuilder.group({
-          startTime: [new Date(), Validators.required],
-          endTime: [new Date(), Validators.required],
+          startTime: [this.minDate, Validators.required],
+          endTime: [this.maxDate, Validators.required],
         }, { validators: DateValidators.dateRange }),
         schedule: [null, Validators.required],
         location: [null, Validators.required]

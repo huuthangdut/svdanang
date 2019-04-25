@@ -1,17 +1,19 @@
-import { VolunteersDataSource } from './volunteer.data-source';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { merge } from 'hammerjs';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+
 import { EventService } from '../../../core/services/event.service';
 import { DialogService } from '../../../shared/services/dialog.service';
-import { merge } from 'hammerjs';
-import { tap } from 'rxjs/operators';
+import { VolunteersDataSource } from './volunteer.data-source';
 
 @Component({
   selector: 'app-volunteer-list',
   templateUrl: './volunteer-list.component.html',
   styleUrls: ['./volunteer-list.component.scss']
 })
-export class VolunteerListComponent implements OnInit {
+export class VolunteerListComponent implements OnInit, AfterViewInit {
 
   @Input() eventId: number;
 
@@ -20,7 +22,7 @@ export class VolunteerListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('search') search: ElementRef;
 
   constructor(
     private dialog: MatDialog,
@@ -34,16 +36,16 @@ export class VolunteerListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // fromEvent(this.input.nativeElement, 'keyup')
-    //   .pipe(
-    //     debounceTime(150),
-    //     distinctUntilChanged(),
-    //     tap(() => {
-    //       this.paginator.pageIndex = 1;
-    //       this.loadUsersPage();
-    //     })
-    //   )
-    //   .subscribe();
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.loadVolunteersPage();
+        })
+      )
+      .subscribe();
 
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -57,15 +59,14 @@ export class VolunteerListComponent implements OnInit {
   loadVolunteersPage() {
     this.dataSource.loadVolunteers(
       this.eventId,
-      // this.input.nativeElement.value,
-      '',
+      this.search.nativeElement.value,
       this.sort.active,
       this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize);
   }
 
-  onView(eventId: number) {
+  onView(volunteerId: number) {
 
   }
 

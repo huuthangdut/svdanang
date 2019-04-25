@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
+import { BlogPostModel } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,11 @@ export class BlogPostService {
     return this.apiService.get(`/blog-posts/${id}`);
   }
 
-  createPost(post) {
+  createPost(post: BlogPostModel) {
     return this.apiService.post(`/blog-posts`, post);
   }
 
-  updatePost(id: number, post) {
+  updatePost(id: number, post: BlogPostModel) {
     return this.apiService.put(`/blog-posts/${id}`, post);
   }
 

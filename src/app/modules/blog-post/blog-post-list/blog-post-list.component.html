@@ -39,8 +39,8 @@
 
 
 
-  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
-    matSortDirection="asc" matSortDisableClear>
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdAt"
+    matSortDirection="desc" matSortDisableClear>
 
     <ng-container matColumnDef="thumbnailImage">
       <mat-header-cell *matHeaderCellDef>Hình ảnh</mat-header-cell>
@@ -60,9 +60,9 @@
       <mat-cell class="description-cell" *matCellDef="let post">{{post.blogPostTopic.name}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="createdDate">
+    <ng-container matColumnDef="createdAt">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdDate | dateFormat }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let post">{{post.createdAt | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdBy">

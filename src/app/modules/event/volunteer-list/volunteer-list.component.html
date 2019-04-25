@@ -1,10 +1,18 @@
+<div class="search-box" flex fxLayout="row" fxLayoutAlign="end center">
+  <mat-form-field class="w100">
+    <mat-label>Tìm kiếm</mat-label>
+    <input #search matInput>
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
 <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="firstName"
   matSortDirection="asc" matSortDisableClear>
 
   <ng-container matColumnDef="avatar">
     <mat-header-cell *matHeaderCellDef> Ảnh đại diện </mat-header-cell>
     <mat-cell *matCellDef="let volunteer">
-      <img mat-card-avatar *ngIf="user.avatar;else noAvatar" [src]="volunteer.avatar">
+      <img mat-card-avatar *ngIf="volunteer.avatar;else noAvatar" [src]="volunteer.avatar">
       <ng-template #noAvatar>
         <img mat-card-avatar alt=""
           src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
@@ -46,15 +54,31 @@
     </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="loading">
+    <mat-footer-cell *matFooterCellDef>
+      <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+    </mat-footer-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="noData">
+    <mat-footer-cell *matFooterCellDef>
+      Không có dữ liệu.
+    </mat-footer-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+  <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">
+  </mat-footer-row>
+
+  <mat-footer-row *matFooterRowDef="['noData']" class="hide"
+    [ngClass]="{'show': (dataSource.loading$ | async) == false && dataSource.totalElements == 0 }">
+  </mat-footer-row>
+
 </mat-table>
 
-<!-- <div *ngIf="dataSource.loading$ | async">
-  <app-spinner-overlay>
-  </app-spinner-overlay>
-</div> -->
 
 <mat-paginator [length]="dataSource.totalElements" [pageSize]="dataSource.pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
   [showFirstLastButtons]="true">

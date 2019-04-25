@@ -37,7 +37,7 @@
     </mat-form-field>
   </div>
 
-  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdDate"
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="createdAt"
     matSortDirection="desc" matSortDisableClear>
 
     <ng-container matColumnDef="image">
@@ -71,14 +71,14 @@
       <mat-cell class="description-cell" *matCellDef="let event">{{event.endTime | dateFormat }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="createdDate">
+    <ng-container matColumnDef="createdAt">
       <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">{{event.createdDate | dateFormat }}</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">{{event.createdAt | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
-      <mat-cell class="description-cell" *matCellDef="let event">Status here..</mat-cell>
+      <mat-cell class="description-cell" *matCellDef="let event">Status ..</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

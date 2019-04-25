@@ -2,11 +2,11 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, first } from 'rxjs/operators';
 
-import { Volunteer } from './../../../core/models/volunteer.model';
-import { EventService } from './../../../core/services/event.service';
+import { Donation } from '../../../core/models/donation.model';
+import { ProjectService } from './../../../core/services/project.service';
 
-export class VolunteersDataSource implements DataSource<Volunteer> {
-  private volunteersSubject = new BehaviorSubject<Volunteer[]>([]);
+export class DonationsDataSource implements DataSource<Donation> {
+  private donationsSubject = new BehaviorSubject<Donation[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   public loading$ = this.loadingSubject.asObservable();
@@ -15,24 +15,24 @@ export class VolunteersDataSource implements DataSource<Volunteer> {
   public pageSize: number = 0;
   public totalElements: number = 0;
 
-  constructor(private eventService: EventService) {
+  constructor(private projectService: ProjectService) {
 
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<Volunteer[]> {
-    return this.volunteersSubject.asObservable();
+  connect(collectionViewer: CollectionViewer): Observable<Donation[]> {
+    return this.donationsSubject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.volunteersSubject.complete();
+    this.donationsSubject.complete();
     this.loadingSubject.complete();
   }
 
-  loadVolunteers(eventId: number, filter = '', sortBy = '',
+  loadDonations(projectId: number, filter = '', sortBy = '',
     sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
-    this.eventService.getVolunteers(eventId, filter, sortBy, sortDirection, pageIndex, pageSize)
+    this.projectService.getDonations(projectId, filter, sortBy, sortDirection, pageIndex, pageSize)
       .pipe(
         first(),
         catchError(() => of([])),
@@ -40,11 +40,11 @@ export class VolunteersDataSource implements DataSource<Volunteer> {
       )
       .subscribe((response: any) => {
         if (response.success) {
-          let volunteers = response.data.content;
+          let donations = response.data.content;
           this.page = response.data.page;
           this.pageSize = response.data.size;
           this.totalElements = response.data.totalElements;
-          this.volunteersSubject.next(volunteers);
+          this.donationsSubject.next(donations);
         }
       });
   }

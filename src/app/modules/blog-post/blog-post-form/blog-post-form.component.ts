@@ -120,7 +120,7 @@ export class BlogPostFormComponent implements OnInit {
       title: post.title,
       shortContent: post.shortContent,
       content: post.content,
-      topicId: post.blogPostTopicId
+      topicId: post.blogPostTopic ? post.blogPostTopic.id : null
     })
 
     this.thumbnailImage = post.thumbnailImage;
@@ -133,7 +133,7 @@ export class BlogPostFormComponent implements OnInit {
     return new BlogPostModel(
       this.post ? this.post.id : null,
       formValue.title,
-      formValue.shortDescription,
+      formValue.shortContent,
       formValue.content,
       formValue.topicId,
       this.post ? this.post.thumbnailImage : null
@@ -178,7 +178,7 @@ export class BlogPostFormComponent implements OnInit {
             map(params => params['fileDownloadUri']),
             switchMap(fileUrl => {
               blogPost.thumbnailImage = fileUrl
-              return this.blogPostService.updatePost(blogPost.id, event)
+              return this.blogPostService.updatePost(blogPost.id, blogPost)
             })
           ).subscribe(
             response => this.handleSubmitSuccess(response),
@@ -186,7 +186,7 @@ export class BlogPostFormComponent implements OnInit {
           );
         }
         else {
-          this.blogPostService.updatePost(blogPost.id, event).subscribe(
+          this.blogPostService.updatePost(blogPost.id, blogPost).subscribe(
             response => this.handleSubmitSuccess(response),
             error => this.handleSubmitError(error)
           );

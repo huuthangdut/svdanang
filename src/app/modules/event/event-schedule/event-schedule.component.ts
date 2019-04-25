@@ -15,6 +15,9 @@ import { EventScheduleFormComponent } from '../event-schedule-form/event-schedul
 })
 export class EventScheduleComponent implements OnInit {
   @Input() schedules: EventSchedule[] = [];
+  @Input() minDate: Date;
+  @Input() maxDate: Date;
+
   @Output() changeSchedules: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private dialog: MatDialog) { }
@@ -29,6 +32,7 @@ export class EventScheduleComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "650px";
     dialogConfig.position = { top: '15vh' }
+    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate }
 
     let dialogRef = this.dialog.open(EventScheduleFormComponent, dialogConfig);
 
@@ -48,7 +52,7 @@ export class EventScheduleComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "650px";
     dialogConfig.position = { top: '15vh' }
-    dialogConfig.data = { schedule: schedule }
+    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate, schedule: schedule }
 
     let dialogRef = this.dialog.open(EventScheduleFormComponent, dialogConfig);
 

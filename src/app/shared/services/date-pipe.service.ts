@@ -46,6 +46,7 @@ export class DatePipeService {
   }
 
   setDate(dateTime: any, day: any) {
+    day = moment(day);
     return moment(dateTime).set({
       day: day.get('day'),
       month: day.get('month'),

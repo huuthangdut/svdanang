@@ -1,16 +1,12 @@
+import { AuditInfo } from './audit-info.model';
 import { BlogPostTopic } from './blog-post-topic.model';
-class BlogPost {
+class BlogPost extends AuditInfo {
   id: number;
   title: string;
   shortContent: string;
   content: string;
   thumbnailImage: string;
   blogPostTopic: BlogPostTopic;
-  blogPostTopicId: number;
-  createdDate: number;
-  updatedDate: number;
-  createdBy: string;
-  updatedBy: string;
 }
 
 class BlogPostModel {

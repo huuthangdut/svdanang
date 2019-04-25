@@ -10,6 +10,7 @@ import { MeetingService } from '../../core/services/meeting.service';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { DialogService } from './../../shared/services/dialog.service';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
+import * as moment from 'moment';
 
 const colors: any = {
   orange: {
@@ -142,7 +143,7 @@ export class MeetingComponent implements OnInit {
         id: meeting.id,
         start: this.datePipeService.fromUnixTimeStamp(meeting.startTime),
         end: this.datePipeService.fromUnixTimeStamp(meeting.endTime),
-        title: meeting.title,
+        title: meeting.title + ", " + meeting.location + ", " + moment(meeting.startTime).format('HH:mm') + " - " + moment(meeting.endTime).format('HH:mm'),
         color: colors.orange,
         actions: this.actions
       }

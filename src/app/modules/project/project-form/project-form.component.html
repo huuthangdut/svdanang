@@ -130,9 +130,9 @@
           </form>
         </div>
       </mat-tab>
-      <mat-tab label="Danh sách ủng hộ">
+      <mat-tab label="Danh sách ủng hộ" *ngIf="projectId">
         <div class="mat-container">
-          <app-donation-list>
+          <app-donation-list [projectId]="projectId">
           </app-donation-list>
         </div>
       </mat-tab>

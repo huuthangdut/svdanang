@@ -16,7 +16,7 @@ import { EventsDataSource } from './event.data-source';
 export class EventListComponent implements OnInit, AfterViewInit {
 
   dataSource: EventsDataSource;
-  displayedColumns = ['image', 'name', 'location', 'topic', 'startTime', 'endTime', 'createdDate', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'location', 'topic', 'startTime', 'endTime', 'createdAt', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

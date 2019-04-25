@@ -10,6 +10,7 @@ import { ApiService } from './api.service';
 })
 export class ProjectService {
 
+
   constructor(private apiService: ApiService) { }
 
   getProjects(filter = '', sortBy = '', sortOrder = 'asc', pageNumber = 0, pageSize = 10): Observable<any> {
@@ -36,5 +37,15 @@ export class ProjectService {
 
   deleteProject(id: number) {
     return this.apiService.delete(`/projects/${id}`);
+  }
+
+  getDonations(projectId: number, filter: string, sortBy: string, sortOrder: string, pageNumber: number, pageSize: number) {
+    return this.apiService.get(`/projects/${projectId}/donators`,
+      new HttpParams()
+        .set('filter', filter)
+        .set('sortBy', sortBy)
+        .set('sortOrder', sortOrder)
+        .set('page', pageNumber.toString())
+        .set('pageSize', pageSize.toString()));
   }
 }
