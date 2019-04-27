@@ -15,6 +15,7 @@ import { EventTopicService } from './../../../core/services/event-topic.service'
 import { EventService } from './../../../core/services/event.service';
 import { EventFormService } from './../../../core/services/forms/event-form.service';
 import { switchMap, map } from 'rxjs/operators';
+import { TINY_MCE_SETTINGS } from '../../../shared/settings/editor.setting';
 
 @Component({
   selector: 'app-event-form',
@@ -44,6 +45,8 @@ export class EventFormComponent implements OnInit {
 
   maxDate: Date;
   minDate: Date;
+
+  tinyMCE = TINY_MCE_SETTINGS;
 
   constructor(
     private formBuilder: FormBuilder,

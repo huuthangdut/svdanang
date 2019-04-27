@@ -31,34 +31,6 @@
               </mat-form-field>
             </div>
             <div fxLayout="row">
-              <mat-icon class="custom-icon">short_text</mat-icon>
-              <mat-form-field class="field-full-width">
-                <textarea cdkTextareaAutosize matInput placeholder="Nội dung" type="text"
-                  formControlName="description"></textarea>
-              </mat-form-field>
-            </div>
-            <div fxLayout="row">
-              <mat-icon class="custom-icon">image</mat-icon>
-              <mat-form-field tdFileDrop (fileDrop)="onSelectImage($event)" (click)="fileInput.inputElement.click()"
-                (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
-                (keyup.backspace)="fileInput.clear()" flex>
-                <input matInput placeholder="Chọn ảnh thumbnail" [value]="file?.name" readonly />
-              </mat-form-field>
-              <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
-                <mat-icon>cancel</mat-icon>
-              </button>
-              <td-file-input class="push-left-sm push-right-sm" accept='image/*' #fileInput
-                (select)="onSelectImage($event)">
-                <mat-icon>folder</mat-icon>
-                <span class="text-upper"> Duyệt</span>
-              </td-file-input>
-            </div>
-            <div fxLayout="row" *ngIf="thumbnailImage">
-              <mat-icon class="custom-icon"></mat-icon>
-              <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
-            </div>
-
-            <div fxLayout="row">
               <mat-icon class="custom-icon">subject</mat-icon>
               <mat-form-field class="field-full-width">
                 <mat-label>Chủ đề</mat-label>
@@ -73,6 +45,9 @@
                 </mat-error>
               </mat-form-field>
             </div>
+
+
+
             <div [formGroup]="projectForm.get('dateGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>
@@ -125,6 +100,34 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+            </div>
+
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">image</mat-icon>
+              <mat-form-field tdFileDrop (fileDrop)="onSelectImage($event)" (click)="fileInput.inputElement.click()"
+                (keyup.enter)="fileInput.inputElement.click()" (keyup.delete)="fileInput.clear()"
+                (keyup.backspace)="fileInput.clear()" flex>
+                <input matInput placeholder="Chọn ảnh thumbnail" [value]="file?.name" readonly />
+              </mat-form-field>
+              <button mat-icon-button *ngIf="file" (click)="onClearImage()" (keyup.enter)="fileInput.clear()">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <td-file-input class="push-left-sm push-right-sm" accept='image/*' #fileInput
+                (select)="onSelectImage($event)">
+                <mat-icon>folder</mat-icon>
+                <span class="text-upper"> Duyệt</span>
+              </td-file-input>
+            </div>
+            <div fxLayout="row" *ngIf="thumbnailImage">
+              <mat-icon class="custom-icon"></mat-icon>
+              <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
+            </div>
+
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">subtitles</mat-icon>
+              <editor formControlName="description" #editor class="field-full-width" [apiKey]="tinyMCE.API_KEY"
+                [init]="tinyMCE.SETTINGS">
+              </editor>
             </div>
 
           </form>

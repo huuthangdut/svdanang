@@ -29,8 +29,8 @@ export class BlogPostsDataSource implements DataSource<BlogPost> {
     this.loadingSubject.complete();
   }
 
-  loadPosts(filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
+  loadPosts(filter = '', sortBy = 'createdAt',
+    sortDirection = 'desc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
     this.blogPostService.getPosts(filter, sortBy, sortDirection, pageIndex, pageSize)

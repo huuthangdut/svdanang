@@ -1,3 +1,4 @@
+import { BlogPostTopicService } from './../../../core/services/blog-post-topic.service';
 import { TdLoadingService } from '@covalent/core/loading';
 import { map, switchMap } from 'rxjs/operators';
 import { UploadService } from './../../../core/services/upload.service';
@@ -40,6 +41,7 @@ export class BlogPostFormComponent implements OnInit {
 
   constructor(
     private blogPostService: BlogPostService,
+    private blogPostTopicService: BlogPostTopicService,
     private blogPostFormService: BlogPostFormService,
     private uploadService: UploadService,
     private formBuilder: FormBuilder,
@@ -66,12 +68,11 @@ export class BlogPostFormComponent implements OnInit {
   }
 
   loadBlogPostTopics() {
-    this.topics = [
-      { id: 1, name: 'Topic 1' },
-      { id: 2, name: 'Topic 2' },
-      { id: 3, name: 'Topic 3' },
-      { id: 4, name: 'Topic 4' },
-    ]
+    this.blogPostTopicService.getAll().subscribe(response => {
+      if (response.success) {
+        this.topics = response.data.content;
+      }
+    })
   }
 
   buildForm() {

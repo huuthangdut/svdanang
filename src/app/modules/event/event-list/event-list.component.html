@@ -57,22 +57,22 @@
     </ng-container>
 
     <ng-container matColumnDef="topic">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Chủ đề</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Chủ đề</mat-header-cell>
       <mat-cell class="description-cell" *matCellDef="let event">{{event.eventTopic?.name}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="startTime">
-      <mat-header-cell *matHeaderCellDef>Ngày bắt đầu</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày bắt đầu</mat-header-cell>
       <mat-cell class="description-cell" *matCellDef="let event">{{event.startTime | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="endTime">
-      <mat-header-cell *matHeaderCellDef>Ngày kết thúc</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày kết thúc</mat-header-cell>
       <mat-cell class="description-cell" *matCellDef="let event">{{event.endTime | dateFormat }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="createdAt">
-      <mat-header-cell *matHeaderCellDef>Ngày tạo</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo</mat-header-cell>
       <mat-cell class="description-cell" *matCellDef="let event">{{event.createdAt | dateFormat }}</mat-cell>
     </ng-container>
 

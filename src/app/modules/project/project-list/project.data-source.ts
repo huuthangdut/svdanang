@@ -28,8 +28,8 @@ export class ProjectsDataSource implements DataSource<Project> {
     this.loadingSubject.complete();
   }
 
-  loadProjects(filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
+  loadProjects(filter = '', sortBy = 'createdAt',
+    sortDirection = 'desc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
     this.projectService.getProjects(filter, sortBy, sortDirection, pageIndex, pageSize)

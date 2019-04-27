@@ -1,3 +1,4 @@
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,7 +29,9 @@ import { CovalentLoadingModule } from '@covalent/core/loading';
     CommonModule,
     SharedModule,
     EventRoutingModule,
-    CovalentLoadingModule
+    CovalentLoadingModule,
+    EditorModule
+
   ],
   entryComponents: [
     EventScheduleFormComponent

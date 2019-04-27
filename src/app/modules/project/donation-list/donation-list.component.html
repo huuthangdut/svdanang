@@ -1,4 +1,8 @@
-<div class="search-box" flex fxLayout="row" fxLayoutAlign="end center">
+<div align="end">
+  <button mat-raised-button color="accent" (click)="onAddDonation()">Thêm</button>
+</div>
+
+<div class="search-box" flex fxLayout="row" fxLayoutGap="15px">
   <mat-form-field class="w100">
     <mat-label>Tìm kiếm</mat-label>
     <input #search matInput>
@@ -48,6 +52,11 @@
   <ng-container matColumnDef="amount">
     <mat-header-cell *matHeaderCellDef>Số tiền ủng hộ</mat-header-cell>
     <mat-cell *matCellDef="let donation">{{donation.amount}} {{ donation.currencyName }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="note">
+    <mat-header-cell *matHeaderCellDef>Ghi chú</mat-header-cell>
+    <mat-cell *matCellDef="let donation">{{donation.note}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="actions">

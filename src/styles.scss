@@ -44,6 +44,13 @@ mat-spinner .loading-spinner {
   height: 30px;
 }
 
+.fa-pencil:before {
+  color: #0288d1 !important;
+}
+
+.fa-remove:before, .fa-close:before, .fa-times:before {
+  color: red !important;
+}
 
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');

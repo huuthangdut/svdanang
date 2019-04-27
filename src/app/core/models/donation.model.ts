@@ -1,4 +1,5 @@
-export class Donation {
+import { Currency } from './currency.model';
+class Donation {
   id: number;
   firstName: string;
   lastName: string;
@@ -10,6 +11,19 @@ export class Donation {
   email: string;
   facebookLink: string;
   amount: number;
-  currencyName: string;
-
+  fee: number;
+  currency: Currency;
+  note: string;
 }
+
+class DonationModel {
+  constructor(
+    public id: number,
+    public projectId: number,
+    public amount: number,
+    public note: number,
+    public currencyId: number
+  ) { }
+}
+
+export { Donation, DonationModel }

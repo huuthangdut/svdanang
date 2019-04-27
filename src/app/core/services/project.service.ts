@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { ProjectModel } from '../models/project.model';
 import { ApiService } from './api.service';
+import { Donation, DonationModel } from '../models/donation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +49,22 @@ export class ProjectService {
         .set('page', pageNumber.toString())
         .set('pageSize', pageSize.toString()));
   }
+
+  createDonation(donation: DonationModel) {
+    return this.apiService.post('/donations', donation);
+  }
+
+  getDonation(id: number) {
+    return this.apiService.get(`/donations/${id}`);
+  }
+
+  updateDonation(id: number, donation: DonationModel) {
+    return this.apiService.put(`/donations/${id}`, donation);
+  }
+
+  deleteDonation(id: number) {
+    return this.apiService.delete(`/donations/${id}`);
+  }
+
+
 }

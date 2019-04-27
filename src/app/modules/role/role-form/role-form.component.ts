@@ -238,20 +238,18 @@ export class RoleFormComponent implements OnInit {
     return flatNode;
   }
 
-  /** Whether all the descendants of the node are selected. */
-  descendantsAllSelected(node: PermissionFlatNode): boolean {
-    const descendants = this.treeControl.getDescendants(node);
-    const descAllSelected = descendants.every(child =>
-      this.checklistSelection.isSelected(child)
-    );
-    return descAllSelected;
-  }
-
   /** Whether part of the descendants are selected */
   descendantsPartiallySelected(node: PermissionFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.checklistSelection.isSelected(child));
-    return result && !this.descendantsAllSelected(node);
+    const result = descendants.some(child =>
+      this.checklistSelection.isSelected(child)
+    );
+
+    if (!this.checklistSelection.isSelected(node) && result) {
+      this.checklistSelection.select(node);
+    }
+
+    return result;
   }
 
   /** Toggle the to-do item selection. Select/deselect all the descendants node */

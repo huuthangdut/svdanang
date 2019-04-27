@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  <div class="mat-container">
+    <form [formGroup]="donationForm" flex fxLayout="column" fxLayoutGap="10px">
+      <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
+        <div fxFlex="80">
+          <mat-form-field class="field-full-width">
+            <input matInput formControlName="amount" min="0" placeholder="Số tiền ủng hộ" type="number" required>
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <mat-form-field class="field-full-width">
+            <mat-label>Loại tiền</mat-label>
+            <mat-select formControlName="currencyId" required>
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let currency of currencies" [value]="currency.id">
+                {{currency.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <input matInput formControlName="note" placeholder="Ghi chú">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <td-message class="field-full-width" #message label="Lưu ý"
+          sublabel="Chỉ thêm khi có người ủng hộ dưới hình thức tiền mặt hoặc chuyển khoản." icon="info" color="primary"
+          [opened]="true">
+        </td-message>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
+  <button mat-button mat-flat-button color="accent" [disabled]="donationForm.invalid" (click)="onSubmit()">Lưu</button>
+</mat-dialog-actions>

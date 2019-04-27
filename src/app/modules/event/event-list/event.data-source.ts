@@ -27,8 +27,8 @@ export class EventsDataSource implements DataSource<Event> {
     this.loadingSubject.complete();
   }
 
-  loadEvents(filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
+  loadEvents(filter = '', sortBy = 'createdAt',
+    sortDirection = 'desc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
     this.eventService.getEvents(filter, sortBy, sortDirection, pageIndex, pageSize)

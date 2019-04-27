@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project, ProjectModel } from '../../../core/models/project.model';
 import { DateValidators } from '../../../core/validators/date.validator';
 import { switchMap, map } from 'rxjs/operators';
+import { TINY_MCE_SETTINGS } from '../../../shared/settings/editor.setting';
 
 @Component({
   selector: 'app-project-form',
@@ -38,6 +39,8 @@ export class ProjectFormComponent implements OnInit {
 
   submitting: boolean;
   loading: boolean;
+
+  tinyMCE = TINY_MCE_SETTINGS;
 
   constructor(
     private formBuilder: FormBuilder,

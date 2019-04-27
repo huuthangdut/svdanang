@@ -1,7 +1,8 @@
+import { DonationFormComponent } from './../donation-form/donation-form.component';
 import { ProjectService } from './../../../core/services/project.service';
 import { DonationsDataSource } from './donation.data-source';
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -15,7 +16,7 @@ export class DonationListComponent implements OnInit, AfterViewInit {
   @Input() projectId: number;
 
   dataSource: DonationsDataSource;
-  displayedColumns = ['avatar', 'lastName', 'firstName', 'email', 'gender', 'phoneNumber', 'amount', 'actions']
+  displayedColumns = ['avatar', 'lastName', 'firstName', 'email', 'gender', 'phoneNumber', 'amount', 'note', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -63,6 +64,26 @@ export class DonationListComponent implements OnInit, AfterViewInit {
 
   onView(donationId: number) {
 
+  }
+
+  onAddDonation() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "34%";
+    dialogConfig.minWidth = "300px";
+    dialogConfig.position = { top: '15vh' };
+    dialogConfig.data = { projectId: this.projectId }
+
+    let dialogRef = this.dialog.open(DonationFormComponent, dialogConfig);
+    dialogRef.afterClosed()
+      .subscribe((response) => {
+        if (response) {
+          this.paginator.pageIndex = 0;
+          this.loadDonationsPage();
+        }
+
+      });
   }
 
 
