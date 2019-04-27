@@ -14,7 +14,7 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     CoreModule,

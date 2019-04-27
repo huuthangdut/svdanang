@@ -41,10 +41,10 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let role">
-        <button *ngIf="role.name !== 'Admi'" mat-icon-button (click)="onEdit(role.id)" color="accent">
+        <button *ngIf="role.name !== 'Admin'" mat-icon-button (click)="onEdit(role.id)" color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button *ngIf="role.name !== 'Admi'" mat-icon-button (click)="onDelete(role.id)" color="warn">
+        <button *ngIf="role.name !== 'Admin'" mat-icon-button (click)="onDelete(role.id)" color="warn">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>

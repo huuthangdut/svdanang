@@ -50,6 +50,12 @@ export class SidenavComponent {
     route: '/projects',
     title: 'Dự án gây quỹ',
     description: 'Item description',
+  },
+  {
+    icon: 'dns',
+    route: '/topics',
+    title: 'Chủ đề',
+    description: 'Item description',
   }
   ];
   monitormenu: Object[] = [{

@@ -1,0 +1,159 @@
+<mat-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Quản lý chủ đề</span>
+    <span flex></span>
+  </div>
+</mat-toolbar>
+
+<mat-card class="card-container">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
+    <span class="push-left-sm">
+      <span class="mat-title">Chủ đề sự kiện</span>
+    </span>
+    <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" (click)="onAdd('event')">Tạo mới</button>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-table #table class="mat-elevation-z8" [dataSource]="eventDataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Tên chủ đề</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.description}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let topic">
+        <button mat-icon-button (click)="onEdit('event', topic.id)" color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete('event', topic.id)" color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': isLoadingEvent == false}">
+    </mat-footer-row>
+
+  </mat-table>
+</mat-card>
+
+<mat-card class="card-container">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
+    <span class="push-left-sm">
+      <span class="mat-title">Chủ đề dự án</span>
+    </span>
+    <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" (click)="onAdd('project')">Tạo mới</button>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-table #table class="mat-elevation-z8" [dataSource]="projectDataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Tên chủ đề</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.description}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let topic">
+        <button mat-icon-button (click)="onEdit('project', topic.id)" color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete('project', topic.id)" color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': isLoadingProject == false}">
+    </mat-footer-row>
+
+  </mat-table>
+</mat-card>
+
+<mat-card class="card-container">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
+    <span class="push-left-sm">
+      <span class="mat-title">Chủ đề bài đăng</span>
+    </span>
+    <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" (click)="onAdd('blog')">Tạo mới</button>
+    </span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-table #table class="mat-elevation-z8" [dataSource]="blogDataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Tên chủ đề</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+      <mat-cell *matCellDef="let topic">{{topic.description}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let topic">
+        <button mat-icon-button (click)="onEdit('blog', topic.id)" color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete('blog', topic.id)" color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': isLoadingBlog == false}">
+    </mat-footer-row>
+
+  </mat-table>
+</mat-card>

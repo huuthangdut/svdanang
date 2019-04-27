@@ -1,8 +1,7 @@
-import { Volunteer } from './volunteer.model';
-import { Currency } from './currency.model';
-import { EventTopic } from './event-topic.model';
-import { EventSchedule } from './event-schedule.model';
 import { AuditInfo } from './audit-info.model';
+import { Currency } from './currency.model';
+import { EventSchedule } from './event-schedule.model';
+import { Topic } from './topic.model';
 
 class Event extends AuditInfo {
   id: number;
@@ -13,7 +12,7 @@ class Event extends AuditInfo {
   startTime: number;
   endTime: number;
   image: string;
-  eventTopic: EventTopic;
+  eventTopic: Topic;
   expectedQuantity: number;
   fee: number;
   currency: Currency;

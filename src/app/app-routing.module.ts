@@ -47,6 +47,10 @@ const routes: Routes = [{
       loadChildren: './modules/project/project.module#ProjectModule'
     },
     {
+      path: 'topics',
+      loadChildren: './modules/topic/topic.module#TopicModule'
+    },
+    {
       path: 'file',
       component: UploadImageComponent
     },

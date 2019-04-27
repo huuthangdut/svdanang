@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
+  <div class="mat-container">
+    <form *ngIf="topicForm" [formGroup]="topicForm" flex fxLayout="column" fxLayoutGap="10px">
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" matInput placeholder="Tên chủ đề" type="text" formControlName="name"
+            required>
+          <mat-error *ngIf="formErrors.name">
+            {{ formErrors.name }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" matInput placeholder="Mô tả" type="text" formControlName="description">
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
+  <button mat-button mat-flat-button (click)="onSubmit()" color="accent">Lưu</button>
+</mat-dialog-actions>

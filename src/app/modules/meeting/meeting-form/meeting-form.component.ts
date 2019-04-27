@@ -68,6 +68,7 @@ export class MeetingFormComponent implements OnInit {
     }
 
     this.meetingForm.valueChanges.subscribe(data => this.onValueChanged());
+    this.onValueChanged();
   }
 
   onValueChanged(): void {
