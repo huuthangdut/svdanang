@@ -12,8 +12,10 @@ class Donation {
   facebookLink: string;
   amount: number;
   fee: number;
-  currency: Currency;
+  currencyName: string;
   note: string;
+  createdAt: number;
+  status: boolean;
 }
 
 class DonationModel {

@@ -28,7 +28,7 @@ export class VolunteersDataSource implements DataSource<Volunteer> {
     this.loadingSubject.complete();
   }
 
-  loadVolunteers(eventId: number, filter = '', sortBy = '',
+  loadVolunteers(eventId: number, filter = '', sortBy = 'fullName',
     sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 

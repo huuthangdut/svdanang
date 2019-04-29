@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   apiURL: 'https://svdanang.herokuapp.com/api',
+  // apiURL: 'http://192.168.137.192:8080/api',
   publicURL: 'https://demo.svdanang.com'
 };

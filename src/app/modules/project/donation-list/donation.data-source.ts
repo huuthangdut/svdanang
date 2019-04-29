@@ -28,8 +28,8 @@ export class DonationsDataSource implements DataSource<Donation> {
     this.loadingSubject.complete();
   }
 
-  loadDonations(projectId: number, filter = '', sortBy = '',
-    sortDirection = 'asc', pageIndex = 0, pageSize = 10) {
+  loadDonations(projectId: number, filter = '', sortBy = 'amount',
+    sortDirection = 'desc', pageIndex = 0, pageSize = 10) {
     this.loadingSubject.next(true);
 
     this.projectService.getDonations(projectId, filter, sortBy, sortDirection, pageIndex, pageSize)

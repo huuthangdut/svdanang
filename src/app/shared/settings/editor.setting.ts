@@ -5,9 +5,9 @@ const BASE_URL = environment.apiURL;
 export const TINY_MCE_SETTINGS = {
   API_KEY: "9byhcrv7dz1t8bdwslufkff61j23dt5zoo6kovgiia8ws443",
   SETTINGS: {
-    selector: 'textarea',
+    // selector: 'textarea',
     menubar: 'file edit insert view format table tools help view',
-    plugins: "advlist autolink lists link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table contextmenu directionality emoticons template paste textcolor colorpicker textpattern autoresize",
+    plugins: "advlist autolink lists link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textpattern autoresize",
     min_height: 400,
     toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
     toolbar2: "print preview media | forecolor backcolor emoticons",
@@ -17,7 +17,7 @@ export const TINY_MCE_SETTINGS = {
 
       xhr = new XMLHttpRequest();
       xhr.withCredentials = false;
-      xhr.open('POST', 'https://svdanang.herokuapp.com/uploadFile');
+      xhr.open('POST', 'https://svdanang.herokuapp.com/api/uploadFile');
 
       xhr.onload = function () {
         var json;

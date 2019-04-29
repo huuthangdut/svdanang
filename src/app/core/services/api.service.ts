@@ -29,11 +29,11 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
-  postFile(url: string, file: File) {
+  postFile(url: string, file: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.httpClient.post('https://svdanang.herokuapp.com' + url, formData);
+    return this.httpClient.post(BASE_URL + url, formData);
   }
 
   put(url: string, body: object = {}): Observable<any> {

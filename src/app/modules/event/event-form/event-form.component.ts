@@ -140,6 +140,9 @@ export class EventFormComponent implements OnInit {
         this.event = response.data;
         this.schedules = response.data.schedules;
 
+        this.minDate = this.datePipeService.fromUnixTimeStamp(this.event.startTime);
+        this.maxDate = this.datePipeService.fromUnixTimeStamp(this.event.endTime);
+
         this.setFormValue(this.event);
         this.eventFormService.markDirty(this.eventForm);
         this.eventForm.updateValueAndValidity();
@@ -178,7 +181,7 @@ export class EventFormComponent implements OnInit {
       formValue.location,
       this.datePipeService.toUnixTimestamp(formValue.dateGroup.startTime),
       this.datePipeService.toUnixTimestamp(formValue.dateGroup.endTime),
-      null,
+      this.event ? this.event.image : null,
       formValue.topicId,
       formValue.expectedQuantity,
       formValue.fee,

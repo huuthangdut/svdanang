@@ -6,7 +6,7 @@
   </mat-form-field>
 </div>
 
-<mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="firstName"
+<mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="fullName"
   matSortDirection="asc" matSortDisableClear>
 
   <ng-container matColumnDef="avatar">
@@ -20,14 +20,9 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="lastName">
-    <mat-header-cell *matHeaderCellDef>Họ và tên đệm</mat-header-cell>
-    <mat-cell *matCellDef="let volunteer">{{volunteer.lastName}}</mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="firstName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
-    <mat-cell *matCellDef="let volunteer">{{volunteer.firstName}}</mat-cell>
+  <ng-container matColumnDef="fullName">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Họ và tên</mat-header-cell>
+    <mat-cell *matCellDef="let volunteer">{{volunteer.fullName}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="email">
@@ -36,7 +31,7 @@
   </ng-container>
 
   <ng-container matColumnDef="gender">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Giới tính</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Giới tính</mat-header-cell>
     <mat-cell *matCellDef="let volunteer">{{volunteer.gender ? "Nam" : "Nữ"}}</mat-cell>
   </ng-container>
 
@@ -45,13 +40,24 @@
     <mat-cell *matCellDef="let volunteer">{{volunteer.phoneNumber}}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let volunteer">
-      <button mat-icon-button color="primary" (click)="onView(volunteer.id)">
-        <mat-icon>launch</mat-icon>
-      </button>
-    </mat-cell>
+  <ng-container matColumnDef="address">
+    <mat-header-cell *matHeaderCellDef>Địa chỉ</mat-header-cell>
+    <mat-cell *matCellDef="let volunteer">{{volunteer.address}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="office">
+    <mat-header-cell *matHeaderCellDef>Nơi công tác</mat-header-cell>
+    <mat-cell *matCellDef="let volunteer">{{volunteer.office}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="skills">
+    <mat-header-cell *matHeaderCellDef>Kỹ năng</mat-header-cell>
+    <mat-cell *matCellDef="let volunteer">{{volunteer.skills}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="note">
+    <mat-header-cell *matHeaderCellDef>Ghi chú</mat-header-cell>
+    <mat-cell *matCellDef="let volunteer">{{volunteer.note}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="loading">

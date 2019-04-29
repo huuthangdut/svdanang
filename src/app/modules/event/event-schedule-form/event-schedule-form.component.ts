@@ -18,13 +18,13 @@ export class EventScheduleFormComponent implements OnInit {
   title = 'Tạo mới lịch trình';
   scheduleForm: FormGroup;
   formErrors: any;
-  errorMatcher = new CrossFieldErrorMatcher();
 
   schedule: EventSchedule;
   isEdit: boolean = false;
 
   minDate: Date = new Date();
   maxDate: Date = new Date();
+  existTimes: Date[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<EventScheduleFormComponent>,
@@ -46,6 +46,10 @@ export class EventScheduleFormComponent implements OnInit {
         this.schedule = this.data.schedule;
         this.title = "Chỉnh sửa lịch trình";
       }
+
+      if (this.data.existTimes) {
+        this.existTimes = this.data.existTimes;
+      }
     }
 
     this.formErrors = this.scheduleFormService.formErrors;
@@ -56,19 +60,14 @@ export class EventScheduleFormComponent implements OnInit {
   buildForm() {
     if (this.isEdit) {
       this.scheduleForm = this.formBuilder.group({
-        dateGroup: this.formBuilder.group({
-          startTime: [this.datePipeService.fromUnixTimeStamp(this.schedule.startTime), Validators.required],
-          endTime: [this.datePipeService.fromUnixTimeStamp(this.schedule.endTime), Validators.required]
-        }, { validators: DateValidators.dateRange }),
+        startTime:
+          [this.datePipeService.fromUnixTimeStamp(this.schedule.startTime), [Validators.required, DateValidators.includeDate(this.existTimes)]],
         schedule: [this.schedule.schedule, Validators.required],
         location: [this.schedule.location, Validators.required]
       });
     } else {
       this.scheduleForm = this.formBuilder.group({
-        dateGroup: this.formBuilder.group({
-          startTime: [this.minDate, Validators.required],
-          endTime: [this.maxDate, Validators.required],
-        }, { validators: DateValidators.dateRange }),
+        startTime: [null, [Validators.required, DateValidators.includeDate(this.existTimes)]],
         schedule: [null, Validators.required],
         location: [null, Validators.required]
       });
@@ -86,8 +85,6 @@ export class EventScheduleFormComponent implements OnInit {
     this.scheduleFormService.logValidationErrors(this.scheduleForm);
 
     this.formErrors = this.scheduleFormService.formErrors;
-
-    console.log(this.formErrors);
   }
 
   getScheduleModel() {
@@ -95,8 +92,8 @@ export class EventScheduleFormComponent implements OnInit {
 
     return new EventSchedule(
       this.schedule ? this.schedule.id : null,
-      this.datePipeService.toUnixTimestamp(formValue.dateGroup.startTime),
-      this.datePipeService.toUnixTimestamp(formValue.dateGroup.endTime),
+      this.datePipeService.toUnixTimestamp(formValue.startTime),
+      null,
       formValue.location,
       formValue.schedule
     )

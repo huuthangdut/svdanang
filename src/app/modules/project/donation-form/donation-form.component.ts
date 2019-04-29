@@ -4,6 +4,7 @@ import { CurrencyService } from './../../../core/services/currency.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { TdLoadingService } from '@covalent/core/loading';
 
 @Component({
   selector: 'app-donation-form',
@@ -15,12 +16,15 @@ export class DonationFormComponent implements OnInit {
 
   currencies: [] = [];
 
-  donation: Donation;
+  donation: DonationModel; // for get and post | put
   projectId: number;
   isEdit: boolean = false;
 
 
   donationForm: FormGroup;
+
+  submitting = false;
+  isLoading: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<DonationFormComponent>,
@@ -28,6 +32,7 @@ export class DonationFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private projectService: ProjectService,
     private currencyService: CurrencyService,
+    private loadingService: TdLoadingService,
     private snackBar: MatSnackBar) {
 
   }
@@ -71,20 +76,23 @@ export class DonationFormComponent implements OnInit {
   }
 
   getDonationAndPopulateForm(id: any) {
+    this.startLoading();
     this.projectService.getDonation(id).subscribe(response => {
       if (response.success) {
         this.donation = response.data;
 
         this.setFormValue(this.donation);
+
+        this.endLoading();
       }
     });
   }
 
-  setFormValue(donation: Donation) {
+  setFormValue(donation: DonationModel) {
     this.donationForm.patchValue({
       amount: donation.amount,
       note: donation.note,
-      currencyId: donation.currency ? donation.currency.id : null,
+      currencyId: donation.currencyId,
     });
   }
 
@@ -100,7 +108,18 @@ export class DonationFormComponent implements OnInit {
     );
   }
 
+  startLoading() {
+    this.loadingService.register('isLoading');
+  }
+
+  endLoading() {
+    this.loadingService.resolve('isLoading');
+  }
+
   onSubmit() {
+    this.submitting = true;
+    this.startLoading();
+
     if (this.donationForm.valid) {
       const donation = this.getSubmitModel();
 
@@ -121,6 +140,9 @@ export class DonationFormComponent implements OnInit {
   }
 
   handleSubmitSuccess(response) {
+    this.submitting = false;
+    this.endLoading();
+
     const message = this.isEdit ? "Cập nhật thông tin ủng hộ thành công" : "Thêm thông tin ủng hộ thành công";
 
     this.snackBar.open(message, '', {
@@ -131,6 +153,8 @@ export class DonationFormComponent implements OnInit {
   }
 
   handleSubmitError(error) {
+    this.submitting = false;
+    this.endLoading();
     console.log(error);
 
     this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {

@@ -1,14 +1,14 @@
 <h2 mat-dialog-title>{{ title }}</h2>
-<mat-dialog-content>
+<mat-dialog-content *tdLoading="'isLoading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary'">
   <div class="mat-container">
     <form [formGroup]="donationForm" flex fxLayout="column" fxLayoutGap="10px">
       <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
-        <div fxFlex="80">
+        <div fxFlex="75">
           <mat-form-field class="field-full-width">
-            <input matInput formControlName="amount" min="0" placeholder="Số tiền ủng hộ" type="number" required>
+            <input matInput formControlName="amount" min="1" placeholder="Số tiền ủng hộ" type="number" required>
           </mat-form-field>
         </div>
-        <div fxFlex="20">
+        <div fxFlex="25">
           <mat-form-field class="field-full-width">
             <mat-label>Loại tiền</mat-label>
             <mat-select formControlName="currencyId" required>
@@ -36,5 +36,6 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close mat-flat-button>Trở về</button>
-  <button mat-button mat-flat-button color="accent" [disabled]="donationForm.invalid" (click)="onSubmit()">Lưu</button>
+  <button mat-button mat-flat-button color="accent" [disabled]="donationForm.invalid || submitting"
+    (click)="onSubmit()">Lưu</button>
 </mat-dialog-actions>

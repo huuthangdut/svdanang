@@ -2,30 +2,16 @@
 <mat-dialog-content>
   <div class="mat-container">
     <form [formGroup]="scheduleForm" flex fxLayout="column" fxLayoutGap="15px">
-      <div [formGroup]="scheduleForm.get('dateGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
-        <div fxFlex="50" fxLayout="row">
-          <mat-form-field class="field-full-width">
-            <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Thời gian bắt đầu"
-              formControlName="startTime" [min]="minDate" [max]="maxDate" required readonly>
-            <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
-            <mat-datepicker type="datetime" #startTimePicker></mat-datepicker>
-            <mat-error *ngIf="formErrors.startTime">
-              {{ formErrors.startTime }}
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxFlex="50" fxLayout="row">
-          <mat-form-field class="field-full-width">
-            <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Thời gian kết thúc"
-              formControlName="endTime" [min]="minDate" [max]="maxDate" required [errorStateMatcher]="errorMatcher"
-              readonly>
-            <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
-            <mat-datepicker type="datetime" #endTimePicker></mat-datepicker>
-            <mat-error *ngIf="formErrors.endTime || formErrors.dateGroup">
-              {{ formErrors.endTime ? formErrors.endTime : formErrors.dateGroup}}
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <div fxLayout="row">
+        <mat-form-field class="field-full-width">
+          <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker"
+            placeholder="Thời gian" formControlName="startTime" [min]="minDate" [max]="maxDate" required readonly>
+          <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
+          <mat-datepicker type="datetime" #startTimePicker></mat-datepicker>
+          <mat-error *ngIf="formErrors.startTime">
+            {{ formErrors.startTime }}
+          </mat-error>
+        </mat-form-field>
       </div>
       <div fxLayout="row">
         <mat-form-field class="field-full-width">

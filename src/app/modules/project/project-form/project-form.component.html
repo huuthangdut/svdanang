@@ -53,7 +53,7 @@
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
                   <input (blur)="onValueChanged()" matInput [matDatepicker]="startTimePicker" placeholder="Ngày bắt đầu"
-                    formControlName="startTime" required>
+                    formControlName="startTime" required readonly>
                   <mat-datepicker-toggle matSuffix [for]="startTimePicker"></mat-datepicker-toggle>
                   <mat-datepicker #startTimePicker></mat-datepicker>
                   <mat-error *ngIf="formErrors.startTime">
@@ -65,7 +65,7 @@
                 <mat-icon class="custom-icon">date_range</mat-icon>
                 <mat-form-field class="field-full-width">
                   <input (blur)="onValueChanged()" matInput [matDatepicker]="endTimePicker" placeholder="Ngày kết thúc"
-                    formControlName="endTime" required [errorStateMatcher]="errorMatcher">
+                    formControlName="endTime" required [errorStateMatcher]="errorMatcher" readonly>
                   <mat-datepicker-toggle matSuffix [for]="endTimePicker"></mat-datepicker-toggle>
                   <mat-datepicker #endTimePicker></mat-datepicker>
                   <mat-error *ngIf="formErrors.endTime || formErrors.dateGroup">
@@ -93,7 +93,7 @@
                     <mat-option>--</mat-option>
                     <mat-option *ngFor="let currency of currencies" [value]="currency.id">
                       {{currency.name}}
-                    </mat-option>s
+                    </mat-option>
                   </mat-select>
                   <mat-error *ngIf="formErrors.currencyId">
                     {{ formErrors.currencyId }}

@@ -10,8 +10,6 @@ export class EventScheduleFormService {
 
   formErrors = {
     startTime: '',
-    endTime: '',
-    dateGroup: '',
     schedule: '',
     location: ''
   }
@@ -19,13 +17,8 @@ export class EventScheduleFormService {
   constructor() {
     this.validationMessages = {
       startTime: {
-        required: 'Vui lòng nhập thời gian bắt đầu.'
-      },
-      endTime: {
-        required: 'Vui lòng nhập thời gian kết thúc.'
-      },
-      dateGroup: {
-        dateRange: 'Khoảng thời gian không hợp lệ.'
+        required: 'Vui lòng nhập thời gian bắt đầu.',
+        includeDate: 'Thời gian đã trùng trong lịch trình.'
       },
       schedule: {
         required: 'Vui lòng nhập nội dung.'

@@ -10,8 +10,8 @@
   </mat-form-field>
 </div>
 
-<mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="firstName"
-  matSortDirection="asc" matSortDisableClear>
+<mat-table #table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="amount"
+  matSortDirection="desc" matSortDisableClear multiTemplateDataRows>
 
   <ng-container matColumnDef="avatar">
     <mat-header-cell *matHeaderCellDef> Ảnh đại diện </mat-header-cell>
@@ -25,23 +25,18 @@
   </ng-container>
 
   <ng-container matColumnDef="lastName">
-    <mat-header-cell *matHeaderCellDef>Họ và tên đệm</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Họ và tên</mat-header-cell>
     <mat-cell *matCellDef="let donation">{{donation.lastName}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="firstName">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Tên</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Tên</mat-header-cell>
     <mat-cell *matCellDef="let donation">{{donation.firstName}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
     <mat-cell *matCellDef="let donation">{{donation.email}}</mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="gender">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Giới tính</mat-header-cell>
-    <mat-cell *matCellDef="let donation">{{donation.gender ? "Nam" : "Nữ"}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="phoneNumber">
@@ -50,20 +45,33 @@
   </ng-container>
 
   <ng-container matColumnDef="amount">
-    <mat-header-cell *matHeaderCellDef>Số tiền ủng hộ</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Số tiền ủng hộ</mat-header-cell>
     <mat-cell *matCellDef="let donation">{{donation.amount}} {{ donation.currencyName }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="fee">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Phí giao dịch</mat-header-cell>
+    <mat-cell *matCellDef="let donation">{{donation.fee}} {{ donation.currencyName }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="createdAt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Ngày ủng hộ</mat-header-cell>
+    <mat-cell *matCellDef="let donation">{{donation.createdAt | dateFormat }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="note">
     <mat-header-cell *matHeaderCellDef>Ghi chú</mat-header-cell>
-    <mat-cell *matCellDef="let donation">{{donation.note}}</mat-cell>
+    <mat-cell *matCellDef="let donation" class="note-cell">{{donation.note}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let donation">
-      <button mat-icon-button color="primary" (click)="onView(donation.id)">
-        <mat-icon>launch</mat-icon>
+      <button *ngIf="donation.status" mat-icon-button color="accent" (click)="onEdit(donation.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="donation.status" mat-icon-button color="warn" (click)="onDelete(donation.id)">
+        <mat-icon>delete_outline</mat-icon>
       </button>
     </mat-cell>
   </ng-container>
@@ -80,9 +88,18 @@
     </mat-footer-cell>
   </ng-container>
 
+  <ng-container matColumnDef="donatedAmount">
+    <mat-footer-cell *matFooterCellDef class="donated-amount-cell">
+      Tổng số tiền ủng hộ: {{ donated.raised | number }} {{ donated.name }}
+    </mat-footer-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+  <mat-footer-row *matFooterRowDef="['donatedAmount']">
+  </mat-footer-row>
 
   <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">
   </mat-footer-row>

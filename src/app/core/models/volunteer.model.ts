@@ -1,14 +1,14 @@
 export class Volunteer {
   id: number;
-  firstName: string;
-  lastName: string;
+  fullName: string;
   gender: boolean;
   birthDate: number;
   phoneNumber: string;
   address: string;
   city: string;
   email: string;
-  facebookLink: string;
+  facebook: string;
+  note: string;
   office: string;
   skills: string;
 }

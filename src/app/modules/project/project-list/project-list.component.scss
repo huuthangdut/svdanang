@@ -15,6 +15,18 @@ mat-header-cell:nth-child(2) {
     flex: 0 0 21%;
 }
 
+mat-cell:nth-child(3),
+mat-header-cell:nth-child(3) {
+    flex: 0 0 7%;
+}
+
+
+mat-cell:nth-child(6),
+mat-header-cell:nth-child(6) {
+    // flex: 0 0 7%;
+    padding-right: 10px;
+}
+
 
 
 mat-cell:nth-child(8),

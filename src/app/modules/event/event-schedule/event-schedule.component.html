@@ -4,7 +4,10 @@
   </button>
 </div>
 <ng-template #chooseDate>
-  Vui lòng chọn ngày bắt đầu và kết thúc sự kiện trước khi tạo lịch trình.
+  <td-message #message sublabel=" Vui lòng chọn ngày bắt đầu và kết thúc sự kiện trước khi tạo lịch trình." icon="info"
+    color="primary" [opened]="true">
+  </td-message>
+
 </ng-template>
 
 
@@ -15,8 +18,7 @@
   <td-expansion-panel [expand]="false">
     <ng-template td-expansion-panel-label class="expansion-header">
       <mat-icon>access_time</mat-icon>
-      <span style="padding-left: 10px;">{{ schedule.startTime | datetimeFormat }} -
-        {{ schedule.endTime | datetimeFormat }}</span>
+      <span style="padding-left: 10px">{{ schedule.startTime | datetimeFormat }}</span>
     </ng-template>
     <td-expansion-summary>
       <mat-list>

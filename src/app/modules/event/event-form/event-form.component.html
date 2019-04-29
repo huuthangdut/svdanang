@@ -27,14 +27,12 @@
             <div fxLayout="row">
               <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
-                <input matInput placeholder="Mô tả ngắn" type="text" formControlName="shortDescription">
+                <textarea cdkTextareaAutosize matInput placeholder="Mô tả ngắn"
+                  formControlName="shortDescription"></textarea>
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" *ngIf="thumbnailImage">
-              <mat-icon class="custom-icon"></mat-icon>
-              <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
-            </div>
+
             <div fxLayout="row">
               <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
@@ -159,6 +157,10 @@
                 <mat-icon>folder</mat-icon>
                 <span class="text-upper"> Duyệt</span>
               </td-file-input>
+            </div>
+            <div fxLayout="row" *ngIf="thumbnailImage">
+              <mat-icon class="custom-icon"></mat-icon>
+              <img class="thumbnail-preview" [src]="thumbnailImage" alt="">
             </div>
             <div fxLayout="row">
               <mat-icon class="custom-icon">subtitles</mat-icon>

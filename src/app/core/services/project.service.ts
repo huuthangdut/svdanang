@@ -66,5 +66,9 @@ export class ProjectService {
     return this.apiService.delete(`/donations/${id}`);
   }
 
+  getDonatedAmount(projectId: number) {
+    return this.apiService.get(`/projects/${projectId}/currentDonate`)
+  }
+
 
 }

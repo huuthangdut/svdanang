@@ -1,12 +1,10 @@
-import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DatePipeService } from './../../../shared/services/date-pipe.service';
-import { EventScheduleFormService } from './../../../core/services/forms/event-schedule-form.service';
-import { EventSchedule } from './../../../core/models/event-schedule.model';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { EventScheduleFormComponent } from '../event-schedule-form/event-schedule-form.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
+import { EventScheduleFormComponent } from '../event-schedule-form/event-schedule-form.component';
+import { EventSchedule } from './../../../core/models/event-schedule.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event-schedule',
@@ -20,7 +18,7 @@ export class EventScheduleComponent implements OnInit {
 
   @Output() changeSchedules: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private datePipeService: DatePipeService) { }
 
   ngOnInit() {
     this.schedules.sort(this.compareDate);
@@ -32,7 +30,7 @@ export class EventScheduleComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "650px";
     dialogConfig.position = { top: '15vh' }
-    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate }
+    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate, existTimes: this.schedules.map(i => this.datePipeService.fromUnixTimeStamp(i.startTime)) }
 
     let dialogRef = this.dialog.open(EventScheduleFormComponent, dialogConfig);
 
@@ -52,7 +50,7 @@ export class EventScheduleComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "650px";
     dialogConfig.position = { top: '15vh' }
-    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate, schedule: schedule }
+    dialogConfig.data = { minDate: this.minDate, maxDate: this.maxDate, schedule: schedule, existTimes: this.schedules.map(i => this.datePipeService.fromUnixTimeStamp(i.startTime)) }
 
     let dialogRef = this.dialog.open(EventScheduleFormComponent, dialogConfig);
 
@@ -77,14 +75,22 @@ export class EventScheduleComponent implements OnInit {
     if (date1.startTime > date2.startTime) {
       return 1;
     } else if (date1.startTime == date2.startTime) {
-      if (date1.endTime > date2.endTime) {
-        return 1;
-      } else if (date1.endTime < date2.endTime) {
-        return -1;
-      }
-      else return 0;
-    } else
-      return -1;
+      return 0;
+    }
+
+    return -1;
+
+    // if (date1.startTime > date2.startTime) {
+    //   return 1;
+    // } else if (date1.startTime == date2.startTime) {
+    //   if (date1.endTime > date2.endTime) {
+    //     return 1;
+    //   } else if (date1.endTime < date2.endTime) {
+    //     return -1;
+    //   }
+    //   else return 0;
+    // } else
+    //   return -1;
   }
 
 }

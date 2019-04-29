@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
-import { merge } from 'hammerjs';
-import { fromEvent } from 'rxjs';
+import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 import { EventService } from '../../../core/services/event.service';
@@ -18,7 +17,7 @@ export class VolunteerListComponent implements OnInit, AfterViewInit {
   @Input() eventId: number;
 
   dataSource: VolunteersDataSource;
-  displayedColumns = ['avatar', 'lastName', 'firstName', 'email', 'gender', 'phoneNumber', 'actions']
+  displayedColumns = ['avatar', 'fullName', 'email', 'gender', 'phoneNumber', 'address', 'office', 'skills', 'note']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -64,10 +63,6 @@ export class VolunteerListComponent implements OnInit, AfterViewInit {
       this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize);
-  }
-
-  onView(volunteerId: number) {
-
   }
 
 }

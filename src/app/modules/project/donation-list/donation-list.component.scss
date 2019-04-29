@@ -1,0 +1,20 @@
+mat-cell:nth-child(4),
+mat-header-cell:nth-child(4) {
+  flex: 0 0 14%;
+}
+
+mat-cell:nth-child(9),
+mat-header-cell:nth-child(9) {
+  flex: 0 0 20%;
+}
+
+.mat-cell {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.donated-amount-cell {
+  font-weight: bold;
+   justify-content: start;
+   font-style: normal;
+}
