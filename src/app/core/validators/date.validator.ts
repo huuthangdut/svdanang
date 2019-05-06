@@ -15,20 +15,19 @@ export class DateValidators {
     return null;
   }
 
-  static includeDate(existDates: Date[]) {
+  static includeDate(existDates: Date[], oldValue?: Date) {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (moment(control.value).isValid()) {
-
-        const date = moment(control.value).set({ seconds: 0 });
-
-        const existDatesMoment = existDates.map(d => moment(d)
-          .set({ seconds: 0 }));
-
-        return existDatesMoment.some(d => d.isSame(date)) ?
-          { includeDate: true } : null;
+      if (oldValue && moment(control.value).isSame(moment(oldValue))) {
+        return null;
       }
 
-      return null;
+      const date = moment(control.value).set({ seconds: 0 });
+
+      const existDatesMoment = existDates.map(d => moment(d)
+        .set({ seconds: 0 }));
+
+      return existDatesMoment.some(d => d.isSame(date)) ?
+        { includeDate: true } : null;
     }
   }
 }

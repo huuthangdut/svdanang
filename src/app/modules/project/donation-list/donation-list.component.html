@@ -98,7 +98,8 @@
 
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-  <mat-footer-row *matFooterRowDef="['donatedAmount']">
+  <mat-footer-row *matFooterRowDef="['donatedAmount']"
+    [ngClass]="{'hide': (dataSource.loading$ | async) == false && dataSource.totalElements == 0 }">
   </mat-footer-row>
 
   <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': (dataSource.loading$ | async) == false}">

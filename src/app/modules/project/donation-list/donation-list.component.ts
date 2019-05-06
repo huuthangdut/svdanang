@@ -82,7 +82,7 @@ export class DonationListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "450px";
+    dialogConfig.width = "470px";
     dialogConfig.position = { top: '15vh' };
     dialogConfig.data = { projectId: this.projectId }
 
@@ -102,7 +102,7 @@ export class DonationListComponent implements OnInit, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "450px";
+    dialogConfig.width = "470px";
     dialogConfig.position = { top: '15vh' };
     dialogConfig.data = { projectId: this.projectId, donationId: id }
 

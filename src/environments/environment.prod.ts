@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiURL: 'https://svdanang.herokuapp.com/api',
-  publicURL: 'https://demo.svdanang.com'
+  apiURL: 'http://222.255.167.89/svdanang-0.0.1-SNAPSHOT/api',
+  publicURL: 'https://svdanang.com'
 };

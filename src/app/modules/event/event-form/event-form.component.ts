@@ -166,7 +166,9 @@ export class EventFormComponent implements OnInit {
       expectedQuantity: event.expectedQuantity,
       fee: event.fee,
       currencyId: event.currency ? event.currency.id : null
-    })
+    });
+
+    this.thumbnailImage = event.image;
   }
 
 

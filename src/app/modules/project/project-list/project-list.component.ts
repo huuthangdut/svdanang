@@ -16,7 +16,7 @@ import { ProjectsDataSource } from './project.data-source';
 export class ProjectListComponent implements OnInit {
 
   dataSource: ProjectsDataSource;
-  displayedColumns = ['image', 'name', 'topic', 'startTime', 'endTime', 'progress', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'topic', 'startTime', 'endTime', 'createdAt', 'status', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

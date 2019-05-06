@@ -1,0 +1,60 @@
+<mat-toolbar>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Quản lý ban</span>
+    <span flex></span>
+  </div>
+</mat-toolbar>
+
+<mat-card class="card-container">
+  <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
+    <span class="push-left-sm">
+      <span class="mat-title">Danh sách ban</span>
+    </span>
+    <span flex></span>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-table #table class="mat-elevation-z8" [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Tên ban</mat-header-cell>
+      <mat-cell *matCellDef="let department">{{department.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Mô tả</mat-header-cell>
+      <mat-cell *matCellDef="let department">{{department.description}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let department">
+        <button mat-icon-button (click)="onEdit(department.id)" color="accent">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDelete(department.id)" color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <mat-spinner [diameter]="60" style="margin-top: 10px; margin-bottom: 10px;"></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': isLoading == false}">
+    </mat-footer-row>
+
+  </mat-table>
+</mat-card>
+
+<a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">
+  <mat-icon>add</mat-icon>
+</a>

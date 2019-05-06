@@ -22,41 +22,49 @@ export class SidenavComponent {
       title: 'Trang cá nhân',
     }
   ];
-  mgmtmenu: Object[] = [{
-    icon: 'people',
-    route: '/users',
-    title: 'Người dùng',
-    description: 'Item description',
-  }, {
-    icon: 'dns',
-    route: '/meetings',
-    title: 'Lịch họp',
-    description: 'Item description',
-  },
-  {
-    icon: 'dns',
-    route: '/posts',
-    title: 'Bài đăng',
-    description: 'Item description',
-  },
-  {
-    icon: 'dns',
-    route: '/events',
-    title: 'Sự kiện',
-    description: 'Item description',
-  },
-  {
-    icon: 'dns',
-    route: '/projects',
-    title: 'Dự án gây quỹ',
-    description: 'Item description',
-  },
-  {
-    icon: 'dns',
-    route: '/topics',
-    title: 'Chủ đề',
-    description: 'Item description',
-  }
+  mgmtmenu: Object[] = [
+    {
+      icon: 'people',
+      route: '/users',
+      title: 'Người dùng',
+      description: 'Item description',
+    },
+    {
+      icon: 'people',
+      route: '/departments',
+      title: 'Ban',
+      description: 'Item description',
+    },
+    {
+      icon: 'dns',
+      route: '/meetings',
+      title: 'Lịch họp',
+      description: 'Item description',
+    },
+    {
+      icon: 'dns',
+      route: '/posts',
+      title: 'Bài đăng',
+      description: 'Item description',
+    },
+    {
+      icon: 'dns',
+      route: '/events',
+      title: 'Sự kiện',
+      description: 'Item description',
+    },
+    {
+      icon: 'dns',
+      route: '/projects',
+      title: 'Dự án gây quỹ',
+      description: 'Item description',
+    },
+    {
+      icon: 'dns',
+      route: '/topics',
+      title: 'Chủ đề',
+      description: 'Item description',
+    }
   ];
   monitormenu: Object[] = [{
     icon: 'verified_user',

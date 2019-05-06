@@ -59,9 +59,12 @@ export class EventScheduleFormComponent implements OnInit {
 
   buildForm() {
     if (this.isEdit) {
+      const startTime = this.datePipeService.fromUnixTimeStamp(this.schedule.startTime);
+
       this.scheduleForm = this.formBuilder.group({
         startTime:
-          [this.datePipeService.fromUnixTimeStamp(this.schedule.startTime), [Validators.required, DateValidators.includeDate(this.existTimes)]],
+          [startTime,
+            [Validators.required, DateValidators.includeDate(this.existTimes, startTime)]],
         schedule: [this.schedule.schedule, Validators.required],
         location: [this.schedule.location, Validators.required]
       });

@@ -5,6 +5,11 @@
     </button>
     <span>{{ title }}</span>
     <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" [disabled]="projectForm.invalid || submitting" (click)="onSubmit()">
+        <mat-icon class="save-icon">save</mat-icon> LƯU
+      </button>
+    </span>
   </div>
 </mat-toolbar>
 
@@ -142,13 +147,13 @@
     </mat-tab-group>
   </mat-card-content>
 
-  <mat-card-actions align="end">
+  <!-- <mat-card-actions align="end">
     <button mat-flat-button>
       Trở về
     </button>
     <button mat-raised-button color="accent" [disabled]="projectForm.invalid || submitting" (click)="onSubmit()">
       Lưu
     </button>
-  </mat-card-actions>
+  </mat-card-actions> -->
 
 </mat-card>

@@ -5,6 +5,11 @@
     </button>
     <span>{{ title }}</span>
     <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" [disabled]="eventForm.invalid || submitting" (click)="onSubmit()">
+        <mat-icon class="save-icon">save</mat-icon> LƯU
+      </button>
+    </span>
   </div>
 </mat-toolbar>
 
@@ -31,8 +36,6 @@
                   formControlName="shortDescription"></textarea>
               </mat-form-field>
             </div>
-
-
             <div fxLayout="row">
               <mat-icon class="custom-icon">title</mat-icon>
               <mat-form-field class="field-full-width">
@@ -104,7 +107,7 @@
                     <mat-icon class="custom-icon">attach_money</mat-icon>
                     <mat-form-field class="field-full-width">
                       <input (blur)="onValueChanged()" matInput placeholder="Lệ phí tham gia" type="number"
-                        formControlName="fee" required>
+                        formControlName="fee" required min="0">
                       <mat-error *ngIf="formErrors.fee">
                         {{ formErrors.fee }}
                       </mat-error>
@@ -125,21 +128,6 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <!-- <div fxFlex="80">
-                  <mat-icon class="custom-icon">attach_money</mat-icon>
-                  <mat-form-field>
-                    <input matInput placeholder="Lệ phí tham gia" type="text" formControlName="fee">
-                  </mat-form-field>
-                </div>
-                <div fxFlex="20">
-                  <mat-form-field class="field-full-width">
-                    <mat-label>Loại tiền</mat-label>
-                    <mat-select required formControlName="topicId">
-                      <mat-option value="VND">VND</mat-option>
-                      <mat-option value="USD">USD</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div> -->
               </div>
             </div>
             <div fxLayout="row">
@@ -188,13 +176,13 @@
     </mat-tab-group>
   </mat-card-content>
 
-  <mat-card-actions align="end">
+  <!-- <mat-card-actions align="end" class="card-actions">
     <button mat-flat-button>
       Trở về
     </button>
     <button mat-raised-button color="accent" [disabled]="eventForm.invalid || submitting" (click)="onSubmit()">
       Lưu
     </button>
-  </mat-card-actions>
+  </mat-card-actions> -->
 
 </mat-card>

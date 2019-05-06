@@ -1,20 +1,26 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <div>Quản lý bài đăng</div>
-    </div>
-  </mat-toolbar-row>
+  <div layout="row" layout-align="start center" flex>
+    <button mat-icon-button tdLayoutManageListOpen [hideWhenOpened]="true">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>{{ title }}</span>
+    <span flex></span>
+    <span>
+      <button mat-flat-button color="accent" [disabled]="blogPostForm.invalid || submitting" (click)="onSubmit()">
+        <mat-icon class="save-icon">save</mat-icon> LƯU
+      </button>
+    </span>
+  </div>
 </mat-toolbar>
 
 <mat-card>
   <div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm layout-row">
     <span class="push-left-sm">
-      <span class="mat-title">{{ title }}</span>
+      <span class="mat-title"></span>
     </span>
 
     <span flex></span>
   </div>
-  <mat-divider></mat-divider>
   <mat-card-content class="card-container"
     *tdLoading="'loading'; mode:'indeterminate'; type:'circle'; strategy:'overlay'; color:'primary';">
     <form [formGroup]="blogPostForm" flex fxLayout="column" fxLayoutGap="15px">
@@ -80,12 +86,12 @@
       </div>
     </form>
   </mat-card-content>
-  <mat-card-actions align="end">
+  <!-- <mat-card-actions align="end">
     <button mat-flat-button>
       Trở về
     </button>
     <button mat-raised-button color="accent" [disabled]="blogPostForm.invalid || submitting" (click)="onSubmit()">
       Lưu
     </button>
-  </mat-card-actions>
+  </mat-card-actions> -->
 </mat-card>
