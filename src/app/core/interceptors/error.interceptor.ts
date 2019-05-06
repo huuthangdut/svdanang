@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
@@ -10,7 +11,8 @@ import { AuthService } from '../services';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    private snackBar: MatSnackBar
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,7 +25,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         const error = err.error.message || err.statusText;
-        return throwError(error);
+        console.error(error);
+
+        return throwError({ error: error });
       }));
   }
 }

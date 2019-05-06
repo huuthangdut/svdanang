@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._titleService.setTitle('Covalent Quickstart');
+    // this._titleService.setTitle('Trang tổng quan - Diễn đàn sinh viên Đà nẵng');
   }
 
   // ngx transform using covalent digits pipe

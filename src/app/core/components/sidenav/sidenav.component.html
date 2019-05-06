@@ -1,7 +1,7 @@
 <td-layout>
-  <td-navigation-drawer flex [sidenavTitle]="name" [name]="user.displayName" [email]="user.email">
-    <mat-nav-list>
-      <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route">
+  <td-navigation-drawer flex [sidenavTitle]="name" [name]="user.displayName" [email]="user.email" navigationRoute="/">
+    <mat-nav-list class="mat-nav-list" role="navigation">
+      <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" tdLayoutClose>
         <mat-icon class="sidenav-icon">{{item.icon}}</mat-icon>{{item.title}}
       </a>
       <a mat-list-item (click)="logout()">

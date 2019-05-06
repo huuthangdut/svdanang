@@ -20,10 +20,10 @@ export class LoginComponent implements OnInit {
 
   validationMessages = {
     'username': [
-      { type: 'required', message: 'Vui lòng nhập tên đăng nhập' }
+      { type: 'required', message: 'Vui lòng nhập tên đăng nhập.' }
     ],
     'password': [
-      { type: 'required', message: 'Vui lòng nhập mật khẩu' }
+      { type: 'required', message: 'Vui lòng nhập mật khẩu.' }
     ]
   }
 
@@ -68,9 +68,9 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         this.router.navigate([this.returnUrl]);
       }, error => {
-        this.error = error;
+        this.error = error.error;
         this.loading = false;
-        this.snackBar.open(error, '', {
+        this.snackBar.open(this.error, '', {
           duration: 2000,
           panelClass: ['error-snackbar-message']
         });

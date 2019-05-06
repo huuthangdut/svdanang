@@ -1,3 +1,4 @@
+import { UploadService } from './../../core/services/upload.service';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +11,8 @@ import { UserProfileFormService } from './../../core/services/forms/user-profile
 import { UserService } from './../../core/services/user.service';
 import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-error-matcher';
 import { PasswordValidators } from './../../core/validators/password.validator';
+import { map, switchMap, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +20,8 @@ import { PasswordValidators } from './../../core/validators/password.validator';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  files: File | FileList;
-  disabled: boolean = false;
+  file: File;
+  avatar: string;
 
   errorMatcher = new CrossFieldErrorMatcher();
 
@@ -37,6 +40,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private userProfileFormService: UserProfileFormService,
     private updatePasswordFormService: UpdatePasswordFormService,
+    private uploadService: UploadService,
     private datePipeService: DatePipeService,
     private snackBar: MatSnackBar) { }
 
@@ -76,6 +80,8 @@ export class ProfileComponent implements OnInit {
       city: userProfile.city,
       facebookLink: userProfile.facebookLink,
     });
+
+    this.avatar = this.userProfile.avatar;
   }
 
   buildProfileForm() {
@@ -127,6 +133,22 @@ export class ProfileComponent implements OnInit {
     this.userProfileFormService.logValidationErrors(this.profileForm);
   }
 
+  onSelectImage(file: File) {
+    this.file = file;
+
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event: any) => {
+      this.avatar = event.target.result;
+      console.log(this.avatar);
+    }
+  }
+
+  onClearImage() {
+    this.file = null;
+    this.avatar = this.userProfile ? this.userProfile.avatar : '';
+  }
+
   getUserProfileModel(): UserProfileModel {
     const formValue = Object.assign({}, this.profileForm.value);
 
@@ -139,7 +161,7 @@ export class ProfileComponent implements OnInit {
       formValue.address,
       formValue.city,
       formValue.facebookLink,
-      null,
+      this.userProfile ? this.userProfile.avatar : null,
     );
   }
 
@@ -155,9 +177,26 @@ export class ProfileComponent implements OnInit {
     if (this.profileForm.valid) {
       const userProfile = this.getUserProfileModel();
 
-      this.userService.updateCurrentUser(userProfile).subscribe(
-        response => this.handleSubmitProfileSuccess(response),
-        error => this.handleSubmitError(error));
+      if (this.file) {
+        this.uploadService.uploadFile(this.file).pipe(
+          map(params => params['fileDownloadUri']),
+          switchMap(fileUrl => {
+            userProfile.avatar = fileUrl
+            return this.userService.updateCurrentUser(userProfile)
+          })
+        ).subscribe(
+          response => this.handleSubmitProfileSuccess(response),
+          error => this.handleSubmitError(error)
+        );
+      } else {
+        this.userService.updateCurrentUser(userProfile).subscribe(
+          response => this.handleSubmitProfileSuccess(response),
+          error => this.handleSubmitError(error)
+        );
+      }
+
+
+
     }
   }
 
@@ -166,13 +205,16 @@ export class ProfileComponent implements OnInit {
     if (this.updatePasswordForm.valid) {
       const userPassword = this.getUserPasswordModel();
 
-      this.userService.updateCurrentUserPassword(userPassword).subscribe(
-        response => this.handleSubmitPasswordSuccess(response),
-        error => this.handleSubmitError(error));
+      this.userService.updateCurrentUserPassword(userPassword)
+        .subscribe(
+          response => this.handleSubmitPasswordSuccess(response),
+          error => this.handleSubmitError(error)
+        );
     }
   }
 
   handleSubmitProfileSuccess(response) {
+    console.log(response);
     this.submitting = false;
     const message = "Cập nhật thông tin cá nhân thành công";
 
@@ -182,6 +224,7 @@ export class ProfileComponent implements OnInit {
   }
 
   handleSubmitPasswordSuccess(response) {
+    console.log(response);
     this.submitting = false;
     this.updatePasswordForm.reset();
     const message = "Cập nhật mật khẩu thành công";
@@ -195,7 +238,7 @@ export class ProfileComponent implements OnInit {
     this.submitting = false;
     console.log(error);
 
-    this.snackBar.open("Có lỗi xảy ra. Vui lòng thử lại.", '', {
+    this.snackBar.open(error, '', {
       duration: 2000,
     });
   }

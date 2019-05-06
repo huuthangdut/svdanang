@@ -34,3 +34,61 @@
 .custom-icon {
     margin: 17px 20px 0 0;
 }
+
+.avatar-image {
+  height: 128px;
+  width: 128px;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.container .button-upload {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 16px;
+  // padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: 0;
+}
+
+.container .button-clear {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  // background-color: #555;
+  color: #555;
+  font-size: 16px;
+  // padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  opacity: 0;
+}
+
+.container:hover img {
+  background-color: #555;
+  opacity: 0.2;
+}
+
+.container:hover .button-upload, .container:hover .button-clear{
+  opacity: 1;
+}
+
+
+
+// .container:hover {
+//   background-color: black;
+//   opacity: 0.5;
+// }
