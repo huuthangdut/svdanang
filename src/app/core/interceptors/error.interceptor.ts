@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '../services';
+import { Router } from '@angular/router';
 
 
 
@@ -12,6 +13,7 @@ import { AuthService } from '../services';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     public authService: AuthService,
+    private router: Router,
     private snackBar: MatSnackBar
   ) { }
 
@@ -21,6 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(err => {
         if ([401, 403].indexOf(err.status) !== -1) {
           this.authService.logout();
+          this.router.navigate(['/login']);
           // location.reload(true);
         }
 

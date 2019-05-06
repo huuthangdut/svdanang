@@ -28,7 +28,8 @@
     </div>
   </div>
   <div flex fxLayout="row" fxLayoutAlign="end center">
-    <button mat-flat-button color="accent" (click)="onAddMeeting()">Tạo mới</button>
+    <button *hasPermission="[ACTION.CREATE_MEETING]" mat-flat-button color="accent" (click)="onAddMeeting()">Tạo
+      mới</button>
   </div>
   <br />
   <br />

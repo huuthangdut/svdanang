@@ -4,7 +4,11 @@
     <form [formGroup]="userForm" flex fxLayout="column" fxLayoutGap="10px">
       <div flex fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="15px" fxLayoutGap.lt-md="0px">
         <div fxFlex="25">
-          <img src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
+          <img mat-card-avatar class="avatar-image" *ngIf="user && user.avatar; else noAvatar" [src]="user.avatar" />
+          <ng-template #noAvatar>
+            <img mat-card-avatar class="avatar-image"
+              src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" />
+          </ng-template>
         </div>
         <div fxFlex="75">
           <div fxLayout="column" fxLayoutGap="10px">

@@ -1,3 +1,5 @@
+import { AuthService } from './../../core/services/auth.service';
+import { ACTION } from './../../shared/constants/action.constant';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core/loading';
@@ -50,22 +52,12 @@ export class MeetingComponent implements OnInit {
   meetings: Meeting[] = [];
   isLoading: boolean;
 
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fa fa-fw fa-pencil action-button"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.editMeeting(event.id);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times action-button"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.deleteMeeting(event.id);
-      }
-    }
-  ];
+  actions: CalendarEventAction[] = [];
+
+  ACTION = ACTION;
 
   constructor(
+    private authService: AuthService,
     private meetingService: MeetingService,
     private datePipeService: DatePipeService,
     private dialog: MatDialog,
@@ -75,6 +67,30 @@ export class MeetingComponent implements OnInit {
 
   ngOnInit() {
     this.loadMeetings();
+
+    const grantedActions = this.authService.currentUserValue.grantedActions;
+
+    if (grantedActions.includes(ACTION.EDIT_MEETING)) {
+      this.actions.push(
+        {
+          label: '<i class="fa fa-fw fa-pencil action-button"></i>',
+          onClick: ({ event }: { event: CalendarEvent }): void => {
+            this.editMeeting(event.id);
+          }
+        }
+      );
+    }
+
+    if (grantedActions.includes(ACTION.DELETE_MEETING)) {
+      this.actions.push(
+        {
+          label: '<i class="fa fa-fw fa-times action-button"></i>',
+          onClick: ({ event }: { event: CalendarEvent }): void => {
+            this.deleteMeeting(event.id);
+          }
+        }
+      );
+    }
   }
 
   loadMeetings() {
@@ -190,7 +206,7 @@ export class MeetingComponent implements OnInit {
   }
 
   eventClicked(event: CalendarEvent) {
-    this.editMeeting(event.id);
+    alert("Form xem chi tiet cuoc hop dang xay dung.");
   }
 
 

@@ -1,5 +1,6 @@
 <td-layout>
-  <td-navigation-drawer flex [sidenavTitle]="name" [name]="user.displayName" [email]="user.email" navigationRoute="/">
+  <td-navigation-drawer flex [name]="displayName" [sidenavTitle]="name" [email]="user ? user.email : ''"
+    navigationRoute="/">
     <mat-nav-list class="mat-nav-list" role="navigation">
       <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" tdLayoutClose>
         <mat-icon class="sidenav-icon">{{item.icon}}</mat-icon>{{item.title}}
@@ -36,20 +37,13 @@
         </a>
         <h3 matSubheader>Quản lý</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="mgmtmenu">
-          <a mat-list-item [routerLink]="item.route">
-            <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
-          </a>
-          <mat-divider *ngIf="item.divider"></mat-divider>
-        </ng-template>
-        <h3 matSubheader>Quyền hạn</h3>
-        <ng-template let-item let-last="last" ngFor [ngForOf]="monitormenu">
-          <a mat-list-item [routerLink]="item.route">
+          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route">
             <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
         <h3 matSubheader>Cài đặt</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="settingsmenu">
-          <a mat-list-item [routerLink]="item.route">
+          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route">
             <mat-icon matListIcon class="sidenav-icon"> {{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>

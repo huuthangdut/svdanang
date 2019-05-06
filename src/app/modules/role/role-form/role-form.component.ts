@@ -241,18 +241,20 @@ export class RoleFormComponent implements OnInit {
   /** Whether part of the descendants are selected */
   descendantsPartiallySelected(node: PermissionFlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child =>
+    const partialDesSelected = descendants.some(child =>
       this.checklistSelection.isSelected(child)
     );
 
-    if (!this.checklistSelection.isSelected(node) && result) {
-      this.checklistSelection.select(node);
-    }
+    const desAllDeselected = descendants.every(child => !this.checklistSelection.isSelected(child));
 
-    return result;
+    if (this.checklistSelection.isSelected(node) && desAllDeselected) {
+      return true;
+    }
+    
+    return partialDesSelected;
   }
 
-  /** Toggle the to-do item selection. Select/deselect all the descendants node */
+  /** Toggle the item selection. Select/deselect all the descendants node */
   todoItemSelectionToggle(node: PermissionFlatNode): void {
     this.checklistSelection.toggle(node);
     const descendants = this.treeControl.getDescendants(node);
@@ -267,7 +269,7 @@ export class RoleFormComponent implements OnInit {
     this.checkAllParentsSelection(node);
   }
 
-  /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
+  /** Toggle a leaf item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: PermissionFlatNode): void {
     this.checklistSelection.toggle(node);
     this.checkAllParentsSelection(node);
@@ -289,9 +291,9 @@ export class RoleFormComponent implements OnInit {
     const descAllSelected = descendants.every(child =>
       this.checklistSelection.isSelected(child)
     );
-    if (nodeSelected && !descAllSelected) {
-      this.checklistSelection.deselect(node);
-    } else if (!nodeSelected && descAllSelected) {
+
+    // edited
+    if (!nodeSelected && descAllSelected) {
       this.checklistSelection.select(node);
     }
   }

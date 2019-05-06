@@ -2,7 +2,7 @@ import { BlogPostTopicService } from './../../../core/services/blog-post-topic.s
 import { TdLoadingService } from '@covalent/core/loading';
 import { map, switchMap } from 'rxjs/operators';
 import { UploadService } from './../../../core/services/upload.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,6 +19,7 @@ import { TINY_MCE_SETTINGS } from './../../../shared/settings/editor.setting';
   styleUrls: ['./blog-post-form.component.scss']
 })
 export class BlogPostFormComponent implements OnInit {
+  @ViewChild('editor') editor;
 
   file: File;
   thumbnailImage: string;

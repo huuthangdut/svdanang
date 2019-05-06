@@ -1,3 +1,4 @@
+import { ACTION } from './../../../shared/constants/action.constant';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
@@ -21,6 +22,8 @@ export class BlogPostListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+
+  ACTION = ACTION;
 
   constructor(
     private blogPostService: BlogPostService,

@@ -13,7 +13,7 @@ import { DepartmentService } from '../../../core/services/department.service';
 })
 export class DepartmentFormComponent implements OnInit {
 
-  title: string = 'Tạo mới chủ đề';
+  title: string = 'Tạo mới ban';
 
   departmentId: number;
   department: Department;

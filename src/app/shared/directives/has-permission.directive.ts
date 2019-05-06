@@ -31,10 +31,10 @@ export class HasPermissionDirective {
   }
 
   private updateView() {
+    this.viewContainer.clear();
+
     if (this.checkPermission()) {
       this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
     }
   }
 

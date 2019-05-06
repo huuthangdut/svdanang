@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { DialogService } from '../../../shared/services/dialog.service';
 import { ProjectService } from './../../../core/services/project.service';
 import { ProjectsDataSource } from './project.data-source';
+import { ACTION } from '../../../shared/constants/action.constant';
 
 @Component({
   selector: 'app-project-list',
@@ -21,6 +22,8 @@ export class ProjectListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+
+  ACTION = ACTION;
 
 
   constructor(private router: Router,

@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { EventService } from './../../../core/services/event.service';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { EventsDataSource } from './event.data-source';
+import { ACTION } from '../../../shared/constants/action.constant';
 
 @Component({
   selector: 'app-event-list',
@@ -21,6 +22,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+
+  ACTION = ACTION;
 
 
   constructor(private router: Router,

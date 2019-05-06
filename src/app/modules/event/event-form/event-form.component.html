@@ -30,23 +30,6 @@
               </mat-form-field>
             </div>
             <div fxLayout="row">
-              <mat-icon class="custom-icon">title</mat-icon>
-              <mat-form-field class="field-full-width">
-                <textarea cdkTextareaAutosize matInput placeholder="Mô tả ngắn"
-                  formControlName="shortDescription"></textarea>
-              </mat-form-field>
-            </div>
-            <div fxLayout="row">
-              <mat-icon class="custom-icon">title</mat-icon>
-              <mat-form-field class="field-full-width">
-                <input (blur)="onValueChanged()" matInput placeholder="Địa điểm" type="text" formControlName="location"
-                  required>
-                <mat-error *ngIf="formErrors.location">
-                  {{ formErrors.location }}
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div fxLayout="row">
               <mat-icon class="custom-icon">subject</mat-icon>
               <mat-form-field class="field-full-width">
                 <mat-label>Chủ đề</mat-label>
@@ -61,6 +44,25 @@
                 </mat-error>
               </mat-form-field>
             </div>
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <textarea cdkTextareaAutosize matInput placeholder="Mô tả ngắn"
+                  formControlName="shortDescription"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row">
+              <mat-icon class="custom-icon">title</mat-icon>
+              <mat-form-field class="field-full-width">
+                <input (blur)="onValueChanged()" matInput placeholder="Địa điểm" type="text" formControlName="location"
+                  required>
+                <mat-error *ngIf="formErrors.location">
+                  {{ formErrors.location }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
             <div [formGroup]="eventForm.get('dateGroup')" fxLayout="row" fxLayout.xs="column" fxLayoutGap="30px">
               <div fxFlex="50" fxLayout="row">
                 <mat-icon class="custom-icon">date_range</mat-icon>

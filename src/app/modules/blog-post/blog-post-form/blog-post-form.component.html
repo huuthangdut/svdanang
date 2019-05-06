@@ -51,8 +51,8 @@
       <div fxLayout="row">
         <mat-icon class="custom-icon">title</mat-icon>
         <mat-form-field class="field-full-width">
-          <input (blur)="onValueChanged()" formControlName="shortContent" matInput placeholder="Mô tả ngắn" type="text"
-            required>
+          <textarea (blur)="onValueChanged()" formControlName="shortContent" cdkTextareaAutosize matInput
+            placeholder="Mô tả ngắn" required></textarea>
           <mat-error *ngIf="formErrors.shortContent">
             {{ formErrors.shortContent }}
           </mat-error>

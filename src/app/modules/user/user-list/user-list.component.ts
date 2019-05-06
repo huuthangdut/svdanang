@@ -1,3 +1,4 @@
+import { ACTION } from './../../../shared/constants/action.constant';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { merge, fromEvent } from 'rxjs';
@@ -20,6 +21,10 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('search') search: ElementRef;
+
+  ACTION = ACTION;
+
+
 
   constructor(
     private dialog: MatDialog,
