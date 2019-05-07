@@ -45,11 +45,11 @@ mat-spinner .loading-spinner {
 }
 
 .fa-pencil:before {
-  color: #0288d1 !important;
+  color: wheat !important;
 }
 
 .fa-remove:before, .fa-close:before, .fa-times:before {
-  color: red !important;
+  color: wheat !important;
 }
 
 .example-header-image {
@@ -57,6 +57,10 @@ mat-spinner .loading-spinner {
     background-size: cover;
 }
 
+.cal-month-view .cal-event-title {
+  cursor: default; }
+  .cal-month-view .cal-event-title:hover {
+    text-decoration: none; }
 
 // spinner style
 #loader {

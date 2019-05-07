@@ -58,6 +58,7 @@ import {
   CovalentPagingModule,
   CovalentSearchModule,
   CovalentStepsModule,
+  CovalentVirtualScrollModule,
 } from '@covalent/core';
 import { CovalentTextEditorModule } from '@covalent/text-editor';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -68,6 +69,7 @@ import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-ov
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { HasPermissionDirective } from './directives/has-permission.directive';
 import { UploadImageComponent } from './components/upload-image/upload-image.component';
+import { DateTimeAgoPipe } from './pipes/datetime-ago.pipe';
 
 
 @NgModule({
@@ -78,6 +80,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     ConfirmDialogComponent,
     DateFormatPipe,
     DateTimeFormatPipe,
+    DateTimeAgoPipe,
     UploadImageComponent
 
   ],
@@ -137,6 +140,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     CovalentMenuModule,
     CovalentDataTableModule,
     CovalentMessageModule,
+    CovalentVirtualScrollModule,
     // external modules
     NgxChartsModule,
 
@@ -206,6 +210,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     CovalentMessageModule,
     // external modules
     NgxChartsModule,
+    CovalentVirtualScrollModule,
 
     MatProgressButtonsModule,
 
@@ -216,6 +221,7 @@ import { UploadImageComponent } from './components/upload-image/upload-image.com
     HasPermissionDirective,
     DateFormatPipe,
     DateTimeFormatPipe,
+    DateTimeAgoPipe,
     UploadImageComponent
 
   ],

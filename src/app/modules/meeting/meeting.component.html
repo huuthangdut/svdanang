@@ -56,8 +56,7 @@
   <div [ngSwitch]="view">
     <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
       [activeDayIsOpen]="activeDayIsOpen" [locale]="locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays"
-      (eventClicked)="eventClicked($event.event)" (dayClicked)="dayClicked($event.day)"
-      [cellTemplate]="monthCellTemplate">
+      (dayClicked)="dayClicked($event.day)" [cellTemplate]="monthCellTemplate">
     </mwl-calendar-month-view>
   </div>
 </mat-card>

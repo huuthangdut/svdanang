@@ -11,7 +11,6 @@ import { SharedModule } from './../../shared/shared.module';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
 import { MeetingRoutingModule } from './meeting-routing.module';
 import { MeetingComponent } from './meeting.component';
-import { ColorPickerModule } from 'ngx-color-picker';
 
 registerLocaleData(localeVi);
 
@@ -27,10 +26,10 @@ registerLocaleData(localeVi);
       useFactory: adapterFactory
     }),
     MeetingRoutingModule,
-    CovalentLoadingModule,
-    ColorPickerModule
+    CovalentLoadingModule
 
   ],
-  entryComponents: [MeetingFormComponent]
+  entryComponents: [
+    MeetingFormComponent]
 })
 export class MeetingModule { }

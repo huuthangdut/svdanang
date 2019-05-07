@@ -24,7 +24,7 @@ export class BlogPostFormComponent implements OnInit {
   file: File;
   thumbnailImage: string;
 
-  title = 'Tạo mới bài đăng';
+  title = 'Tạo mới bài viết';
   topics = [];
 
   postId: number;
@@ -56,7 +56,7 @@ export class BlogPostFormComponent implements OnInit {
     if (param) {
       this.postId = param;
       this.isEdit = true;
-      this.title = 'Chỉnh sửa bài đăng';
+      this.title = 'Chỉnh sửa bài viết';
     }
   }
 

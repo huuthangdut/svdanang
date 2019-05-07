@@ -1,5 +1,3 @@
-import { ACTION } from './../../../shared/constants/action.constant';
-
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -8,6 +6,7 @@ import { TdMediaService } from '@covalent/core';
 
 import { environment } from '../../../../environments/environment';
 import { User } from '../../models';
+import { ACTION } from './../../../shared/constants/action.constant';
 import { AuthService } from './../../services/auth.service';
 import { UserService } from './../../services/user.service';
 
@@ -20,6 +19,8 @@ export class SidenavComponent {
   PUBLIC_URL = environment.publicURL;
 
   name = "Diễn đàn sinh viên Đà nẵng";
+
+  miniNav: boolean = false;
 
   routes: Object[] = [
     {
@@ -58,7 +59,7 @@ export class SidenavComponent {
       permissions: [ACTION.EVENT_PAGE]
     },
     {
-      icon: 'payment',
+      icon: 'receipt',
       route: '/projects',
       title: 'Dự án gây quỹ',
       description: 'Item description',
@@ -96,7 +97,6 @@ export class SidenavComponent {
     }
   ];
 
-  USERS
 
   user: User;
   displayName: string;

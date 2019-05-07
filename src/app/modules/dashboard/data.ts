@@ -1,19 +1,158 @@
 export let single: any = [
   {
-    'name': 'Germany',
-    'value': 8940000,
+    'name': 'Xã hội',
+    'value': 150,
   },
   {
-    'name': 'USA',
-    'value': 5000000,
+    'name': 'Giáo dục',
+    'value': 200,
   },
   {
-    'name': 'France',
-    'value': 7200000,
+    'name': 'Buôn lậu',
+    'value': 120,
+  },
+  {
+    'name': 'Trẻ em',
+    'value': 250
   },
 ];
 
-export let multi: any = [
+export var multi: any = [
+  {
+    'name': 'Buôn lậu',
+    'series': [
+      {
+        'name': '2018',
+        'value': 5300000
+      },
+      {
+        'name': '2019',
+        'value': 7300000
+      }
+    ]
+  },
+
+  {
+    'name': 'Giáo dục',
+    'series': [
+      {
+        'name': '2018',
+        'value': 5300000
+      },
+      {
+        'name': '2019',
+        'value': 8270000
+      }
+    ]
+  },
+
+  {
+    'name': 'Xã hội',
+    'series': [
+      {
+        'name': '2018',
+        'value': 5300000
+      },
+      {
+        'name': '2019',
+        'value': 8940000
+      },
+    ]
+  },
+  {
+    'name': 'Trẻ em',
+    'series': [
+      {
+        'name': '2018',
+        'value': 5300000
+      },
+      {
+        'name': '2019',
+        'value': 8940000
+      },
+    ]
+  }
+];
+
+export var times: any = [
+  {
+    'name': 'FY2018',
+    'series': [
+      {
+        'value': 69,
+        'name': '2016-09-15T19:25:07.773Z',
+      },
+      {
+        'value': 19,
+        'name': '2016-09-17T17:16:53.279Z',
+      },
+      {
+        'value': 85,
+        'name': '2016-09-15T10:34:32.344Z',
+      },
+      {
+        'value': 89,
+        'name': '2016-09-19T14:33:45.710Z',
+      },
+      {
+        'value': 33,
+        'name': '2016-09-12T18:48:58.925Z',
+      }
+    ]
+  },
+  {
+    'name': 'FY2019',
+    'series': [
+      {
+        'value': 52,
+        'name': '2016-09-15T19:25:07.773Z',
+      },
+      {
+        'value': 49,
+        'name': '2016-09-17T17:16:53.279Z',
+      },
+      {
+        'value': 41,
+        'name': '2016-09-15T10:34:32.344Z',
+      },
+      {
+        'value': 38,
+        'name': '2016-09-19T14:33:45.710Z',
+      },
+      {
+        'value': 72,
+        'name': '2016-09-12T18:48:58.925Z',
+      }
+    ]
+  },
+  {
+    'name': 'FY2020',
+    'series': [
+      {
+        'value': 40,
+        'name': '2016-09-15T19:25:07.773Z',
+      },
+      {
+        'value': 45,
+        'name': '2016-09-17T17:16:53.279Z',
+      },
+      {
+        'value': 51,
+        'name': '2016-09-15T10:34:32.344Z',
+      },
+      {
+        'value': 68,
+        'name': '2016-09-19T14:33:45.710Z',
+      },
+      {
+        'value': 54,
+        'name': '2016-09-12T18:48:58.925Z',
+      }
+    ]
+  },
+];
+
+export let abc: any = [
   {
     'name': 'Container Apps',
     'series': [

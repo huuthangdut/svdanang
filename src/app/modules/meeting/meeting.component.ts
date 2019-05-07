@@ -13,6 +13,7 @@ import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { DialogService } from './../../shared/services/dialog.service';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
 import * as moment from 'moment';
+import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
 
 const colors: any = {
   orange: {
@@ -133,7 +134,7 @@ export class MeetingComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "35%";
-    dialogConfig.position = { top: '10vh' }
+    dialogConfig.position = { top: '15vh' }
     const dialogRef = this.dialog.open(MeetingFormComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
@@ -194,7 +195,7 @@ export class MeetingComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = "35%";
-    dialogConfig.position = { top: '10vh' }
+    dialogConfig.position = { top: '15vh' }
     dialogConfig.data = { meetingId: id }
     const dialogRef = this.dialog.open(MeetingFormComponent, dialogConfig);
 
@@ -206,7 +207,7 @@ export class MeetingComponent implements OnInit {
   }
 
   eventClicked(event: CalendarEvent) {
-    alert("Form xem chi tiet cuoc hop dang xay dung.");
+    
   }
 
 
