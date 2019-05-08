@@ -41,7 +41,7 @@
             <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
-        <h3 matSubheader>Cài đặt</h3>
+        <h3 matSubheader>Cài đặt/Cấu hình</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="settingsmenu">
           <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route" routerLinkActive="active">
             <mat-icon matListIcon class="sidenav-icon"> {{item.icon}}</mat-icon> {{item.title}}
