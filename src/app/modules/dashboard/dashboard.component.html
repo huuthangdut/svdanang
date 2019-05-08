@@ -5,7 +5,7 @@
     </button>
     <span>Trang tổng quan</span>
     <span flex></span>
-    <span layout="row" class="push-left-sm push-right mat-body-1">
+    <!-- <span layout="row" class="push-left-sm push-right mat-body-1">
       <mat-form-field floatPlaceholder="never" flex>
         <input matInput readonly [matDatepicker]="pickerFrom">
         <mat-datepicker-toggle matSuffix matTooltip="Start date" [for]="pickerFrom"></mat-datepicker-toggle>
@@ -21,7 +21,7 @@
         <mat-datepicker #pickerTo></mat-datepicker>
       </mat-form-field>
 
-    </span>
+    </span> -->
   </div>
 </mat-toolbar>
 
@@ -98,8 +98,8 @@
           <mat-divider></mat-divider>
           <div class="pad">
             <div [style.height.px]="250" #container>
-              <ngx-charts-pie-grid [view]="[container.offsetWidth, 250]" [scheme]="colorScheme" [results]="single"
-                [label]="'Tổng tiền'">
+              <ngx-charts-pie-grid [view]="[container.offsetWidth, 250]" [scheme]="colorScheme"
+                [results]="dashboard.totalRaisedByTopic" [label]="'Tổng tiền'">
               </ngx-charts-pie-grid>
             </div>
           </div>
@@ -109,17 +109,22 @@
         <mat-card>
           <mat-card-title>
             <div layout="row" layout-align="start center">
-              <span flex>Tổng tiền gây quỹ theo năm</span>
+              <span flex>Tổng tiền gây quỹ được trong năm</span>
             </div>
           </mat-card-title>
           <mat-divider></mat-divider>
           <div class="pad">
             <div [style.height.px]="250">
-              <ngx-charts-bar-vertical-2d [scheme]="colorScheme" [results]="multi" [barPadding]="18" [groupPadding]="28"
-                [gradient]="true" [xAxis]="true" [yAxis]="true" [legend]="true" [legendTitle]="'Năm'"
-                [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
-                [yAxisTickFormatting]="axisDigits">
-              </ngx-charts-bar-vertical-2d>
+              <!-- <ngx-charts-bar-vertical-2d [scheme]="colorScheme" [results]="dashboard.totalRaisedLastestYear"
+                [barPadding]="18" [groupPadding]="28" [gradient]="true" [xAxis]="true" [yAxis]="true" [legend]="true"
+                [legendTitle]="'Năm'" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel" [yAxisTickFormatting]="axisDigits">
+              </ngx-charts-bar-vertical-2d> -->
+              <ngx-charts-line-chart [scheme]="colorScheme" [results]="dashboard.totalRaisedInYear"
+                [gradient]="gradient" [autoScale]="false" [xAxis]="true" [yAxis]="true" [legend]="true"
+                [legendTitle]="'Chủ đề'" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel">
+              </ngx-charts-line-chart>
             </div>
           </div>
         </mat-card>
@@ -133,7 +138,7 @@
           <mat-card-subtitle></mat-card-subtitle>
           <mat-divider></mat-divider>
           <mat-nav-list class="item-list">
-            <td-virtual-scroll-container #virtualScroll [style.height.px]="216" [data]="dashboard.meetings">
+            <td-virtual-scroll-container #virtualScroll [style.height.px]="220" [data]="dashboard.lastestMeetings">
               <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
                 <a mat-list-item layout-align="row">
                   <mat-icon matListAvatar> event_note </mat-icon>
@@ -156,14 +161,17 @@
           <mat-card-subtitle></mat-card-subtitle>
           <mat-divider></mat-divider>
           <mat-nav-list class="item-list">
-            <td-virtual-scroll-container #virtualScroll [style.height.px]="216" [data]="data">
+            <td-virtual-scroll-container #virtualScroll [style.height.px]="220" [data]="dashboard.userActivities">
               <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
                 <a mat-list-item layout-align="row">
                   <!-- <mat-icon matListAvatar>person</mat-icon> -->
-                  <img mat-card-avatar
+                  <img matListAvatar mat-card-avatar
                     src="http://222.255.167.89/svdanang-0.0.1-SNAPSHOT/api/downloadFile/59641240_2400041123616385_4977906665597698048_n-07052019224424.jpg"
                     alt="">
                   <h4 matLine>{{row.activity}}</h4>
+                  <span flex></span>
+                  <span class="mat-caption text-right" flex="40">
+                    {{ row.createdAt | dateTimeAgo }}</span>
                   <!-- <p matLine>Row: {{row.index}}</p> -->
                 </a>
                 <mat-divider *ngIf="!last" [inset]="true"></mat-divider>

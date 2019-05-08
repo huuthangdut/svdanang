@@ -47,6 +47,17 @@ export class AuthService {
         }));
   }
 
+
+  public updateCurrentUser(firstName: string, lastName: string, avatar: string) {
+    let user = this.currentUserValue;
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.avatar = avatar;
+
+    this.setAuthToken(user);
+    this.currentUserSubject.next(user);
+  }
+
   public logout(): void {
     this.removeAuthToken();
     this.currentUserSubject.next(null);

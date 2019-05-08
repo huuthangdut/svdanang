@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/services/auth.service';
 import { UploadService } from './../../core/services/upload.service';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-erro
 import { PasswordValidators } from './../../core/validators/password.validator';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { userInfo } from 'os';
 
 @Component({
   selector: 'app-profile',
@@ -37,6 +39,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private userService: UserService,
     private userProfileFormService: UserProfileFormService,
     private updatePasswordFormService: UpdatePasswordFormService,
@@ -214,6 +217,13 @@ export class ProfileComponent implements OnInit {
   }
 
   handleSubmitProfileSuccess(response) {
+    // update current user in subject in AuthService, so sidebar has change the current user info
+    const data = response.data;
+
+    this.authService.updateCurrentUser(data.firstName, data.lastName, data.avatar);
+
+
+
     console.log(response);
     this.submitting = false;
     const message = "Cập nhật thông tin cá nhân thành công";

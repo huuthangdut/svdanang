@@ -1,3 +1,4 @@
+import { AuthUser } from './../../models/auth-user.model';
 import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -90,7 +91,7 @@ export class SidenavComponent {
     },
     {
       icon: 'settings',
-      route: '.',
+      route: '/settings',
       title: 'Hệ thống',
       description: 'Item description',
       permissions: []
@@ -98,25 +99,17 @@ export class SidenavComponent {
   ];
 
 
-  user: User;
-  displayName: string;
+  user: AuthUser;
 
   constructor(
     public media: TdMediaService,
-    private iconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
     private authService: AuthService,
-    private userService: UserService,
     private router: Router
   ) {
 
-    this.userService.getCurrentUser().subscribe(response => {
-      if (response.success) {
-        this.user = response.data;
-        this.displayName = this.user.lastName + " " + this.user.firstName;
-
-        this.iconRegistry.addSvgIconInNamespace('assets', 'avatar',
-          this.domSanitizer.bypassSecurityTrustResourceUrl(this.user.avatar));
+    this.authService.currentUser.subscribe(response => {
+      if (response) {
+        this.user = response;
       }
 
     });

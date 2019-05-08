@@ -1,8 +1,8 @@
 <td-layout>
-  <td-navigation-drawer flex [name]="displayName" [sidenavTitle]="name" [email]="user ? user.email : ''"
-    navigationRoute="/">
+  <td-navigation-drawer flex [name]="user ? user.lastName + ' ' + user.firstName : ''" [sidenavTitle]="name"
+    [email]="user ? user.email : ''" navigationRoute="/">
     <mat-nav-list class="mat-nav-list" role="navigation">
-      <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" tdLayoutClose>
+      <a *ngFor="let item of routes" mat-list-item [routerLink]="item.route" tdLayoutClose routerLinkActive="active">
         <mat-icon class="sidenav-icon">{{item.icon}}</mat-icon>{{item.title}}
       </a>
       <a mat-list-item (click)="logout()">
@@ -32,18 +32,18 @@
         <img class="push-left logo-sidebar" src="assets/icons/sv-logo.png" alt="">
       </mat-toolbar>
       <mat-nav-list td-sidenav-content [tdLayoutManageListClose]="!media.query('gt-sm')">
-        <a mat-list-item [routerLink]="['/']">
+        <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon matListIcon class="sidenav-icon">dashboard</mat-icon> Trang tổng quan
         </a>
         <h3 matSubheader>Quản lý</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="mgmtmenu">
-          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route">
+          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route" routerLinkActive="active">
             <mat-icon matListIcon class="sidenav-icon">{{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>
         <h3 matSubheader>Cài đặt</h3>
         <ng-template let-item let-last="last" ngFor [ngForOf]="settingsmenu">
-          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route">
+          <a *hasPermission="item.permissions" mat-list-item [routerLink]="item.route" routerLinkActive="active">
             <mat-icon matListIcon class="sidenav-icon"> {{item.icon}}</mat-icon> {{item.title}}
           </a>
         </ng-template>

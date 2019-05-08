@@ -1,19 +1,18 @@
-import { AuthService } from './../../core/services/auth.service';
-import { ACTION } from './../../shared/constants/action.constant';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core/loading';
 import { CalendarEvent, CalendarEventAction, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 
 import { Meeting } from '../../core/models/meeting.model';
 import { MeetingService } from '../../core/services/meeting.service';
+import { AuthService } from './../../core/services/auth.service';
+import { ACTION } from './../../shared/constants/action.constant';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { DialogService } from './../../shared/services/dialog.service';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
-import * as moment from 'moment';
-import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
 
 const colors: any = {
   orange: {
@@ -207,7 +206,7 @@ export class MeetingComponent implements OnInit {
   }
 
   eventClicked(event: CalendarEvent) {
-    
+
   }
 
 

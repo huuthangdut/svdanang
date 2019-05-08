@@ -66,7 +66,7 @@ mat-nav-list, mat-list {
             color: mat-color($accent, default-contrast);
         }
         mat-icon[matListIcon] {
-            color: mat-color($accent);
+            color: mat-color($primary);
         }
     }
 }

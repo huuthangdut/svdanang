@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { TdDigitsPipe, TdLoadingService, ITdDataTableColumn } from '@covalent/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { single, multi } from './data';
+import { TdDigitsPipe, TdLoadingService } from '@covalent/core';
+import { DatePipe } from '@angular/common';
+
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -10,76 +13,10 @@ import { single, multi } from './data';
 })
 export class DashboardComponent implements OnInit {
 
-  @ViewChild('container') container: ElementRef;
 
   // Current date
   year: any = new Date().getFullYear();
 
-  dashboard: any;
-
-  configWidthColumns: ITdDataTableColumn[] = [
-    { name: 'avatar', label: '' },
-    { name: 'name', label: 'Họ tên' },
-    { name: 'activity', label: 'Hoạt động' }
-  ];
-
-  // Data table
-  data: any[] = [
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-    {
-      'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
-      'name': 'Tran Huu Thang',
-      'activity': 'Chíp vừa ủng hộ cho dự án Buôn lậu từ thiện  số tiền 1500$',
-    },
-
-  ];
-
-
-
-  // view = [innerWidth / 1.3, 250];
-  totalLabel: 'Tổng tiền';
-
-  single: any[];
-  multi: any[];
 
   // options
   showXAxis = true;
@@ -87,14 +24,216 @@ export class DashboardComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  yAxisLabel = 'Số tiền đã gây quỹ (USD)';
+  yAxisLabel = 'Số tiền đã gây quỹ (VND)';
   showYAxisLabel = true;
-  xAxisLabel = 'Chủ đề';
+  xAxisLabel = this.year;
 
 
   colorScheme = {
-
     domain: ['#4DD0E1', '#BA68C8', '#FF7043', '#AAAAAA']
+  };
+
+  dashboard = {
+    lastestMeetings: [
+      { icon: 'event_note', name: 'Cuộc họp 1', location: 'Địa điểm 1', createdAt: new Date(2019, 4, 20) },
+      { icon: 'event_note', name: 'Cuộc họp 1', location: 'Địa điểm 1', createdAt: new Date() },
+      { icon: 'event_note', name: 'Cuộc họp 1', location: 'Địa điểm 1', createdAt: new Date() },
+      { icon: 'event_note', name: 'Cuộc họp 1', location: 'Địa điểm 1', createdAt: new Date() },
+    ],
+    userActivities: [
+      {
+        'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
+        'activity': 'Chíp vừa ủng hộ cho dự án xxx số tiền 1500$',
+        'createdAt': new Date()
+      },
+      {
+        'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
+        'activity': 'Chíp vừa ủng hộ cho dự án xxx số tiền 1500$',
+        'createdAt': new Date()
+      },
+      {
+        'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
+        'activity': 'Chíp vừa ủng hộ cho dự án xxx số tiền 1500$',
+        'createdAt': new Date()
+      },
+      {
+        'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
+        'activity': 'Chíp vừa ủng hộ cho dự án xxx số tiền 1500$',
+        'createdAt': new Date()
+      },
+      {
+        'avatar': 'http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png',
+        'activity': 'Chíp vừa ủng hộ cho dự án xxx số tiền 1500$',
+        'createdAt': new Date()
+      },
+    ],
+    totalRaisedByTopic: [
+      {
+        'name': 'Xã hội',
+        'value': 2500000,
+      },
+      {
+        'name': 'Giáo dục',
+        'value': 2000000,
+      },
+      {
+        'name': 'Trẻ em',
+        'value': 250000
+      },
+    ],
+    totalRaisedLastestYear: [
+      {
+        'name': 'Buôn lậu',
+        'series': [
+          {
+            'name': '2019',
+            'value': 7300000
+          }
+        ]
+      },
+
+      {
+        'name': 'Giáo dục',
+        'series': [
+          {
+            'name': '2019',
+            'value': 8270000
+          }
+        ]
+      },
+
+      {
+        'name': 'Xã hội',
+        'series': [
+          {
+            'name': '2019',
+            'value': 8940000
+          },
+        ]
+      },
+      {
+        'name': 'Trẻ em',
+        'series': [
+          {
+            'name': '2019',
+            'value': 8940000
+          },
+        ]
+      }
+    ],
+    totalRaisedInYear: [
+      {
+        'name': 'Xã hội',
+        'series': [
+          {
+            'value': 150000,
+            'name': 'T1',
+          },
+          {
+            'value': 300000,
+            'name': 'T2',
+          },
+          {
+            'value': 600000,
+            'name': 'T3',
+          },
+          {
+            'value': 1200000,
+            'name': 'T4',
+          },
+          {
+            'value': 1500000,
+            'name': 'T5',
+          },
+          {
+            'value': 1500000,
+            'name': 'T6',
+          },
+          {
+            'value': 1500000,
+            'name': 'T7',
+          },
+          {
+            'value': 3500000,
+            'name': 'T8',
+          },
+        ]
+      },
+      {
+        'name': 'Giáo dục',
+        'series': [
+          {
+            'value': 0,
+            'name': 'T1',
+          },
+          {
+            'value': 100000,
+            'name': 'T2',
+          },
+          {
+            'value': 200000,
+            'name': 'T3',
+          },
+          {
+            'value': 3200000,
+            'name': 'T4',
+          },
+          {
+            'value': 4500000,
+            'name': 'T5',
+          },
+          {
+            'value': 6500000,
+            'name': 'T6',
+          },
+          {
+            'value': 6500000,
+            'name': 'T7',
+          },
+          {
+            'value': 7500000,
+            'name': 'T8',
+          },
+        ]
+      },
+      {
+        'name': 'Trẻ em',
+        'series': [
+          {
+            'value': 250000,
+            'name': 'T1',
+          },
+          {
+            'value': 350000,
+            'name': 'T2',
+          },
+          {
+            'value': 700000,
+            'name': 'T3',
+          },
+          {
+            'value': 2200000,
+            'name': 'T4',
+          },
+          {
+            'value': 2500000,
+            'name': 'T5',
+          },
+          {
+            'value': 2500000,
+            'name': 'T6',
+          },
+          {
+            'value': 3500000,
+            'name': 'T7',
+          },
+          {
+            'value': 4500000,
+            'name': 'T8',
+          },
+        ]
+      },
+    ]
   };
 
   // pie
@@ -105,26 +244,21 @@ export class DashboardComponent implements OnInit {
   constructor(
     private _titleService: Title,
     private _loadingService: TdLoadingService) {
-    Object.assign(this, { single, multi })
   }
 
   ngOnInit(): void {
 
 
     // this._titleService.setTitle('Trang tổng quan - Diễn đàn sinh viên Đà nẵng');
-    this.dashboard = {
-      meetings: [
-        { icon: 'event_note', name: 'Cuộc họp có tiêu đề hơi dài 1 tí', location: 'Địa điểm 1', createdAt: new Date(2019, 4, 20) },
-        { icon: 'event_note', name: 'Cuộc họp có tiêu đề hơi dài 1 tí', location: 'Địa điểm 1', createdAt: new Date() },
-        { icon: 'event_note', name: 'Cuộc họp có tiêu đề hơi dài 1 tí', location: 'Địa điểm 1', createdAt: new Date() },
-        { icon: 'event_note', name: 'Cuộc họp có tiêu đề hơi dài 1 tí', location: 'Địa điểm 1', createdAt: new Date() },
-      ]
-    }
   }
 
 
   axisDigits(val: any): any {
     return new TdDigitsPipe().transform(val);
+  }
+
+  axisDate(val: string): string {
+    return new DatePipe('en').transform(val, 'MMMM');
   }
 
 
