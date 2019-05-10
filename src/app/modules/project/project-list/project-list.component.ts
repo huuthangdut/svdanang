@@ -17,7 +17,7 @@ import { ACTION } from '../../../shared/constants/action.constant';
 export class ProjectListComponent implements OnInit {
 
   dataSource: ProjectsDataSource;
-  displayedColumns = ['image', 'name', 'topic', 'startTime', 'endTime', 'createdAt', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'topic', 'startTime', 'endTime', 'createdAt', 'progress', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

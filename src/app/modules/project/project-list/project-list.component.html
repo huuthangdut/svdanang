@@ -71,10 +71,16 @@
       <mat-cell *matCellDef="let project">{{project.createdAt | dateFormat }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef>Trạng thái</mat-header-cell>
+    <ng-container matColumnDef="progress">
+      <mat-header-cell *matHeaderCellDef>Số tiền đã gây quỹ / mục tiêu</mat-header-cell>
       <mat-cell *matCellDef="let project">
-
+        <mat-progress-bar style="width: 50%; margin-right: 6px;"
+          [value]="project.raised ? ((project.raised / project.goal) * 100) : 0">
+        </mat-progress-bar>
+        <!-- <label>{{ project.raised | currency:'USD' }} / {{ project.goal | currency:'USD' }}</label> -->
+        <div class="text-progress">
+          {{ project.raised |digits  }} /
+          {{ project.goal | digits }} $ </div>
       </mat-cell>
     </ng-container>
 

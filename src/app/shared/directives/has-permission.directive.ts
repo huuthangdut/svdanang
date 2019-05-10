@@ -1,28 +1,50 @@
-import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { UserService } from './../../core/services/user.service';
 
-import { AuthUser } from '../../core/models';
-import { AuthService } from '../../core/services/auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ActionDatabase {
+  dataChange = new BehaviorSubject<string[]>([]);
+
+  get data(): string[] { return this.dataChange.value; }
+
+  constructor(private userService: UserService) {
+    this.initialize();
+  }
+
+  initialize() {
+    this.userService.getCurrentGrantedActions().subscribe((response: any) => {
+      if (response.success) {
+
+        // Notify the change.
+        this.dataChange.next(response.data);
+      }
+    });
+  }
+}
 
 @Directive({
   selector: '[hasPermission]'
 })
 export class HasPermissionDirective {
-  private currentUser: AuthUser;
+  private grantedActions: string[] = [];
   private permissions = [];
 
   constructor(
     private element: ElementRef,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
-    private authService: AuthService
-  ) { }
-
-  ngOnInit() {
-    this.authService.currentUser.subscribe(user => {
-      this.currentUser = user;
+    private database: ActionDatabase
+  ) {
+    database.dataChange.subscribe(data => {
+      this.grantedActions = data;
       this.updateView();
     });
   }
+
 
   @Input()
   set hasPermission(val) {
@@ -39,10 +61,11 @@ export class HasPermissionDirective {
   }
 
   private checkPermission() {
-    if (this.currentUser && this.currentUser.grantedActions) {
-      return this.permissions.every(current => this.currentUser.grantedActions.includes(current));
+    if (this.grantedActions) {
+      return this.permissions.every(current => this.grantedActions.includes(current));
     }
 
     return true;
   }
 }
+

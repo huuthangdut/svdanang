@@ -25,7 +25,13 @@ mat-header-cell:nth-child(3) {
 mat-cell:nth-child(6),
 mat-header-cell:nth-child(6) {
     // flex: 0 0 7%;
-    padding-right: 10px;
+    // padding-right: 10px;
+}
+
+mat-cell:nth-child(7),
+mat-header-cell:nth-child(7) {
+    flex: 0 0 15%;
+    // padding-right: 10px;
 }
 
 
@@ -33,4 +39,11 @@ mat-header-cell:nth-child(6) {
 mat-cell:nth-child(8),
 mat-header-cell:nth-child(8) {
     flex: 0 0 7%;
+}
+
+.text-progress {
+    position:relative;
+    top: 15px;
+    left: -50%;
+    font-size: 12px;
 }

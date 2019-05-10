@@ -17,7 +17,7 @@ import { ACTION } from '../../../shared/constants/action.constant';
 export class EventListComponent implements OnInit, AfterViewInit {
 
   dataSource: EventsDataSource;
-  displayedColumns = ['image', 'name', 'location', 'topic', 'startTime', 'endTime', 'createdAt', 'status', 'actions']
+  displayedColumns = ['image', 'name', 'location', 'topic', 'startTime', 'endTime', 'createdAt', 'actions']
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
