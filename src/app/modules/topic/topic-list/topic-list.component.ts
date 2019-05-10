@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { ProjectTopicService } from './../../../core/services/project-topic.service';
 import { BlogPostTopicService } from './../../../core/services/blog-post-topic.service';
@@ -32,10 +33,13 @@ export class TopicListComponent implements OnInit {
     private blogTopicService: BlogPostTopicService,
     private projectTopicService: ProjectTopicService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách chủ đề');
+
     this.loadBlogPostTopics();
     this.loadEventTopics();
     this.loadProjectTopics();

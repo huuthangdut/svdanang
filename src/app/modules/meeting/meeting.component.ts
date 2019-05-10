@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { TdLoadingService } from '@covalent/core/loading';
@@ -63,9 +64,12 @@ export class MeetingComponent implements OnInit {
     private dialog: MatDialog,
     private dialogService: DialogService,
     private loadingService: TdLoadingService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách cuộc họp');
+
     this.loadMeetings();
 
     const grantedActions = this.authService.currentUserValue.grantedActions;

@@ -2,6 +2,7 @@ import { MatSnackBar } from '@angular/material';
 import { AuthService } from './../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-forgot-password',
@@ -24,9 +25,12 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Quên mật khẩu');
+
     this.buildForm();
   }
 

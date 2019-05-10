@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { DepartmentFormComponent } from './../department-form/department-form.component';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { DepartmentService } from './../../../core/services/department.service';
@@ -22,10 +23,13 @@ export class DepartmentListComponent implements OnInit {
     private departmentService: DepartmentService,
     private dialogService: DialogService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách ban');
+
     this.loadDepartmentsPage();
   }
 

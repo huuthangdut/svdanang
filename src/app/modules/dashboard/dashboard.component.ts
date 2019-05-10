@@ -254,6 +254,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Trang thông tin tổng quan');
+
     this.loading = true;
     this.dashboardService.getDashboardData().subscribe(response => {
       if (response.success) {
@@ -262,8 +264,6 @@ export class DashboardComponent implements OnInit {
         this.loading = false;
       }
     });
-
-    // this._titleService.setTitle('Trang tổng quan - Diễn đàn sinh viên Đà nẵng');
   }
 
 

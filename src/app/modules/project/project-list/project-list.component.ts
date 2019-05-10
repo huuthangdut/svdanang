@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
@@ -29,10 +30,13 @@ export class ProjectListComponent implements OnInit {
   constructor(private router: Router,
     private projectService: ProjectService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách dự án');
+
     this.dataSource = new ProjectsDataSource(this.projectService);
     this.dataSource.loadProjects();
   }

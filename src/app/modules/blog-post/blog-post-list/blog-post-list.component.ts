@@ -8,6 +8,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { BlogPostService } from './../../../core/services/blog-post.service';
 import { DialogService } from './../../../shared/services/dialog.service';
 import { BlogPostsDataSource } from './blog-post.data-source';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-post-list',
@@ -29,9 +30,12 @@ export class BlogPostListComponent implements OnInit {
     private blogPostService: BlogPostService,
     private dialogService: DialogService,
     private snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách bài viết');
+
     this.dataSource = new BlogPostsDataSource(this.blogPostService);
     this.dataSource.loadPosts();
   }

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
 import { fromEvent, merge } from 'rxjs';
@@ -26,9 +27,12 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private roleService: RoleService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách vai trò');
+
     this.dataSource = new RolesDataSource(this.roleService);
     this.dataSource.loadRoles();
   }

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { CurrencyService } from './../../../core/services/currency.service';
 import { UploadService } from './../../../core/services/upload.service';
 import { MatSnackBar } from '@angular/material';
@@ -53,7 +54,8 @@ export class ProjectFormComponent implements OnInit {
     private datePipeService: DatePipeService,
     private loadingService: TdLoadingService,
     private uploadService: UploadService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
 
   ) {
     let param = +this.route.snapshot.paramMap.get('id');
@@ -66,6 +68,8 @@ export class ProjectFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
+
     this.formErrors = this.projectFormService.formErrors;
 
     this.loadProjectTopics();

@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
@@ -29,10 +30,13 @@ export class EventListComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
     private eventService: EventService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách sự kiện');
+
     this.dataSource = new EventsDataSource(this.eventService);
     this.dataSource.loadEvents();
   }

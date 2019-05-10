@@ -13,6 +13,7 @@ import { UserService } from './../../core/services/user.service';
 import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-error-matcher';
 import { PasswordValidators } from './../../core/validators/password.validator';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -43,9 +44,12 @@ export class ProfileComponent implements OnInit {
     private updatePasswordFormService: UpdatePasswordFormService,
     private uploadService: UploadService,
     private datePipeService: DatePipeService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Thông tin cá nhân');
+
     this.profileFormErrors = this.userProfileFormService.formErrors;
     this.updatePasswordFormErrors = this.updatePasswordFormService.formErrors;
 

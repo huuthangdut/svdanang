@@ -13,7 +13,7 @@ import { TopicService } from './../../../core/services/topic.service';
   styleUrls: ['./topic-form.component.scss']
 })
 export class TopicFormComponent implements OnInit {
-  title: string = 'Tạo mới chủ đề';
+  title: string = 'Tạo mới chủ đề ';
 
   topicId: number;
   topic: Topic;
@@ -46,11 +46,24 @@ export class TopicFormComponent implements OnInit {
       if (this.data.topicId) {
         this.topicId = this.data.topicId;
         this.isEdit = true;
-        this.title = 'Chỉnh sửa chủ đề'
+        this.title = 'Chỉnh sửa chủ đề '
       }
     }
 
+    this.title += this.getTitle();
+
     this.buildForm();
+  }
+
+  getTitle() {
+    switch (this.data.type) {
+      case 'event':
+        return ' sự kiện';
+      case 'project':
+        return ' dự án';
+      case 'blog':
+        return ' bài viết';
+    }
   }
 
 

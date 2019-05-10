@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
@@ -31,10 +32,14 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private router: Router) {
+    private router: Router,
+    private titleService: Title
+  ) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Đăng nhập hệ thống diễn đàn');
+
     this.form = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required])],
       password: ['', Validators.compose([Validators.required])]

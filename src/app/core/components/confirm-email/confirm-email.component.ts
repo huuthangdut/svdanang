@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from './../../services/api.service';
@@ -16,11 +17,15 @@ export class ConfirmEmailComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title
+  ) {
+    this.token = this.route.snapshot.queryParamMap.get('token');
+  }
 
   ngOnInit() {
-    this.token = this.route.snapshot.queryParamMap.get('token');
+    this.titleService.setTitle('Xác thực email');
+
     this.apiService.post('/auth/confirm', { token: this.token }).subscribe(response => {
       if (response.success) {
         this.snackBar.open(response.message, '', { duration: 3000 });

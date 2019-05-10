@@ -16,6 +16,7 @@ import { EventService } from './../../../core/services/event.service';
 import { EventFormService } from './../../../core/services/forms/event-form.service';
 import { switchMap, map } from 'rxjs/operators';
 import { TINY_MCE_SETTINGS } from '../../../shared/settings/editor.setting';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event-form',
@@ -59,7 +60,8 @@ export class EventFormComponent implements OnInit {
     private datePipeService: DatePipeService,
     private loadingService: TdLoadingService,
     private uploadService: UploadService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private titleService: Title) {
 
     let param = +this.route.snapshot.paramMap.get('id');
     param = !isNaN(param) ? param : null;
@@ -71,6 +73,8 @@ export class EventFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
+
     this.formErrors = this.eventFormService.formErrors;
     this.loadCurrencies();
     this.loadEventTopics();

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { CrossFieldErrorMatcher } from '../../validators/cross-field-error-matcher';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-change-password',
@@ -38,12 +39,15 @@ export class ChangePasswordComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) {
     this.token = this.route.snapshot.queryParamMap.get('token');
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Thay đổi mật khẩu');
+
     this.buildForm();
   }
 

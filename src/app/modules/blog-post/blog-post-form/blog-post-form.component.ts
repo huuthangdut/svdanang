@@ -11,6 +11,7 @@ import { BlogPost, BlogPostModel } from './../../../core/models/blog-post.model'
 import { BlogPostService } from './../../../core/services/blog-post.service';
 import { BlogPostFormService } from './../../../core/services/forms/blog-post-form.service';
 import { TINY_MCE_SETTINGS } from './../../../shared/settings/editor.setting';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -49,7 +50,8 @@ export class BlogPostFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
-    private loadingService: TdLoadingService
+    private loadingService: TdLoadingService,
+    private titleService: Title
   ) {
     let param = +this.route.snapshot.paramMap.get('id');
     param = !isNaN(param) ? param : null;
@@ -61,6 +63,8 @@ export class BlogPostFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle(this.title);
+
     this.formErrors = this.blogPostFormService.formErrors;
 
     this.loadBlogPostTopics();

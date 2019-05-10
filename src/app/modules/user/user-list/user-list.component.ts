@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { ACTION } from './../../../shared/constants/action.constant';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
@@ -30,9 +31,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private userService: UserService,
     private dialogService: DialogService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('Danh sách người dùng');
+
     this.dataSource = new UsersDataSource(this.userService);
     this.dataSource.loadUsers();
   }
