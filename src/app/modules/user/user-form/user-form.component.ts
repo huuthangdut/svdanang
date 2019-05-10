@@ -142,9 +142,9 @@ export class UserFormComponent implements OnInit {
     if (!this.isEdit) {
       this.passwordGroup = this.formBuilder.group({
         password:
-          ['', Validators.required],
+          ['', [Validators.required, Validators.minLength(this.userFormService.minLengthPassword)]],
         confirmPassword:
-          ['', Validators.required]
+          ['', [Validators.required, Validators.minLength(this.userFormService.minLengthPassword)]]
       }, { validators: PasswordValidators.matchPassword });
 
       this.userForm.addControl('passwordGroup', this.passwordGroup);
@@ -168,6 +168,8 @@ export class UserFormComponent implements OnInit {
     this.userFormService.logValidationErrors(this.userForm);
 
     this.formErrors = this.userFormService.formErrors;
+
+    console.log(this.formErrors);
   }
 
   getSubmitModel() {

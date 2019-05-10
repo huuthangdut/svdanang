@@ -8,6 +8,8 @@ export class UserFormService {
 
   validationMessages: any;
 
+  minLengthPassword = 6;
+
   formErrors = {
     firstName: '',
     lastName: '',
@@ -41,9 +43,11 @@ export class UserFormService {
       },
       password: {
         required: 'Vui lòng nhập mật khẩu.',
+        minlength: 'Vui lòng nhập mật khẩu tối thiểu ' + this.minLengthPassword + ' kí tự.'
       },
       confirmPassword: {
-        required: 'Vui lòng nhập xác nhận mật khẩu.'
+        required: 'Vui lòng nhập xác nhận mật khẩu.',
+        minlength: 'Mật khẩu xác nhận tối thiểu ' + this.minLengthPassword + ' kí tự.'
       },
       roles: {
         required: 'Vui lòng chọn vai trò người dùng.'

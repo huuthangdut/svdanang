@@ -9,18 +9,23 @@ export class ProjectFormService {
 
   formErrors = {
     name: '',
+    shortDescription: '',
     startTime: '',
     endTime: '',
     dateGroup: '',
     goal: '',
     projectTopicId: '',
-    currencyId: ''
+    currencyId: '',
+
   }
 
   constructor() {
     this.validationMessages = {
       name: {
         required: 'Vui lòng nhập tên dự án.'
+      },
+      shortDescription: {
+        required: 'Vui lòng nhập mô tả ngắn.'
       },
       startTime: {
         required: 'Vui lòng nhập ngày bắt đầu.'

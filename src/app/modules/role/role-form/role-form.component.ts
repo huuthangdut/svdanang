@@ -201,6 +201,8 @@ export class RoleFormComponent implements OnInit {
   getSubmitModel() {
     const formValue = Object.assign({}, this.roleForm.value);
 
+    console.log(this.checklistSelection.selected.map(i => i.name))
+
     return new RoleModel(
       this.role ? this.role.id : null,
       formValue.name,
@@ -250,7 +252,7 @@ export class RoleFormComponent implements OnInit {
     if (this.checklistSelection.isSelected(node) && desAllDeselected) {
       return true;
     }
-    
+
     return partialDesSelected;
   }
 

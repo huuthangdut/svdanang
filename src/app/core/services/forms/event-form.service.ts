@@ -15,6 +15,7 @@ export class EventFormService {
     startTime: '',
     endTime: '',
     location: '',
+    shortDescription: '',
     expectedQuantity: '',
     fee: '',
     currencyId: ''
@@ -39,6 +40,9 @@ export class EventFormService {
       },
       location: {
         required: 'Vui lòng nhập địa điểm tổ chức sự kiện.'
+      },
+      shortDescription: {
+        required: 'Vui lòng nhập mô tả ngắn.'
       },
       expectedQuantity: {
         required: 'Vui lòng nhập số lượng dự kiến.'

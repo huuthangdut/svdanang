@@ -105,7 +105,7 @@ export class EventFormComponent implements OnInit {
   buildForm() {
     this.eventForm = this.formBuilder.group({
       name: [null, Validators.required],
-      shortDescription: null,
+      shortDescription: [null, Validators.required],
       description: null,
       topicId: [null, Validators.required],
       dateGroup: this.formBuilder.group({
