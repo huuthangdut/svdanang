@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -56,6 +57,14 @@ export class AuthService {
 
     this.setAuthToken(user);
     this.currentUserSubject.next(user);
+  }
+
+  public forgotPassword(email: string) {
+    return this.apiService.post('/auth/forgot', { email });
+  }
+
+  public resetPassword(token: string, password: string) {
+    return this.apiService.post('/auth/reset', { token, password });
   }
 
   public logout(): void {

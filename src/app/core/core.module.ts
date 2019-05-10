@@ -8,6 +8,9 @@ import { MenuListItemComponent } from './components/menu-list-item/menu-list-ite
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 import { ErrorInterceptor, JwtInterceptor } from './interceptors';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { ErrorInterceptor, JwtInterceptor } from './interceptors';
     LoginComponent,
     FooterComponent,
     SidenavComponent,
-    MenuListItemComponent
+    MenuListItemComponent,
+    NotFoundComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent
 
   ],
   imports: [

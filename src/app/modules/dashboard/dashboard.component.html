@@ -147,7 +147,7 @@
                 <a mat-list-item layout-align="row">
                   <mat-icon matListAvatar> event_note </mat-icon>
                   <h3 matLine> {{row.name}} </h3>
-                  <p matLine> {{row.location | truncate:50 }} </p>
+                  <p matLine> {{row.location }} </p>
                   <span flex></span>
                   <span class="mat-caption text-right" flex="40"> {{row.createdAt | datetimeFormat }}
                     ({{ row.createdAt | dateTimeAgo }})</span>
@@ -169,10 +169,12 @@
               <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
                 <a mat-list-item layout-align="row">
                   <!-- <mat-icon matListAvatar>person</mat-icon> -->
-                  <img matListAvatar mat-card-avatar
-                    src="http://222.255.167.89/svdanang-0.0.1-SNAPSHOT/api/downloadFile/59641240_2400041123616385_4977906665597698048_n-07052019224424.jpg"
-                    alt="">
-                  <h4 matLine>{{row.activity}}</h4>
+                  <img *ngIf="row.avatar; else noAvatar" matListAvatar mat-card-avatar [src]="row.avatar" alt="">
+                  <ng-template #noAvatar>
+                    <img matListAvatar mat-card-avatar
+                      src="http://angular.demo.aspnetzero.com/assets/common/images/default-profile-picture.png" alt="">
+                  </ng-template>
+                  <p style="padding-left: 10px;">{{row.activity}}</p>
                   <span flex></span>
                   <span class="mat-caption text-right" flex="40">
                     {{ row.createdAt | dateTimeAgo }}</span>

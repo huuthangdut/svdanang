@@ -1,0 +1,20 @@
+// .container {
+//   width: 50%;
+//   height: 50%;
+//   // background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+//    display: flex;
+//    align-items: center;
+//   justify-content: center;
+//   margin: 0 auto;
+// }
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: contain;
+  margin-top: 50px;
+  width: 50%;
+  height: 50%;
+  // width: 100%;
+}

@@ -1,3 +1,6 @@
+import { ChangePasswordComponent } from './core/components/change-password/change-password.component';
+import { ForgotPasswordComponent } from './core/components/forgot-password/forgot-password.component';
+import { NotFoundComponent } from './core/components/not-found/not-found.component';
 import { UploadImageComponent } from './shared/components/upload-image/upload-image.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NgModule } from '@angular/core';
@@ -10,7 +13,16 @@ import { ACTION } from './shared/constants/action.constant';
 const routes: Routes = [{
   path: 'login',
   component: LoginComponent,
-}, {
+},
+{
+  path: 'forgot-password',
+  component: ForgotPasswordComponent,
+},
+{
+  path: 'change-password',
+  component: ChangePasswordComponent,
+},
+{
   path: '',
   component: MainComponent,
   canActivate: [AuthGuard],
@@ -81,6 +93,10 @@ const routes: Routes = [{
     }
   ],
 },
+{
+  path: '**',
+  component: NotFoundComponent
+}
 ];
 
 @NgModule({
