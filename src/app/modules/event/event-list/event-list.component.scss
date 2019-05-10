@@ -13,12 +13,14 @@ mat-header-cell:nth-child(1) {
 mat-cell:nth-child(2),
 mat-header-cell:nth-child(2) {
     flex: 0 0 20%;
+    padding-right: 5px;
 }
 
 
 mat-cell:nth-child(3),
 mat-header-cell:nth-child(3) {
     flex: 0 0 15%;
+    padding-right: 5px;
 }
 
 

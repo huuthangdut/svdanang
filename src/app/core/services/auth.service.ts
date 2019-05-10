@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<any> {
-    return this.apiService.post('/auth/signin-admin',
+    return this.apiService.post('/auth/signin',
       { userNameOrEmail: username, password: password })
       .pipe(
         map(response => {

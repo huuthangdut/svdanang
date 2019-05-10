@@ -1,3 +1,4 @@
+import { ConfirmEmailComponent } from './core/components/confirm-email/confirm-email.component';
 import { ChangePasswordComponent } from './core/components/change-password/change-password.component';
 import { ForgotPasswordComponent } from './core/components/forgot-password/forgot-password.component';
 import { NotFoundComponent } from './core/components/not-found/not-found.component';
@@ -21,6 +22,10 @@ const routes: Routes = [{
 {
   path: 'change-password',
   component: ChangePasswordComponent,
+},
+{
+  path: 'confirm-email',
+  component: ConfirmEmailComponent,
 },
 {
   path: '',

@@ -11,6 +11,7 @@ import { ErrorInterceptor, JwtInterceptor } from './interceptors';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     MenuListItemComponent,
     NotFoundComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ConfirmEmailComponent
 
   ],
   imports: [
