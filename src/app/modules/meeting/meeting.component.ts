@@ -14,6 +14,7 @@ import { ACTION } from './../../shared/constants/action.constant';
 import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { DialogService } from './../../shared/services/dialog.service';
 import { MeetingFormComponent } from './meeting-form/meeting-form.component';
+import { ActionDatabase } from '../../shared/directives/has-permission.directive';
 
 const colors: any = {
   orange: {
@@ -57,6 +58,8 @@ export class MeetingComponent implements OnInit {
 
   ACTION = ACTION;
 
+  grantedActions = [];
+
   constructor(
     private authService: AuthService,
     private meetingService: MeetingService,
@@ -65,16 +68,19 @@ export class MeetingComponent implements OnInit {
     private dialogService: DialogService,
     private loadingService: TdLoadingService,
     private snackBar: MatSnackBar,
-    private titleService: Title) { }
+    private titleService: Title,
+    private actionDatabase: ActionDatabase) { }
 
   ngOnInit() {
     this.titleService.setTitle('Danh sách cuộc họp');
 
     this.loadMeetings();
 
-    const grantedActions = this.authService.currentUserValue.grantedActions;
+    this.actionDatabase.dataChange.subscribe(response =>
+      this.grantedActions = response
+    );
 
-    if (grantedActions.includes(ACTION.EDIT_MEETING)) {
+    if (this.grantedActions.includes(ACTION.EDIT_MEETING)) {
       this.actions.push(
         {
           label: '<i class="fa fa-fw fa-pencil action-button"></i>',
@@ -85,7 +91,7 @@ export class MeetingComponent implements OnInit {
       );
     }
 
-    if (grantedActions.includes(ACTION.DELETE_MEETING)) {
+    if (this.grantedActions.includes(ACTION.DELETE_MEETING)) {
       this.actions.push(
         {
           label: '<i class="fa fa-fw fa-times action-button"></i>',

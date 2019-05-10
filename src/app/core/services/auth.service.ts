@@ -1,3 +1,4 @@
+import { ActionDatabase } from './../../shared/directives/has-permission.directive';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -18,7 +19,9 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<AuthUser>;
   public currentUser: Observable<AuthUser>;
 
-  constructor(private apiService: ApiService, private crypto: Crypto) {
+  constructor(
+    private apiService: ApiService,
+    private crypto: Crypto) {
     this.currentUserSubject = new BehaviorSubject<AuthUser>(this.getAuthToken());
     this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
@@ -41,6 +44,7 @@ export class AuthService {
               this.currentUserSubject.next(user);
             }
 
+
             return true;
           }
 
@@ -54,6 +58,14 @@ export class AuthService {
     user.firstName = firstName;
     user.lastName = lastName;
     user.avatar = avatar;
+
+    this.setAuthToken(user);
+    this.currentUserSubject.next(user);
+  }
+
+  public updateGrantedActions(actions: string[]) {
+    let user = this.currentUserValue;
+    user.grantedActions = actions;
 
     this.setAuthToken(user);
     this.currentUserSubject.next(user);

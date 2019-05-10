@@ -1,3 +1,4 @@
+import { AuthService } from './../../core/services/auth.service';
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from './../../core/services/user.service';
@@ -11,13 +12,16 @@ export class ActionDatabase {
 
   get data(): string[] { return this.dataChange.value; }
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private authService: AuthService) {
     this.initialize();
   }
 
   initialize() {
     this.userService.getCurrentGrantedActions().subscribe((response: any) => {
       if (response.success) {
+        this.authService.updateGrantedActions(response.data);
 
         // Notify the change.
         this.dataChange.next(response.data);

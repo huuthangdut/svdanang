@@ -21,11 +21,20 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError(err => {
-        if ([401, 403].indexOf(err.status) !== -1) {
+        if (err.status === 401) { // not login
           this.authService.logout();
           this.router.navigate(['/login']);
-          // location.reload(true);
         }
+        else if (err.status === 403 && this.authService.isAuthenticated()) {
+          // logined and not have permission
+          console.log('router link dashboard');
+          this.router.navigate(['/dashboard']);
+        }
+        // if ([401, 403].indexOf(err.status) !== -1) {
+        //   this.authService.logout();
+        //   this.router.navigate(['/login']);
+        //   // location.reload(true);
+        // }
 
         const error = err.error.message || err.statusText;
         console.error(error);

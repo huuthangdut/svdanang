@@ -1,3 +1,4 @@
+import { ActionDatabase } from './../../../shared/directives/has-permission.directive';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private actionDatabase: ActionDatabase,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -71,6 +73,10 @@ export class LoginComponent implements OnInit {
       // .pipe(first())
       .subscribe(data => {
         this.loading = false;
+
+        // login successful so update granted action database for current user
+        this.actionDatabase.initialize();
+
         this.router.navigate([this.returnUrl]);
       }, error => {
         this.error = error;
