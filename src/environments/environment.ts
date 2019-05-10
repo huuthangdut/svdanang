@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   apiURL: 'http://222.255.167.89/svdanang-0.0.1-SNAPSHOT/api',
-  // apiURL: 'http://192.168.137.192:8080/api',
-  publicURL: 'https://svdanang.com'
+  // apiURL: 'http://192.168.1.12:8080/api',
+  publicURL: 'http://svdanang.com'
 };

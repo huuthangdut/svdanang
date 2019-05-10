@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -64,11 +63,12 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
     this.authService.login(this.f.username.value, this.f.password.value)
-      .pipe(first())
+      // .pipe(first())
       .subscribe(data => {
+        this.loading = false;
         this.router.navigate([this.returnUrl]);
       }, error => {
-        this.error = error.error;
+        this.error = error;
         this.loading = false;
         this.snackBar.open(this.error, '', {
           duration: 2000,

@@ -26,19 +26,20 @@
 </mat-toolbar>
 
 
-<div layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+<div *ngIf="dashboard" layout-gt-sm="row" tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
   <div flex-gt-sm="100">
     <div layout-gt-xs="row">
       <div flex-gt-xs="25">
         <mat-card>
           <mat-card-content class="text-center">
-            <div class="mat-headline push-bottom-none">{{ '1200'| digits }} <mat-icon class="tc-green-500 text-sm">
-                arrow_upward</mat-icon>
+            <div class="mat-headline push-bottom-none">{{  dashboard.totalUser | digits }}
+              <!-- <mat-icon class="tc-green-500 text-sm">
+                arrow_upward</mat-icon> -->
             </div>
             <mat-icon class="icon tc-cyan-700">perm_contact_calendar</mat-icon>
             <div>
               <div class="mat-subheading-2 push-bottom-none">Người dùng hoạt động</div>
-              <div class="mat-caption tc-grey-600">cập nhật {{ '2018-06-17 12:59:59' | dateTimeAgo }}</div>
+              <!-- <div class="mat-caption tc-grey-600">cập nhật {{ '2018-06-17 12:59:59' | dateTimeAgo }}</div> -->
             </div>
           </mat-card-content>
         </mat-card>
@@ -46,13 +47,14 @@
       <div flex-gt-xs="25">
         <mat-card>
           <mat-card-content class="text-center">
-            <div class="mat-headline push-bottom-none">{{ '250' | digits }} <mat-icon class="tc-red-500 text-sm">
-                arrow_downward</mat-icon>
+            <div class="mat-headline push-bottom-none">{{ dashboard.totalBlogPost | digits }}
+              <!-- <mat-icon class="tc-red-500 text-sm">
+                arrow_downward</mat-icon> -->
             </div>
             <mat-icon class="icon tc-cyan-700">note_add</mat-icon>
             <div>
               <div class="mat-subheading-2 push-bottom-none">Bài viết</div>
-              <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-18 11:02:59' | dateTimeAgo }}</div>
+              <!-- <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-18 11:02:59' | dateTimeAgo }}</div> -->
             </div>
           </mat-card-content>
         </mat-card>
@@ -60,13 +62,14 @@
       <div flex-gt-xs="25">
         <mat-card>
           <mat-card-content class="text-center">
-            <div class="mat-headline push-bottom-none">{{ '15' | digits}} <mat-icon class="tc-green-500 text-sm">
-                arrow_upward</mat-icon>
+            <div class="mat-headline push-bottom-none">{{ dashboard.totalEvent | digits}}
+              <!-- <mat-icon class="tc-green-500 text-sm">
+                arrow_upward</mat-icon> -->
             </div>
             <mat-icon class="icon tc-cyan-700">event</mat-icon>
             <div>
               <div class="mat-subheading-2 push-bottom-none">Sự kiện</div>
-              <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-13 09:59:59' | dateTimeAgo }}</div>
+              <!-- <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-13 09:59:59' | dateTimeAgo }}</div> -->
             </div>
           </mat-card-content>
         </mat-card>
@@ -74,13 +77,14 @@
       <div flex-gt-xs="25">
         <mat-card>
           <mat-card-content class="text-center">
-            <div class="mat-headline push-bottom-none">{{ '20' | digits}} <mat-icon class="tc-green-500 text-sm">
-                arrow_upward</mat-icon>
+            <div class="mat-headline push-bottom-none">{{ dashboard.totalProject | digits}}
+              <!-- <mat-icon class="tc-green-500 text-sm">
+                arrow_upward</mat-icon> -->
             </div>
             <mat-icon class="icon tc-cyan-700">receipt</mat-icon>
             <div>
               <div class="mat-subheading-2 push-bottom-none">Dự án</div>
-              <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-13 09:59:59' | dateTimeAgo }}</div>
+              <!-- <div class="mat-caption tc-grey-600">cập nhật {{ '2018-07-13 09:59:59' | dateTimeAgo }}</div> -->
             </div>
           </mat-card-content>
         </mat-card>
@@ -88,7 +92,7 @@
     </div>
 
     <div layout-gt-xs="row">
-      <div flex-gt-sm="50">
+      <div flex-gt-xs="50">
         <mat-card>
           <mat-card-title>
             <div layout="row" layout-align="start center">
@@ -105,7 +109,7 @@
           </div>
         </mat-card>
       </div>
-      <div flex-gt-sm="50">
+      <div flex-gt-xs="50">
         <mat-card>
           <mat-card-title>
             <div layout="row" layout-align="start center">
@@ -138,7 +142,7 @@
           <mat-card-subtitle></mat-card-subtitle>
           <mat-divider></mat-divider>
           <mat-nav-list class="item-list">
-            <td-virtual-scroll-container #virtualScroll [style.height.px]="220" [data]="dashboard.lastestMeetings">
+            <td-virtual-scroll-container #virtualScroll [style.height.px]="290" [data]="dashboard.latestMeetings">
               <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
                 <a mat-list-item layout-align="row">
                   <mat-icon matListAvatar> event_note </mat-icon>
@@ -161,7 +165,7 @@
           <mat-card-subtitle></mat-card-subtitle>
           <mat-divider></mat-divider>
           <mat-nav-list class="item-list">
-            <td-virtual-scroll-container #virtualScroll [style.height.px]="220" [data]="dashboard.userActivities">
+            <td-virtual-scroll-container #virtualScroll [style.height.px]="290" [data]="dashboard.userActivities">
               <ng-template let-row="row" let-last="last" tdVirtualScrollRow>
                 <a mat-list-item layout-align="row">
                   <!-- <mat-icon matListAvatar>person</mat-icon> -->
@@ -181,7 +185,7 @@
         </mat-card>
       </div>
     </div>
-
-
   </div>
 </div>
+
+<app-spinner-overlay *ngIf="loading"></app-spinner-overlay>

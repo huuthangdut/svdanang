@@ -5,6 +5,7 @@ import { EventTopicService } from './../../../core/services/event-topic.service'
 import { TopicFormComponent } from './../topic-form/topic-form.component';
 import { MatDialog, MatDialogConfig, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
+import { ACTION } from '../../../shared/constants/action.constant';
 
 @Component({
   selector: 'app-topic-list',
@@ -22,6 +23,8 @@ export class TopicListComponent implements OnInit {
   blogDataSource = new MatTableDataSource();
   projectDataSource = new MatTableDataSource();
   eventDataSource = new MatTableDataSource();
+
+  ACTION = ACTION;
 
   constructor(
     private dialog: MatDialog,

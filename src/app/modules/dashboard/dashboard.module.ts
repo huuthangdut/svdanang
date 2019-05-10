@@ -1,3 +1,4 @@
+import { CovalentLoadingModule } from '@covalent/core/loading';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +11,7 @@ import { DashboardComponent } from './dashboard.component';
   imports: [
     CommonModule,
     SharedModule,
+    CovalentLoadingModule,
     DashboardRoutingModule
   ]
 })

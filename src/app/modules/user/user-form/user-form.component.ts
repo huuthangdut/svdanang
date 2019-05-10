@@ -112,7 +112,7 @@ export class UserFormComponent implements OnInit {
       lastName: user.lastName,
       email: user.email,
       departmentId: user.department ? user.department.id : null,
-      isActive: true,
+      isActive: user.isActive,
       roles: user.roles.map(i => i.id)
     });
   }

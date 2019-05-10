@@ -80,22 +80,22 @@ export class SidenavComponent {
       route: '/departments',
       title: 'Ban',
       description: 'Item description',
-      permissions: []
+      permissions: [ACTION.DEPARTMENT_PAGE]
     },
     {
       icon: 'subject',
       route: '/topics',
       title: 'Chủ đề',
       description: 'Item description',
-      permissions: []
+      permissions: [ACTION.TOPIC_PAGE]
     },
-    {
-      icon: 'settings',
-      route: '/settings',
-      title: 'Hệ thống',
-      description: 'Item description',
-      permissions: []
-    }
+    // {
+    //   icon: 'settings',
+    //   route: '/settings',
+    //   title: 'Hệ thống',
+    //   description: 'Item description',
+    //   permissions: []
+    // }
   ];
 
 

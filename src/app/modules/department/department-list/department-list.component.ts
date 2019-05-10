@@ -3,6 +3,7 @@ import { DialogService } from './../../../shared/services/dialog.service';
 import { DepartmentService } from './../../../core/services/department.service';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog, MatSnackBar, MatDialogConfig } from '@angular/material';
+import { ACTION } from '../../../shared/constants/action.constant';
 
 @Component({
   selector: 'app-department-list',
@@ -14,6 +15,8 @@ export class DepartmentListComponent implements OnInit {
 
   displayedColumns = ['name', 'description', 'actions'];
   dataSource = new MatTableDataSource();
+
+  ACTION = ACTION;
 
   constructor(
     private departmentService: DepartmentService,

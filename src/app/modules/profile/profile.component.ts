@@ -1,20 +1,18 @@
-import { AuthService } from './../../core/services/auth.service';
-import { UploadService } from './../../core/services/upload.service';
-import { DatePipeService } from './../../shared/services/date-pipe.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { map, switchMap } from 'rxjs/operators';
 
 import { UserProfile, UserProfileModel } from '../../core/models';
 import { UserPasswordModel } from '../../core/models/user-password.model';
+import { AuthService } from './../../core/services/auth.service';
 import { UpdatePasswordFormService } from './../../core/services/forms/update-password-form.service';
 import { UserProfileFormService } from './../../core/services/forms/user-profile-form.service';
+import { UploadService } from './../../core/services/upload.service';
 import { UserService } from './../../core/services/user.service';
 import { CrossFieldErrorMatcher } from './../../core/validators/cross-field-error-matcher';
 import { PasswordValidators } from './../../core/validators/password.validator';
-import { map, switchMap, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { userInfo } from 'os';
+import { DatePipeService } from './../../shared/services/date-pipe.service';
 
 @Component({
   selector: 'app-profile',

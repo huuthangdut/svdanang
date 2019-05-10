@@ -27,6 +27,10 @@ export class UserService {
     return this.apiService.get('/users/me');
   }
 
+  getCurrentGrantedActions() {
+    return this.apiService.get('/users/me/grantedAction');
+  }
+
   updateCurrentUser(userProfile: UserProfileModel) {
     return this.apiService.put('/users/me', userProfile);
   }

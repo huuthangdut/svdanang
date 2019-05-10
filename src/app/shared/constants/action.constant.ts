@@ -27,7 +27,17 @@ export const ACTION = {
   PROJECT_PAGE: 'Projects',
   CREATE_PROJECT: 'Projects.Create',
   EDIT_PROJECT: 'Projects.Edit',
-  DELETE_PROJECT: 'Projects.Delete'
+  DELETE_PROJECT: 'Projects.Delete',
+
+  TOPIC_PAGE: 'Topics',
+  CREATE_TOPIC: 'Topics.Create',
+  EDIT_TOPIC: 'Topics.Edit',
+  DELETE_TOPIC: 'Topics.Delete',
+
+  DEPARTMENT_PAGE: 'Departments',
+  CREATE_DEPARTMENT: 'Departments.Create',
+  EDIT_DEPARTMENT: 'Departments.Edit',
+  DELETE_DEPARTMENT: 'Departments.Delete'
 }
 
 

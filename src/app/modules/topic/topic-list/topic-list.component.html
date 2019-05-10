@@ -15,7 +15,8 @@
     </span>
     <span flex></span>
     <span>
-      <button mat-flat-button color="accent" (click)="onAdd('event')">Tạo mới</button>
+      <button *hasPermission="[ACTION.CREATE_TOPIC]" mat-flat-button color="accent" (click)="onAdd('event')">Tạo
+        mới</button>
     </span>
   </div>
   <mat-divider></mat-divider>
@@ -33,10 +34,11 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let topic">
-        <button mat-icon-button (click)="onEdit('event', topic.id)" color="accent">
+        <button *hasPermission="[ACTION.EDIT_TOPIC]" mat-icon-button (click)="onEdit('event', topic.id)" color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="onDelete('event', topic.id)" color="warn">
+        <button *hasPermission="[ACTION.DELETE_TOPIC]" mat-icon-button (click)="onDelete('event', topic.id)"
+          color="warn">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>
@@ -65,7 +67,8 @@
     </span>
     <span flex></span>
     <span>
-      <button mat-flat-button color="accent" (click)="onAdd('project')">Tạo mới</button>
+      <button *hasPermission="[ACTION.CREATE_TOPIC]" mat-flat-button color="accent" (click)="onAdd('project')">Tạo
+        mới</button>
     </span>
   </div>
   <mat-divider></mat-divider>
@@ -83,10 +86,12 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let topic">
-        <button mat-icon-button (click)="onEdit('project', topic.id)" color="accent">
+        <button *hasPermission="[ACTION.EDIT_TOPIC]" mat-icon-button (click)="onEdit('project', topic.id)"
+          color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="onDelete('project', topic.id)" color="warn">
+        <button *hasPermission="[ACTION.DELETE_TOPIC]" mat-icon-button (click)="onDelete('project', topic.id)"
+          color="warn">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>
@@ -115,7 +120,8 @@
     </span>
     <span flex></span>
     <span>
-      <button mat-flat-button color="accent" (click)="onAdd('blog')">Tạo mới</button>
+      <button *hasPermission="[ACTION.CREATE_TOPIC]" mat-flat-button color="accent" (click)="onAdd('blog')">Tạo
+        mới</button>
     </span>
   </div>
   <mat-divider></mat-divider>
@@ -133,10 +139,11 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let topic">
-        <button mat-icon-button (click)="onEdit('blog', topic.id)" color="accent">
+        <button *hasPermission="[ACTION.EDIT_TOPIC]" mat-icon-button (click)="onEdit('blog', topic.id)" color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="onDelete('blog', topic.id)" color="warn">
+        <button *hasPermission="[ACTION.DELETE_TOPIC]" mat-icon-button (click)="onDelete('blog', topic.id)"
+          color="warn">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>

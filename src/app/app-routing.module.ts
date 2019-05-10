@@ -71,13 +71,13 @@ const routes: Routes = [{
       path: 'topics',
       loadChildren: './modules/topic/topic.module#TopicModule',
       canActivate: [AuthGuard],
-      data: { permissions: [] }
+      data: { permissions: [ACTION.TOPIC_PAGE] }
     },
     {
       path: 'departments',
       loadChildren: './modules/department/department.module#DepartmentModule',
       canActivate: [AuthGuard],
-      data: { permissions: [] }
+      data: { permissions: [ACTION.DEPARTMENT_PAGE] }
     }
   ],
 },

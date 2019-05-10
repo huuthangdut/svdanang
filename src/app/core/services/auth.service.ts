@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -7,6 +6,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthUser } from '../models';
 import { Crypto } from './../helpers';
+import { ApiService } from './api.service';
 
 const BASE_URL = environment.apiURL;
 
@@ -17,7 +17,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<AuthUser>;
   public currentUser: Observable<AuthUser>;
 
-  constructor(private httpClient: HttpClient, private crypto: Crypto) {
+  constructor(private apiService: ApiService, private crypto: Crypto) {
     this.currentUserSubject = new BehaviorSubject<AuthUser>(this.getAuthToken());
     this.currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
   }
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<any> {
-    return this.httpClient.post<any>(`${BASE_URL}/auth/signin`,
+    return this.apiService.post('/auth/signin-admin',
       { userNameOrEmail: username, password: password })
       .pipe(
         map(response => {

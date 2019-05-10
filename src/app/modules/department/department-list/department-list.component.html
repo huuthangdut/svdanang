@@ -30,10 +30,12 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let department">
-        <button mat-icon-button (click)="onEdit(department.id)" color="accent">
+        <button *hasPermission="[ACTION.EDIT_DEPARTMENT]" mat-icon-button (click)="onEdit(department.id)"
+          color="accent">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button (click)="onDelete(department.id)" color="warn">
+        <button *hasPermission="[ACTION.DELETE_DEPARTMENT]" mat-icon-button (click)="onDelete(department.id)"
+          color="warn">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </mat-cell>
@@ -55,6 +57,7 @@
   </mat-table>
 </mat-card>
 
-<a mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add" (click)="onCreate()">
+<a *hasPermission="[ACTION.CREATE_DEPARTMENT]" mat-fab color="accent" class="mat-fab-bottom-right fixed z-3 button-add"
+  (click)="onCreate()">
   <mat-icon>add</mat-icon>
 </a>
